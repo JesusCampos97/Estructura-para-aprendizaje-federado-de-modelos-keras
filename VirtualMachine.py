@@ -19,7 +19,7 @@ if __name__ == "__main__":
     num_devices=1
     data_percentage=0.8
     train_percentage=0.8
-    path_devices="Proyecto python/Devices/"#"Devices/5/20042022 (2)"
+    path_devices="./Devices/"#"Devices/5/20042022 (2)"
     path_dataset="/datasets" #path donde se encuentra el dataset descomprimido
     model_type=1 #Se debera de pasar por parametros
     epochs=2 #Se debera de pasar por parametros
@@ -31,6 +31,7 @@ if __name__ == "__main__":
 
     #Creo las carpetas de los datasets y los renombro
     if (dataset_rename):
+        print("Creando carpetas de dispositivo")
         os.getcwd()
         collection = path_dataset+"/dataset negativo/"
         for i, filename in enumerate(os.listdir(collection)):
@@ -66,6 +67,7 @@ if __name__ == "__main__":
 
     #Se crean tantos folders como dispositivos
     for i in range(num_devices):
+        print("Ejecuta un dispositivo")
         path_param=new_path+"/d"+str(i)
         os.mkdir(path_param)
         device = Devices(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, image_height, image_width, batch_size)

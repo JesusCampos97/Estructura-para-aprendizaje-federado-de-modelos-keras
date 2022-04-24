@@ -49,7 +49,7 @@ class Device:
         self.image_height = image_height
         self.image_width = image_width
         self.batch_size = batch_size
-
+        print("Termina init")
         warnings.filterwarnings('ignore')
 
 
@@ -60,20 +60,24 @@ class Device:
         y guarda su accuracy
     """
     def execute(self):
-
+        print("Comienza execute")
         train,test = self.loadDataIntoPaths()
+        print("loaddataintopaths cargado")
         trainData, testData = self.loadDataImages()
+        print("dataimages cargadas")
         trainData.head()
         testData.head()
+        print("Se van a procesar imagenes")
         self.processImages()
-
+        print("imagenes procesadas")
         train_set, val_set = train_test_split(trainData,
                                             test_size=0.1)
+        print("split realziado")
         print(len(train_set), len(val_set))
         train_generator, validation_generator= self.loadValidationDatasets(train_set, val_set)
-
+        print("train generador cargado")
         model=self.loadModelType()
-
+        print("modelo cargado")
         for layer in model.layers:
             layer.trainable = False
 
@@ -87,13 +91,14 @@ class Device:
         # summarize
         model.summary()
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
-
+        print("modleo compilado")
         with tf.device('/device:GPU:0'):
             history = model.fit_generator(train_generator, 
                             validation_data=validation_generator, 
                             epochs=self.epochs)
 
         model.save(self.path+"/model.h5")
+        print("modelo guardado")
         self.plotHistory(history)
         self.saveConfig(history)
         self.deleteTempFiles()
