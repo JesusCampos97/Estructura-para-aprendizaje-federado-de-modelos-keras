@@ -128,7 +128,7 @@ class Device:
 
         labels=[]
         for filename in enumerate(os.listdir(dst_dir)):
-            labels.append(filename)
+            labels.append(filename[1])
 
         num=len(labels)
         print(num)
@@ -140,9 +140,6 @@ class Device:
 
         print(len(train))
         print(len(test))
-
-        print(train)
-        print(test)
 
         dst_dir = self.path+"/tmp/train/"
         if(os.path.isdir(dst_dir)==False):
