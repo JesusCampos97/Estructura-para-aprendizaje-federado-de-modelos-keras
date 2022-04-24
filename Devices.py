@@ -16,13 +16,13 @@ from tensorflow.keras.callbacks import EarlyStopping
 import warnings
 import tensorflow as tf
 from tensorflow import keras
-from keras.applications.vgg16 import VGG16
-from keras.applications.inception_v3 import InceptionV3
+from tensorflow.keras.applications.vgg16 import VGG16
+from tensorflow.keras.applications.inception_v3 import InceptionV3
 from tensorflow.keras.applications.resnet50 import ResNet50
 
-from keras.models import Model
-from keras.layers import Dense
-from keras.layers import Flatten
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Flatten
 from matplotlib import pyplot as plt
 import json
 
