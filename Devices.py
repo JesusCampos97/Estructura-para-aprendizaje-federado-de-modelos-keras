@@ -146,14 +146,14 @@ class Device:
             os.mkdir(dst_dir)
 
         for i,val in enumerate(train):
-            shutil.copy(self.path+'/tmp/allDataset/'+train[i], dst_dir)
+            shutil.copy(self.path+'/tmp/allDataset/'+str(train[i]), dst_dir)
 
         dst_dir = self.path+"/tmp/test/"
         if(os.path.isdir(dst_dir)==False):
             os.mkdir(dst_dir)
 
         for i,val in enumerate(test):
-            shutil.copy(self.path+'/tmp/allDataset/'+test[i], dst_dir)
+            shutil.copy(self.path+'/tmp/allDataset/'+str(test[i]), dst_dir)
         
         return train, test
 
