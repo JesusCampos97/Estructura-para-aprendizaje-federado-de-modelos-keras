@@ -3,7 +3,7 @@ import shutil
 from datetime import datetime
 import glob  
 from Server import Server
-from Devices import Devices
+from Devices import Device
 
 """
 
@@ -70,7 +70,7 @@ if __name__ == "__main__":
         print("Ejecuta un dispositivo")
         path_param=new_path+"/d"+str(i)
         os.mkdir(path_param)
-        device = Devices(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, image_height, image_width, batch_size)
+        device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, image_height, image_width, batch_size)
         device.execute()
         
 
@@ -81,7 +81,7 @@ if __name__ == "__main__":
         ya el server ha temrinado, me ha generado un modelo
         y ahora cada modelo evalua el nuevo modelo y se queda con su accuracy
         for i in range(num_devices):
-            device = Devices()
+            device = Device()
             device.evaluate(path del nuevo modelo)
     """
     
