@@ -103,7 +103,9 @@ class Device:
 
     def loadDataIntoPaths(self):
         src_dir = self.path_dataset+"/dataset negativo/"
-        dst_dir = self.path+"/tmp/allDataset"
+        dst_dir = self.path+"/tmp"
+        os.mkdir(dst_dir)
+        dst_dir+="/allDataset"
         os.mkdir(dst_dir)
         list = os.listdir(src_dir) # dir is your directory path
         file_count = len(list)
