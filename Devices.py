@@ -104,9 +104,11 @@ class Device:
     def loadDataIntoPaths(self):
         src_dir = self.path_dataset+"/dataset negativo/"
         dst_dir = self.path+"/tmp"
-        os.mkdir(dst_dir)
+        if(os.path.isdir(dst_dir)==False):
+            os.mkdir(dst_dir)
         dst_dir+="/allDataset"
-        os.mkdir(dst_dir)
+        if(os.path.isdir(dst_dir)==False):
+            os.mkdir(dst_dir)
         list = os.listdir(src_dir) # dir is your directory path
         file_count = len(list)
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
