@@ -141,6 +141,9 @@ class Device:
         print(len(train))
         print(len(test))
 
+        print(train)
+        print(test)
+
         dst_dir = self.path+"/tmp/train/"
         if(os.path.isdir(dst_dir)==False):
             os.mkdir(dst_dir)
