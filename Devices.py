@@ -9,20 +9,19 @@ from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix, classification_report
 
-from tensorflow.keras import layers
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.callbacks import EarlyStopping
-import warnings
 import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras.applications.vgg16 import VGG16
-from tensorflow.keras.applications.inception_v3 import InceptionV3
-from tensorflow.keras.applications.resnet50 import ResNet50
+from tf.keras import layers
+from tf.keras.models import Sequential
+from tf.keras.preprocessing.image import ImageDataGenerator
+from tf.keras.callbacks import EarlyStopping
+import warnings
+from tf.keras.applications.vgg16 import VGG16
+from tf.keras.applications.inception_v3 import InceptionV3
+from tf.keras.applications.resnet50 import ResNet50
 
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.layers import Flatten
+from tf.keras.models import Model
+from tf.keras.layers import Dense
+from tf.keras.layers import Flatten
 from matplotlib import pyplot as plt
 import json
 
