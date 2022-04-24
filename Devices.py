@@ -111,19 +111,23 @@ class Device:
             os.mkdir(dst_dir)
         list = os.listdir(src_dir) # dir is your directory path
         file_count = len(list)
+        i=0
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             if(i<(file_count*self.data_percentage)):
                 shutil.copy(jpgfile, dst_dir)
+            i+=1
 
         src_dir = self.path_dataset+"/dataset positivo/"
         list = os.listdir(src_dir) # dir is your directory path
         file_count = len(list)
+        i=0
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             if(i<(file_count*self.data_percentage)):
                 shutil.copy(jpgfile, dst_dir)
+            i+=1
 
         labels=[]
-        for i, filename in enumerate(os.listdir(dst_dir)):
+        for filename in enumerate(os.listdir(dst_dir)):
             labels.append(filename)
 
         num=len(labels)
