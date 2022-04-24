@@ -2,6 +2,8 @@ import os
 import shutil
 from datetime import datetime
 import glob  
+import Server
+import Devices
 
 
 
@@ -26,17 +28,17 @@ if __name__ == "__main__":
     #Se crean tantos folders como dispositivos
     for i in range(num_devices):
         os.mkdir(new_path+"/d"+str(i))
-        device = new Devices()
+        device = Devices()
         device.lanzar()
         
 
-    server = new Server(new_path)
+    server = Server(new_path)
     server.merge()
 
     ya el server ha temrinado, me ha generado un modelo
     y ahora cada modelo evalua el nuevo modelo y se queda con su accuracy
     for i in range(num_devices):
-        device = new Devices()
+        device = Devices()
         device.evaluate(path del nuevo modelo)
     
     
