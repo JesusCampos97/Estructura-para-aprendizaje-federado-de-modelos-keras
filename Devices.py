@@ -9,7 +9,6 @@ from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix, classification_report
 
-from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
