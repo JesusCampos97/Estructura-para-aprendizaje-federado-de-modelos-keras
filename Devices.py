@@ -16,7 +16,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import EarlyStopping
 import warnings
 import tensorflow as tf
-import keras
+from tensorflow import keras
 from keras.applications.vgg16 import VGG16
 from keras.applications.inception_v3 import InceptionV3
 from tensorflow.keras.applications.resnet50 import ResNet50

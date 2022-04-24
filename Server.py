@@ -4,6 +4,8 @@ import os
 import Devices
 import tensorflow as tf
 from numpy import average
+from tensorflow import keras
+
 from keras.models import clone_model
 from math import exp
 from numpy import array
