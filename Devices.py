@@ -208,7 +208,7 @@ class Device:
         return train_generator,validation_generator
 
     def processImages(self):
-        filepath = self.path+'/tmp/train'
+        filepath = self.path+'/tmp/train/'
         for i in tqdm(range(len(os.listdir(filepath)))):
             pic_path = filepath + os.listdir(filepath)[i]
             pic = PIL.Image.open(pic_path)
