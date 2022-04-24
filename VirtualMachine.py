@@ -2,8 +2,8 @@ import os
 import shutil
 from datetime import datetime
 import glob  
-import Server
-import Devices
+from Server import Server
+from Devices import Devices
 
 """
 
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     image_width = 224
     batch_size=224
 
-    dataset_rename = True
+    dataset_rename = False
 
     #Creo las carpetas de los datasets y los renombro
     if (dataset_rename):
