@@ -16,7 +16,7 @@ model_type = 3 -> ResNet50
 if __name__ == "__main__":
 
 
-    num_devices=5
+    num_devices=1
     data_percentage=0.8
     train_percentage=0.8
     path_devices="Proyecto python/Devices/"#"Devices/5/20042022 (2)"
@@ -72,13 +72,16 @@ if __name__ == "__main__":
         device.execute()
         
 
-    server = Server(new_path)
-    server.merge()
+    """
+        server = Server(new_path)
+        server.merge()
 
-    ya el server ha temrinado, me ha generado un modelo
-    y ahora cada modelo evalua el nuevo modelo y se queda con su accuracy
-    for i in range(num_devices):
-        device = Devices()
-        device.evaluate(path del nuevo modelo)
+        ya el server ha temrinado, me ha generado un modelo
+        y ahora cada modelo evalua el nuevo modelo y se queda con su accuracy
+        for i in range(num_devices):
+            device = Devices()
+            device.evaluate(path del nuevo modelo)
+    """
+    
     
     
