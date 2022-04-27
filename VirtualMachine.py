@@ -4,6 +4,7 @@ from datetime import datetime
 import glob  
 from Server import Server
 from Devices import Device
+import time
 
 """
 
@@ -24,13 +25,15 @@ if __name__ == "__main__":
     path_dataset="/datasets" #path donde se encuentra el dataset descomprimido
     model_type=1 #Se debera de pasar por parametros
     epochs=2 #Se debera de pasar por parametros
-    image_height = 224#156
-    image_width = 224#156
+    image_height = 156 #224
+    image_width = 156 #224
     batch_size = 25
     steps_per_epoch = 6
     dataset_rename = False
 
     #Creo las carpetas de los datasets y los renombro
+    start_dataset_renames = time.time()
+
     if (dataset_rename):
         print("Creando carpetas de dispositivo")
         os.getcwd()
@@ -53,6 +56,10 @@ if __name__ == "__main__":
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             shutil.copy(jpgfile, dst_dir)
 
+    end_dataset_renames = time.time()
+
+    print("El tiempo en rejecutar el renamed es: "+str(end_dataset_renames-start_dataset_renames))
+
     if(os.path.isdir(path_devices+str(num_devices))==False):
         os.mkdir(path_devices+str(num_devices))
     
@@ -71,9 +78,12 @@ if __name__ == "__main__":
         print("Ejecuta un dispositivo")
         path_param=new_path+"/d"+str(i)
         os.mkdir(path_param)
+        start_device_execute = time.time()
         device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size)
         device.execute()
-        
+        end_device_execute = time.time()
+        print("El tiempo en ejecutar el device"+str(i)+" es : "+str(end_device_execute-start_device_execute))
+
 
     """
         server = Server(new_path)
