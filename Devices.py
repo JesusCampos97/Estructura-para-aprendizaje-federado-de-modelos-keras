@@ -403,8 +403,8 @@ class Device:
             "image_height" : self.image_height,
             "image_width" : self.image_width,
             "batch_size" : self.batch_size,
-            "accuracy" : history.history['acc'],
-            "val_accuracy" : history.history['val_acc'],
+            "accuracy" : history.history['accuracy'],
+            "val_accuracy" : history.history['val_accuracy'],
             "loss" : history.history['loss'],
             "val_loss" : history.history['val_loss']
 
