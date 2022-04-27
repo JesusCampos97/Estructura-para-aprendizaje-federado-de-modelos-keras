@@ -224,7 +224,7 @@ class Device:
         labels=[]
         dst_dir = self.path_dataset+"/allDataset"
         for filename in enumerate(os.listdir(dst_dir)):
-            labels.append(self.path_dataset+"/allDataset"+filename[1])
+            labels.append(self.path_dataset+"/allDataset/"+filename[1])
 
         print(labels)
         print("----------------------")

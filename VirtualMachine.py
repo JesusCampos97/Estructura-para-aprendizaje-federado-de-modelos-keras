@@ -18,7 +18,7 @@ model_type = 4 -> MobileNetV2
 """
 
 def processImages(path_dataset):
-    filepath = path_dataset+'/allDataset'
+    filepath = path_dataset+'/allDataset/'
     for i in tqdm(range(len(os.listdir(filepath)))):
         pic_path = filepath + os.listdir(filepath)[i]
         pic = PIL.Image.open(pic_path)
@@ -66,7 +66,7 @@ if __name__ == "__main__":
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             shutil.copy(jpgfile, dst_dir)
 
-    processImages(path_dataset)
+        processImages(path_dataset)
 
     end_dataset_renames = time.time()
 
