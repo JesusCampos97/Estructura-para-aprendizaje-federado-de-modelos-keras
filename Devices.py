@@ -33,7 +33,7 @@ class Device:
             path: Ruta donde se guarda cada dispositivo
             data_percentage: Cantidad de datos que utilizará de nuestro dataset 
     """
-    def __init__(self, number, path, path_dataset, data_percentage, train_percentage, model_type, epochs, image_height, image_width, batch_size):
+    def __init__(self, number, path, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size):
         self.number = number
         random.seed(number)
         self.path = path
@@ -47,6 +47,7 @@ class Device:
         self.image_height = image_height
         self.image_width = image_width
         self.batch_size = batch_size
+        self.steps_per_epoch = steps_per_epoch
         print("Termina init")
         warnings.filterwarnings('ignore')
 
@@ -91,9 +92,9 @@ class Device:
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
         print("modleo compilado")
         with tf.device('/device:GPU:0'):
-            history = model.fit_generator(train_generator, 
-                            validation_data=validation_generator, 
-                            epochs=self.epochs)
+            history = model.fit(train_generator, 
+                            validation_data = validation_generator, 
+                            epochs = self.epochs, steps_per_epoch = self.steps_per_epoch) #model.fit_generator
 
         model.save(self.path+"/model.h5")
         print("modelo guardado")
@@ -131,10 +132,8 @@ class Device:
             labels.append(filename[1])
 
         num=len(labels)
-        print(num)
         random.shuffle(labels)
         final=int(num*self.train_percentage) #se usa un 80 para train y un 20 para test de forma normal
-        print(final)
         train= labels[:final]
         test= labels[final:]
 
@@ -225,11 +224,15 @@ class Device:
         elif self.model_type==3:
             #Cargamos ResNet50
             return ResNet50(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+        elif self.model_type==4:
+            #Cargamos ResNet50
+            return MobileNetV2(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+            
 
     def plotHistory(self, history):
 
-        plt.plot(history.history['accuracy'])
-        plt.plot(history.history['val_accuracy'])
+        plt.plot(history.history['acc'])
+        plt.plot(history.history['val_acc'])
         plt.title('model accuracy')
         plt.ylabel('accuracy')
         plt.xlabel('epoch')
@@ -257,7 +260,11 @@ class Device:
             "image_height" : self.image_height,
             "image_width" : self.image_width,
             "batch_size" : self.batch_size,
-            "accuracy" : history.history['accuracy']
+            "accuracy" : history.history['acc'],
+            "val_accuracy" : history.history['val_acc'],
+            "loss" : history.history['loss'],
+            "val_loss" : history.history['val_loss']
+
         }
         # Serializing json 
         json_object = json.dumps(dictionary, indent = 4)

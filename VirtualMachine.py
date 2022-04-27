@@ -10,6 +10,7 @@ from Devices import Device
 model_type = 1 -> VGG16
 model_type = 2 -> InceptionV3
 model_type = 3 -> ResNet50
+model_type = 4 -> MobileNetV2
 
 """
 
@@ -23,10 +24,10 @@ if __name__ == "__main__":
     path_dataset="/datasets" #path donde se encuentra el dataset descomprimido
     model_type=1 #Se debera de pasar por parametros
     epochs=2 #Se debera de pasar por parametros
-    image_height = 224
-    image_width = 224
-    batch_size=32
-
+    image_height = 224#156
+    image_width = 224#156
+    batch_size = 25
+    steps_per_epoch = 6
     dataset_rename = False
 
     #Creo las carpetas de los datasets y los renombro
@@ -70,7 +71,7 @@ if __name__ == "__main__":
         print("Ejecuta un dispositivo")
         path_param=new_path+"/d"+str(i)
         os.mkdir(path_param)
-        device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, image_height, image_width, batch_size)
+        device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size)
         device.execute()
         
 
