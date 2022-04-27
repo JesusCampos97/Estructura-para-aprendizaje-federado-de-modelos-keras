@@ -78,17 +78,7 @@ class Device:
         train_generator, validation_generator= self.loadValidationDatasets(train_set, val_set)
         print("train generador cargado")
         model=self.loadModelType()
-        print("modelo cargado")
-        for layer in model.layers:
-            layer.trainable = False
-
-        # add new classifier layers
-        flat1 = Flatten()(model.layers[-1].output)
-        class1 = Dense(512, activation='relu')(flat1)
-        output = Dense(2, activation='softmax')(class1)
-
-        #output = Flatten()(output)
-        model = Model(inputs=model.inputs, outputs=output)
+        
         # summarize
         model.summary()
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
@@ -374,8 +364,8 @@ class Device:
 
     def plotHistory(self, history):
 
-        plt.plot(history.history['acc'])
-        plt.plot(history.history['val_acc'])
+        plt.plot(history.history['accuracy'])
+        plt.plot(history.history['val_accuracy'])
         plt.title('model accuracy')
         plt.ylabel('accuracy')
         plt.xlabel('epoch')
