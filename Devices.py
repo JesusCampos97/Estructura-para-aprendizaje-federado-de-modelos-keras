@@ -81,7 +81,7 @@ class Device:
         model.summary()
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
         print("modleo compilado")
-        tf.keras.clear_session()
+        tf.compat.v1.reset_default_graph()
         with tf.device('/device:CPU:0'):
             history = model.fit(train_generator, 
                             validation_data = validation_generator, 
@@ -113,7 +113,7 @@ class Device:
         model.summary()
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
         print("modelo compilado")
-        tf.keras.clear_session()
+        tf.compat.v1.reset_default_graph()
         with tf.device('/device:CPU:0'):
             history = model.fit(train_generator, 
                             validation_data = validation_generator, 
