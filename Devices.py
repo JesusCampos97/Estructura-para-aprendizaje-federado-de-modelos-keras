@@ -203,7 +203,7 @@ class Device:
         labels=[]
         dst_dir = self.path_dataset+"/allDataset"
         for filename in enumerate(os.listdir(dst_dir)):
-            labels.append(self.path_dataset+"/allDataset/"+filename[1])
+            labels.append(filename[1])
 
         num=len(labels)
         random.shuffle(labels)
@@ -271,7 +271,7 @@ class Device:
 
         train_generator = train_gen.flow_from_dataframe(
             dataframe = train_set,
-            #directory = destination + '/train/',
+            directory = self.path_dataset + '/allDataset/',
             x_col = 'file',
             y_col = 'labels',
             class_mode = 'categorical',#binary
@@ -281,7 +281,7 @@ class Device:
 
         validation_generator = val_gen.flow_from_dataframe(
             dataframe = val_set,
-            #directory = destination + '/train/',
+            directory = self.path_dataset + '/allDataset/',
             x_col = 'file',
             y_col = 'labels',
             class_mode = 'categorical',
