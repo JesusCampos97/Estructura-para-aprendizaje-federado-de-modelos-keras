@@ -226,8 +226,6 @@ class Device:
         for filename in enumerate(os.listdir(dst_dir)):
             labels.append(self.path_dataset+"/allDataset/"+filename[1])
 
-        print(labels)
-        print("----------------------")
         num=len(labels)
         random.shuffle(labels)
         num_max_labels=int(num*self.train_percentage) #se usa un 80 para train y un 20 para test de forma normal
@@ -241,7 +239,7 @@ class Device:
         labelsData = []
         binary_labelsData=[]
 
-        for i in os.listdir(self.path_dataset+'/allDataset'):
+        for i in train:
             if 'crosswalk' in i:
                 labelsData.append('crosswalk')
                 binary_labelsData.append(1)
@@ -253,6 +251,8 @@ class Device:
         trainData['labels'] = labelsData
         trainData['binary_labels'] = binary_labelsData
         testData = pd.DataFrame({'file': test})
+
+        trainData.head(10)
 
         return trainData, testData
 

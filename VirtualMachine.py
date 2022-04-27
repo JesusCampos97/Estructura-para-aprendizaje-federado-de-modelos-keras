@@ -66,7 +66,7 @@ if __name__ == "__main__":
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             shutil.copy(jpgfile, dst_dir)
 
-        processImages(path_dataset)
+    processImages(path_dataset)
 
     end_dataset_renames = time.time()
 
