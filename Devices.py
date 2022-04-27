@@ -195,6 +195,7 @@ class Device:
         trainData['labels'] = labelsData
         trainData['binary_labels'] = binary_labelsData
         testData = pd.DataFrame({'file': os.listdir(self.path+'/tmp/test')})
+        print(trainData)
 
         return trainData, testData
 
@@ -212,7 +213,7 @@ class Device:
         test = labels[num_max_labels:]
 
         print("Num imagenes train "+str(len(train)))
-        print("Num imagenes train "+str(len(test)))
+        print("Num imagenes test "+str(len(test)))
 
         trainData = pd.DataFrame({'file': train})
         labelsData = []
@@ -230,7 +231,7 @@ class Device:
         trainData['labels'] = labelsData
         trainData['binary_labels'] = binary_labelsData
         testData = pd.DataFrame({'file': test})
-
+        print(trainData)
         trainData.head(10)
 
         return trainData, testData
@@ -390,7 +391,7 @@ class Device:
         # Writing to sample.json
         with open(self.path+"config.json", "w") as outfile:
             outfile.write(json_object)
-            
+
         hist_df = pd.DataFrame(history.history) 
         hist_json_file = 'history.json' 
         with open(hist_json_file, mode='w') as f:

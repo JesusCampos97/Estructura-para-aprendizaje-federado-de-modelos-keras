@@ -96,10 +96,11 @@ if __name__ == "__main__":
         end_device_execute = time.time()
         print("El tiempo en ejecutar el device"+str(i)+" es : "+str(end_device_execute-start_device_execute))
 
+    server = Server(new_path)
+    server.merge()
 
     """
-        server = Server(new_path)
-        server.merge()
+        
 
         ya el server ha temrinado, me ha generado un modelo
         y ahora cada modelo evalua el nuevo modelo y se queda con su accuracy

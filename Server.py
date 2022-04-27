@@ -128,3 +128,6 @@ class Server():
             # summarize the created model
             #el modelo resultante lo guardo en el path
             new_model.summary()
+
+        new_model.save(pathp+"/model_merged.h5")
+        print("modelo guardado")
