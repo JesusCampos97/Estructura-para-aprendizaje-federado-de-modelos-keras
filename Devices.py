@@ -389,11 +389,11 @@ class Device:
         json_object = json.dumps(dictionary, indent = 4)
         
         # Writing to sample.json
-        with open(self.path+"config.json", "w") as outfile:
+        with open(self.path+"/config.json", "w") as outfile:
             outfile.write(json_object)
 
         hist_df = pd.DataFrame(history.history) 
-        hist_json_file = 'history.json' 
+        hist_json_file = self.path+'/history.json' 
         with open(hist_json_file, mode='w') as f:
             hist_df.to_json(f)
 
