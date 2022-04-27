@@ -93,7 +93,7 @@ class Device:
         model.summary()
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
         print("modleo compilado")
-        with tf.device('/device:GPU:0'):
+        with tf.device('/device:TPU:0'):
             history = model.fit(train_generator, 
                             validation_data = validation_generator, 
                             epochs = self.epochs, steps_per_epoch = self.steps_per_epoch) #model.fit_generator
