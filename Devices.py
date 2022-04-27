@@ -68,8 +68,8 @@ class Device:
         print("dataimages cargadas")
         trainData.head()
         testData.head()
-        print("Se van a procesar imagenes")
-        self.processImages()
+        #print("Se van a procesar imagenes")
+        #self.processImages()
         print("imagenes procesadas")
         train_set, val_set = train_test_split(trainData,
                                             test_size=0.1)
