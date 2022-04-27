@@ -382,8 +382,7 @@ class Device:
             "epochs" : self.epochs,
             "image_height" : self.image_height,
             "image_width" : self.image_width,
-            "batch_size" : self.batch_size,
-            "history" : json.dump(history.history)
+            "batch_size" : self.batch_size
         }
         # Serializing json 
         json_object = json.dumps(dictionary, indent = 4)
@@ -391,6 +390,12 @@ class Device:
         # Writing to sample.json
         with open(self.path+"config.json", "w") as outfile:
             outfile.write(json_object)
+            
+        hist_df = pd.DataFrame(history.history) 
+        hist_json_file = 'history.json' 
+        with open(hist_json_file, mode='w') as f:
+            hist_df.to_json(f)
+
 
     def deleteTempFiles(self):
         files = glob.glob(self.path+"/tmp/**/*.jpg", recursive=True)
