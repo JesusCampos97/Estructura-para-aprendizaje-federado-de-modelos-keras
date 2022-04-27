@@ -35,9 +35,9 @@ if __name__ == "__main__":
     path_dataset="/datasets" #path donde se encuentra el dataset descomprimido
     model_type=1 #Se debera de pasar por parametros
     epochs=2 #Se debera de pasar por parametros
-    image_height = 156 #224
-    image_width = 156 #224
-    batch_size = 25
+    image_height = 128 #224
+    image_width = 128 #224
+    batch_size = 5
     steps_per_epoch = 6
     dataset_rename = False
 
@@ -66,7 +66,7 @@ if __name__ == "__main__":
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             shutil.copy(jpgfile, dst_dir)
 
-    processImages(path_dataset)
+        processImages(path_dataset)
 
     end_dataset_renames = time.time()
 

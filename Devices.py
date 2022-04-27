@@ -93,7 +93,7 @@ class Device:
         model.summary()
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
         print("modleo compilado")
-        with tf.device('/device:TPU:0'):
+        with tf.device('/device:CPU:0'):
             history = model.fit(train_generator, 
                             validation_data = validation_generator, 
                             epochs = self.epochs, steps_per_epoch = self.steps_per_epoch) #model.fit_generator
@@ -119,21 +119,12 @@ class Device:
         print("train generador cargado")
         model=self.loadModelType()
         print("modelo cargado")
-        for layer in model.layers:
-            layer.trainable = False
-
-        # add new classifier layers
-        flat1 = Flatten()(model.layers[-1].output)
-        class1 = Dense(512, activation='relu')(flat1)
-        output = Dense(2, activation='softmax')(class1)
-
-        #output = Flatten()(output)
-        model = Model(inputs=model.inputs, outputs=output)
+        
         # summarize
         model.summary()
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
-        print("modleo compilado")
-        with tf.device('/device:GPU:0'):
+        print("modelo compilado")
+        with tf.device('/device:CPU:0'):
             history = model.fit(train_generator, 
                             validation_data = validation_generator, 
                             epochs = self.epochs, steps_per_epoch = self.steps_per_epoch) #model.fit_generator
@@ -299,8 +290,6 @@ class Device:
             target_size = (self.image_height,self.image_width),
             batch_size = self.batch_size
         )
-        print(train_set.head())
-        print(train_generator.labels)
 
         validation_generator = val_gen.flow_from_dataframe(
             dataframe = val_set,
@@ -327,16 +316,60 @@ class Device:
     def loadModelType(self):
         if self.model_type==1:
             #Cargamos VGG16
-            return VGG16(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+            model = VGG16(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+            for layer in model.layers:
+                layer.trainable = False
+
+            # add new classifier layers
+            flat1 = Flatten()(model.layers[-1].output)
+            class1 = Dense(512, activation='relu')(flat1)
+            output = Dense(2, activation='softmax')(class1)
+
+            #output = Flatten()(output)
+            model = Model(inputs=model.inputs, outputs=output)
+            return model
         elif self.model_type==2:
             #Cargamos InceptionV3
-            return InceptionV3(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+            model = InceptionV3(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+            for layer in model.layers:
+                layer.trainable = False
+
+            # add new classifier layers
+            flat1 = Flatten()(model.layers[-1].output)
+            class1 = Dense(512, activation='relu')(flat1)
+            output = Dense(2, activation='softmax')(class1)
+
+            #output = Flatten()(output)
+            model = Model(inputs=model.inputs, outputs=output)
+            return model
         elif self.model_type==3:
             #Cargamos ResNet50
-            return ResNet50(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+            model = ResNet50(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+            for layer in model.layers:
+                layer.trainable = False
+
+            # add new classifier layers
+            flat1 = Flatten()(model.layers[-1].output)
+            class1 = Dense(512, activation='relu')(flat1)
+            output = Dense(2, activation='softmax')(class1)
+
+            #output = Flatten()(output)
+            model = Model(inputs=model.inputs, outputs=output)
+            return model
         elif self.model_type==4:
-            #Cargamos ResNet50
-            return MobileNetV2(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+            #Cargamos MobileNetV2
+            model = MobileNetV2(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+            for layer in model.layers:
+                layer.trainable = False
+
+            # add new classifier layers
+            flat1 = Flatten()(model.layers[-1].output)
+            class1 = Dense(512, activation='relu')(flat1)
+            output = Dense(2, activation='softmax')(class1)
+
+            #output = Flatten()(output)
+            model = Model(inputs=model.inputs, outputs=output)
+            return model
             
 
     def plotHistory(self, history):
