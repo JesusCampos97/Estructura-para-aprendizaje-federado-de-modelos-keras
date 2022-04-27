@@ -5,6 +5,8 @@ import glob
 from Server import Server
 from Devices import Device
 import time
+import PIL
+from tqdm import tqdm
 
 """
 
@@ -14,6 +16,14 @@ model_type = 3 -> ResNet50
 model_type = 4 -> MobileNetV2
 
 """
+
+def processImages(path_dataset):
+    filepath = path_dataset+'/allDataset'
+    for i in tqdm(range(len(os.listdir(filepath)))):
+        pic_path = filepath + os.listdir(filepath)[i]
+        pic = PIL.Image.open(pic_path)
+        pic_sharp = pic.filter(PIL.ImageFilter.UnsharpMask(radius=2, percent=100))
+        pic_sharp.save(pic_path)
 
 if __name__ == "__main__":
 
@@ -56,6 +66,8 @@ if __name__ == "__main__":
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             shutil.copy(jpgfile, dst_dir)
 
+    processImages(path_dataset)
+
     end_dataset_renames = time.time()
 
     print("El tiempo en rejecutar el renamed es: "+str(end_dataset_renames-start_dataset_renames))
@@ -80,7 +92,7 @@ if __name__ == "__main__":
         os.mkdir(path_param)
         start_device_execute = time.time()
         device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size)
-        device.execute()
+        device.execute_new()
         end_device_execute = time.time()
         print("El tiempo en ejecutar el device"+str(i)+" es : "+str(end_device_execute-start_device_execute))
 

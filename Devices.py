@@ -18,6 +18,8 @@ import warnings
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.applications.inception_v3 import InceptionV3
 from tensorflow.keras.applications.resnet50 import ResNet50
+from tensorflow.keras.applications.mobilenetv2 import MobileNetV2
+
 
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense
@@ -60,7 +62,7 @@ class Device:
     """
     def execute(self):
         print("Comienza execute")
-        train,test = self.loadDataIntoPaths()
+        train, test = self.loadDataIntoPaths()
         print("loaddataintopaths cargado")
         trainData, testData = self.loadDataImages()
         print("dataimages cargadas")
@@ -101,6 +103,47 @@ class Device:
         self.plotHistory(history)
         self.saveConfig(history)
         self.deleteTempFiles()
+
+    def execute_new(self):
+        print("Comienza execute")
+        trainData, testData = self.loadDataImages_new()
+        print("dataimages cargadas")
+        trainData.head()
+        testData.head()
+        print("imagenes procesadas")
+        train_set, val_set = train_test_split(trainData,
+                                            test_size=0.1)
+        print("validation split realizado")
+        print(len(train_set), len(val_set))
+        train_generator, validation_generator= self.loadValidationDatasets_new(train_set, val_set)
+        print("train generador cargado")
+        model=self.loadModelType()
+        print("modelo cargado")
+        for layer in model.layers:
+            layer.trainable = False
+
+        # add new classifier layers
+        flat1 = Flatten()(model.layers[-1].output)
+        class1 = Dense(512, activation='relu')(flat1)
+        output = Dense(2, activation='softmax')(class1)
+
+        #output = Flatten()(output)
+        model = Model(inputs=model.inputs, outputs=output)
+        # summarize
+        model.summary()
+        model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
+        print("modleo compilado")
+        with tf.device('/device:GPU:0'):
+            history = model.fit(train_generator, 
+                            validation_data = validation_generator, 
+                            epochs = self.epochs, steps_per_epoch = self.steps_per_epoch) #model.fit_generator
+
+        model.save(self.path+"/model.h5")
+        print("modelo guardado")
+        self.plotHistory(history)
+        self.saveConfig(history)
+        self.deleteTempFiles()
+
 
     def loadDataIntoPaths(self):
         src_dir = self.path_dataset+"/dataset negativo/"
@@ -169,10 +212,47 @@ class Device:
                 labelsData.append('road')
                 binary_labelsData.append(0)
 
-        print(labelsData)
+        print("La clase 0 es: "+labelsData[0])
         trainData['labels'] = labelsData
         trainData['binary_labels'] = binary_labelsData
         testData = pd.DataFrame({'file': os.listdir(self.path+'/tmp/test')})
+
+        return trainData, testData
+
+    def loadDataImages_new(self):
+
+        labels=[]
+        dst_dir = self.path_dataset+"/allDataset"
+        for filename in enumerate(os.listdir(dst_dir)):
+            labels.append(self.path_dataset+"/allDataset"+filename[1])
+
+        print(labels)
+        print("----------------------")
+        num=len(labels)
+        random.shuffle(labels)
+        num_max_labels=int(num*self.train_percentage) #se usa un 80 para train y un 20 para test de forma normal
+        train = labels[:num_max_labels]
+        test = labels[num_max_labels:]
+
+        print("Num imagenes train "+str(len(train)))
+        print("Num imagenes train "+str(len(test)))
+
+        trainData = pd.DataFrame({'file': train})
+        labelsData = []
+        binary_labelsData=[]
+
+        for i in os.listdir(self.path_dataset+'/allDataset'):
+            if 'crosswalk' in i:
+                labelsData.append('crosswalk')
+                binary_labelsData.append(1)
+            else:
+                labelsData.append('road')
+                binary_labelsData.append(0)
+
+        print("La clase 0 es: "+labelsData[0])
+        trainData['labels'] = labelsData
+        trainData['binary_labels'] = binary_labelsData
+        testData = pd.DataFrame({'file': test})
 
         return trainData, testData
 
@@ -206,6 +286,35 @@ class Device:
 
         return train_generator,validation_generator
 
+    def loadValidationDatasets_new(self, train_set, val_set):
+        train_gen = ImageDataGenerator(rescale=1./255)
+        val_gen = ImageDataGenerator(rescale=1./255)
+
+        train_generator = train_gen.flow_from_dataframe(
+            dataframe = train_set,
+            #directory = destination + '/train/',
+            x_col = 'file',
+            y_col = 'labels',
+            class_mode = 'categorical',#binary
+            target_size = (self.image_height,self.image_width),
+            batch_size = self.batch_size
+        )
+        print(train_set.head())
+        print(train_generator.labels)
+
+        validation_generator = val_gen.flow_from_dataframe(
+            dataframe = val_set,
+            #directory = destination + '/train/',
+            x_col = 'file',
+            y_col = 'labels',
+            class_mode = 'categorical',
+            target_size = (self.image_height,self.image_width),
+            batch_size = self.batch_size,
+            shuffle = False
+        )
+
+        return train_generator,validation_generator
+
     def processImages(self):
         filepath = self.path+'/tmp/train/'
         for i in tqdm(range(len(os.listdir(filepath)))):
@@ -213,6 +322,7 @@ class Device:
             pic = PIL.Image.open(pic_path)
             pic_sharp = pic.filter(PIL.ImageFilter.UnsharpMask(radius=2, percent=100))
             pic_sharp.save(pic_path)
+
 
     def loadModelType(self):
         if self.model_type==1:
