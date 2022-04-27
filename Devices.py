@@ -18,7 +18,7 @@ import warnings
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.applications.inception_v3 import InceptionV3
 from tensorflow.keras.applications.resnet50 import ResNet50
-from tensorflow.keras.applications.mobilenetv2 import MobileNetV2
+from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2
 
 
 from tensorflow.keras.models import Model

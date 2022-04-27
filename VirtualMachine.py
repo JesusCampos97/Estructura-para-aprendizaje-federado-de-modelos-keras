@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
     end_dataset_renames = time.time()
 
-    print("El tiempo en rejecutar el renamed es: "+str(end_dataset_renames-start_dataset_renames))
+    print("El tiempo en ejecutar el renamed es: "+str(end_dataset_renames-start_dataset_renames))
 
     if(os.path.isdir(path_devices+str(num_devices))==False):
         os.mkdir(path_devices+str(num_devices))
