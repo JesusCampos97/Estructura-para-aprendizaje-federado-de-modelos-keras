@@ -92,7 +92,7 @@ if __name__ == "__main__":
         os.mkdir(path_param)
         start_device_execute = time.time()
         device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size)
-        device.execute()
+        device.execute_new()
         end_device_execute = time.time()
         print("El tiempo en ejecutar el device"+str(i)+" es : "+str(end_device_execute-start_device_execute))
 

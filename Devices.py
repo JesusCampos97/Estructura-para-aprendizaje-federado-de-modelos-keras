@@ -68,8 +68,6 @@ class Device:
         print("dataimages cargadas")
         trainData.head()
         testData.head()
-        #print("Se van a procesar imagenes")
-        #self.processImages()
         print("imagenes procesadas")
         train_set, val_set = train_test_split(trainData,
                                             test_size=0.1)
@@ -294,14 +292,6 @@ class Device:
 
         return train_generator,validation_generator
 
-    def processImages(self):
-        filepath = self.path+'/tmp/train/'
-        for i in tqdm(range(len(os.listdir(filepath)))):
-            pic_path = filepath + os.listdir(filepath)[i]
-            pic = PIL.Image.open(pic_path)
-            pic_sharp = pic.filter(PIL.ImageFilter.UnsharpMask(radius=2, percent=100))
-            pic_sharp.save(pic_path)
-
 
     def loadModelType(self):
         if self.model_type==1:
@@ -382,7 +372,7 @@ class Device:
 
     def saveConfig(self, history):
         # Data to be written
-        dictionary ={
+        dictionary = {
             "number" : self.number,
             "path" : self.path,
             "path_dataset" : self.path_dataset,
@@ -393,11 +383,7 @@ class Device:
             "image_height" : self.image_height,
             "image_width" : self.image_width,
             "batch_size" : self.batch_size,
-            "accuracy" : history.history['accuracy'],
-            "val_accuracy" : history.history['val_accuracy'],
-            "loss" : history.history['loss'],
-            "val_loss" : history.history['val_loss']
-
+            "history" : json.dump(history.history)
         }
         # Serializing json 
         json_object = json.dumps(dictionary, indent = 4)
@@ -425,7 +411,6 @@ class Device:
         trainData, testData = self.loadDataImages()
         trainData.head()
         testData.head()
-        self.processImages()
 
         train_set, val_set = train_test_split(trainData,
                                             test_size=0.1)
