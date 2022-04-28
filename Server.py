@@ -9,9 +9,9 @@ from tensorflow.keras.models import clone_model
 from math import exp
 from numpy import array
 
-class Server():
+class Server:
 
-    def weight_scalling_factor(clients_trn_data, client_name):
+    def weight_scalling_factor(self, clients_trn_data, client_name):
         client_names = list(clients_trn_data.keys())
         #get the bs
         bs = list(clients_trn_data[client_name])[0][0].shape[0]
@@ -22,7 +22,7 @@ class Server():
         return local_count/global_count
 
 
-    def scale_model_weights(weight, scalar):
+    def scale_model_weights(self, weight, scalar):
         '''function for scaling a models weights'''
         weight_final = []
         steps = len(weight)
@@ -32,7 +32,7 @@ class Server():
 
 
 
-    def sum_scaled_weights(scaled_weight_list):
+    def sum_scaled_weights(self, scaled_weight_list):
         #Return the sum of the listed scaled weights. The is equivalent to scaled avg of the weights
         avg_grad = []
         #get the average grad accross all client gradients
@@ -52,7 +52,7 @@ class Server():
         return acc, loss'''
 
     # create a model from the weights of multiple models
-    def model_weight_ensemble(members, weights):
+    def model_weight_ensemble(self, members, weights):
         # determine how many layers need to be averaged
         n_layers = len(members[0].get_weights())
         # create an set of average model weights
@@ -72,7 +72,7 @@ class Server():
         return model
 
     # create a model from the weights of multiple models
-    def model_weight_ensemble_2(members, weights):
+    def model_weight_ensemble_2(self, members, weights):
         # determine how many layers need to be averaged
         n_layers = len(members[0].get_weights())
         # create an set of average model weights
@@ -91,14 +91,16 @@ class Server():
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         return model
 
-    def merge(self,pathp):
+    def merge(self, pathp):
         #cojo todos los device dese path con el len del folder
         #me meto todos los modelos en un array
         ListDevices = []
 
-        for file in os.listdir(pathp):
-            if file.endswith(".tflite"):
+        i=0
+        for file in os.listdir(pathp+"/d"+str(i)):
+            if file.endswith(".h5"):
                 ListDevices.append(Devices(file))
+                i+=1
         
         #ejecuto el merge que hay en colab
         modelA = tf.keras.models.load_model('/modelo_vgg16_epoch_2.h5')

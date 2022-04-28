@@ -96,8 +96,8 @@ if __name__ == "__main__":
         end_device_execute = time.time()
         print("El tiempo en ejecutar el device"+str(i)+" es : "+str(end_device_execute-start_device_execute))
 
-    server = Server(new_path)
-    server.merge()
+    server = Server()
+    server.merge(new_path)
 
     """
         

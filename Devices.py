@@ -125,7 +125,7 @@ class Device:
         print("modelo guardado")
         self.plotHistory(history)
         self.saveConfig(history)
-        self.deleteTempFiles()
+        #self.deleteTempFiles()
 
 
     def loadDataIntoPaths(self):
@@ -367,7 +367,9 @@ class Device:
         plt.xlabel('epoch')
         plt.legend(['train', 'val'], loc='upper left')
         plt.savefig(self.path+'/accuracy.png')
-
+        print("*****")
+        print(history.history)
+        print("*****")
         plt.plot(history.history['loss'])
         plt.plot(history.history['val_loss'])
         plt.title('model loss')
