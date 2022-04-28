@@ -37,7 +37,7 @@ if __name__ == "__main__":
     epochs=2 #Se debera de pasar por parametros
     image_height = 256 #224
     image_width = 256 #224
-    batch_size = 10
+    batch_size = 5
     steps_per_epoch = 10
     dataset_rename = False
 

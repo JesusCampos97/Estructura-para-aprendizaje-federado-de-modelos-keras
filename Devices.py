@@ -26,6 +26,7 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import Flatten
 from matplotlib import pyplot as plt
 import json
+from sklearn.preprocessing import LabelEncoder
 
 
 ##FALTA POR PONER LA CLASE 0 Y 1 QUE ES DEPENDIENDO D ELO QUE HAA EN EL DATASET DE INICIO
@@ -97,11 +98,12 @@ class Device:
         print("Comienza execute")
         trainData, testData = self.loadDataImages_new()
         print("dataimages cargadas")
-        trainData.head()
+        print(trainData.head(10))
         testData.head()
         print("imagenes procesadas")
         train_set, val_set = train_test_split(trainData,
                                             test_size=0.1)
+        print(train_set.head(10))
         print("validation split realizado")
         print(len(train_set), len(val_set))
         train_generator, validation_generator= self.loadValidationDatasets_new(train_set, val_set)
@@ -117,7 +119,7 @@ class Device:
         with tf.device('/device:CPU:0'):
             history = model.fit(train_generator, 
                             validation_data = validation_generator, 
-                            epochs = self.epochs, steps_per_epoch = self.steps_per_epoch) #model.fit_generator
+                            epochs = self.epochs, steps_per_epoch = int(len(train_generator)/self.batch_size)) #model.fit_generator
 
         model.save(self.path+"/model.h5")
         print("modelo guardado")
@@ -202,6 +204,7 @@ class Device:
         return trainData, testData
 
     def loadDataImages_new(self):
+        #Aqui hay que cmabiar al forma de trabajar. La clase 0 tiene que ser siempre la misma... si no cascará al mergear 2 modelos siempre.... es decir no irá bien
 
         labels=[]
         dst_dir = self.path_dataset+"/allDataset"
