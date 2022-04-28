@@ -40,8 +40,10 @@ class Device:
         self.number = number
         random.seed(number)
         self.path = path
-        os.mkdir(path+"/tmp")
-        os.mkdir(path+"/tmp/allDataset")
+        if(os.path.isdir(path+"/tmp")==False):
+                os.mkdir(path+"/tmp")
+        if(os.path.isdir(path+"/tmp/allDataset")==False):
+                os.mkdir(path+"/tmp/allDataset")
         self.path_dataset = path_dataset
         self.data_percentage = data_percentage
         self.train_percentage = train_percentage
@@ -431,6 +433,21 @@ class Device:
         train_generator, _ = self.loadValidationDatasets(train_set, val_set)
 
         model=tf.keras.models.load_model(self.path+'/model.h5')
+        model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
+        results = model.evaluate(train_generator)
+        print(results)
+        
+    def evaluate_new(self, path):
+        trainData, testData = self.loadDataImages_new()
+        trainData.head()
+        testData.head()
+
+        train_set, val_set = train_test_split(trainData,
+                                            test_size=0.1)
+        print(len(train_set), len(val_set))
+        train_generator, _ = self.loadValidationDatasets_new(train_set, val_set)
+
+        model=tf.keras.models.load_model(path)
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
         results = model.evaluate(train_generator)
         print(results)

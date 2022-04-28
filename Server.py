@@ -95,25 +95,34 @@ class Server:
         #cojo todos los device dese path con el len del folder
         #me meto todos los modelos en un array
         ListDevices = []
+        
+        list_devices = os.listdir(pathp+"/") # dir is your directory path
+        num_devices = len(list_devices)
+        print("num devices "+str(num_devices))
+        for i in range(num_devices):
+            for file in os.listdir(pathp+"/d"+str(i)):
+                if file.endswith(".h5"):
+                    path_aux=pathp+"/d"+str(i)+"/"+file
+                    print(path_aux)
+                    model_aux=tf.keras.models.load_model(path_aux)
+                    model_aux.summary()
+                    ListDevices.append(model_aux)
 
-        i=0
-        for file in os.listdir(pathp+"/d"+str(i)):
-            if file.endswith(".h5"):
-                ListDevices.append(Devices(file))
-                i+=1
+                
+        print(ListDevices)
         
         #ejecuto el merge que hay en colab
-        modelA = tf.keras.models.load_model('/modelo_vgg16_epoch_2.h5')
+        #modelA = tf.keras.models.load_model('/modelo_vgg16_epoch_2.h5')
         # Check its architecture
-        modelA.summary()
+        #modelA.summary()
         #model_A.get_weights()
 
-        modelB=tf.keras.models.load_model('/modelo_vgg16_epoch_2_80_percentage.h5')
+        #modelB=tf.keras.models.load_model('/modelo_vgg16_epoch_2_80_percentage.h5')
 
-        model_list=[modelB,modelA]
+        #model_list=[modelB,modelA]
 
         # prepare an array of equal weights
-        n_models = len(model_list)
+        n_models = len(ListDevices) #len(model_list)
         print(n_models)
         mode=1
         if mode==2:
@@ -121,12 +130,12 @@ class Server:
             alpha = 2.0
             weights = [exp(-i/alpha) for i in range(1, n_models+1)]
             print("Tengo weights="+str(weights))
-            new_model = self.model_weight_ensemble_2(model_list, weights)
+            new_model = self.model_weight_ensemble_2(ListDevices, weights)
         else:
             weights = [1/n_models for i in range(1, n_models+1)]
             print("Tengo weights="+str(weights))
             # create a new model with the weighted average of all model weights
-            new_model = self.model_weight_ensemble(model_list, weights)
+            new_model = self.model_weight_ensemble(ListDevices, weights)
             # summarize the created model
             #el modelo resultante lo guardo en el path
             new_model.summary()
