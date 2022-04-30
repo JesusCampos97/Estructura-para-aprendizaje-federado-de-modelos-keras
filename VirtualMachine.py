@@ -129,7 +129,7 @@ if __name__ == "__main__":
     #Se ejecuta el merge
     print("Se empieza a ejecutar el merge")
     server = Server()
-    server.merge("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/28-04-2022 13-31")
+    server.merge(new_path)#("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/28-04-2022 13-31")
 
     evaluate_times=[]
     for i in range(num_devices):
