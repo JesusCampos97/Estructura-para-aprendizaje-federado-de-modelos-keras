@@ -24,6 +24,7 @@ from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import Flatten
+from tensorflow.keras.layers import GlobalAveragePooling2D
 from matplotlib import pyplot as plt
 import json
 from sklearn.preprocessing import LabelEncoder
@@ -309,9 +310,13 @@ class Device:
                 layer.trainable = False
 
             # add new classifier layers
-            flat1 = Flatten()(model.layers[-1].output)
+            """flat1 = Flatten()(model.layers[-1].output)
             class1 = Dense(512, activation='relu')(flat1)
+            output = Dense(2, activation='softmax')(class1)"""
+            x=GlobalAveragePooling2D()(model.layers[-1].output)
+            class1 = Dense(512, activation='relu')(x)
             output = Dense(2, activation='softmax')(class1)
+
 
             #output = Flatten()(output)
             model = Model(inputs=model.inputs, outputs=output)
