@@ -1,0 +1,5 @@
+** Se guarda información de lo que va pasando a modo de historial **
+
+*- 30/04/22 -*
+    Se ha generado un modelo con menos parametros que aparentemente funciona bien. Se tiene que comprobar le mergeo y el accuracy
+    

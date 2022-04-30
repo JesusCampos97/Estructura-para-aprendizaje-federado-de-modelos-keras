@@ -18,6 +18,22 @@ model_type = 4 -> MobileNetV2
 
 """
 
+"""
+    TODO:
+        *Generar un modelo con menos parametros
+        *Reducir el numero de steps para encontrar uno que lo deje en un 80% aprox
+        *Arreglar el plot del "loss" que aparecen mas líneas de las que son
+        *Evaluar con otro dataset que no se hayan tenido en cuenta para los entrenamientos ni test
+        *Validar el modelo con alguna foto viendo que devuelve y tener el script que te diga que clase es -> https://stackoverflow.com/questions/70518659/how-to-get-label-prediction-of-binary-image-classification-from-tensorflow o  https://machinelearningmastery.com/how-to-use-transfer-learning-when-developing-convolutional-neural-network-models/
+            yhat = model.predict(image)
+            # convert the probabilities to class labels
+            label = decode_predictions(yhat)
+            # retrieve the most likely result, e.g. highest probability
+            label = label[0][0]
+            print('%s (%.2f%%)' % (label[1], label[2]*100)) -> XXX (YY.YY%)
+
+        *Generar los modelos de los demás tipos posibles
+"""
 def processImages(path_dataset):
     filepath = path_dataset+'/allDataset/'
     for i in tqdm(range(len(os.listdir(filepath)))):
