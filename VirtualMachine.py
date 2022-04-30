@@ -118,7 +118,7 @@ if __name__ == "__main__":
     dictionary = {
         "execute_total_time_seconds" : execute_total_time
     }
-    with open("config.json", "r+") as file:
+    with open(new_path+"/config.json", "r+") as file:
         data = json.load(file)
         data.update(dictionary)
         file.seek(0)

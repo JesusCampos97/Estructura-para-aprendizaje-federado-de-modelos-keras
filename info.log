@@ -2,4 +2,6 @@
 
 *- 30/04/22 -*
     Se ha generado un modelo con menos parametros que aparentemente funciona bien. Se tiene que comprobar le mergeo y el accuracy
-    
+    D0 -> acc 0.8821 y val_acc 0.9633% loss 0.2977 y val_loss 0.2373
+    D1 -> acc 0.8918 y val_acc 0.8991 loss 0.29774 y val_loss 0.22
+    MERGED -> acc y val_acc
