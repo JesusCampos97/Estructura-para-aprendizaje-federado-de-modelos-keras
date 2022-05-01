@@ -151,6 +151,7 @@ if __name__ == "__main__":
         data.update(dictionary)
         file.seek(0)
         json.dump(data, file)
+        
     print(str(num_devices)+" dispositivos han tardado en evaluarse un total de: "+str(execute_total_time)+" segundos")
 
 
