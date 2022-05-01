@@ -21,7 +21,6 @@ model_type = 4 -> MobileNetV2
 """
     TODO:
         *Reducir el numero de steps para encontrar uno que lo deje en un 80% aprox
-        *Arreglar el plot del "loss" que aparecen mas líneas de las que son
         *Evaluar con otro dataset que no se hayan tenido en cuenta para los entrenamientos ni test
         *Validar el modelo con alguna foto viendo que devuelve y tener el script que te diga que clase es -> https://stackoverflow.com/questions/70518659/how-to-get-label-prediction-of-binary-image-classification-from-tensorflow o  https://machinelearningmastery.com/how-to-use-transfer-learning-when-developing-convolutional-neural-network-models/
             yhat = model.predict(image)
@@ -34,6 +33,7 @@ model_type = 4 -> MobileNetV2
         *Generar los modelos de los demás tipos posibles
         *Dataframe con tablas de resultados
         *Consumo de raspberry
+        *Codigo para que itere n días y coja el modelo que mas le convenga rspecto al ultimo para entrenar
 """
 def processImages(path_dataset):
     filepath = path_dataset+'/allDataset/'
@@ -58,6 +58,8 @@ if __name__ == "__main__":
     batch_size = 5
     steps_per_epoch = 10
     dataset_rename = False
+    num_etapas=2 #Serian 2 días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
+
 
     #Creo las carpetas de los datasets y los renombro
     start_dataset_renames = time.time()
@@ -101,59 +103,64 @@ if __name__ == "__main__":
     if(os.path.isdir(new_path)==False):
         os.mkdir(new_path)
 
-    execute_times=[]
-    #Se crean tantos folders como dispositivos
-    for i in range(num_devices):
-        print("Ejecuta un dispositivo")
-        path_param=new_path+"/d"+str(i)
-        os.mkdir(path_param)
-        start_device_execute = time.time()
-        device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size)
-        device.execute_new()
-        end_device_execute = time.time()
-        total_time=end_device_execute-start_device_execute
-        execute_times.append(total_time)
-        print("El tiempo en ejecutar el device"+str(i)+" es : "+str(total_time))
+    for day in range(num_etapas):
+        print("**** Dia de ejecucion: "+str(day)+" de "+str(num_etapas)+" ****")
+        execute_times=[]
+        #Se crean tantos folders como dispositivos
+        for i in range(num_devices):
+            print("Ejecuta un dispositivo")
+            path_param=new_path+"/d"+str(i)+"_day"+str(day)
+            os.mkdir(path_param)
+            start_device_execute = time.time()
+            device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
+                steps_per_epoch, image_height, image_width, batch_size, day)
+            device.execute_new()
+            end_device_execute = time.time()
+            total_time=end_device_execute-start_device_execute
+            execute_times.append(total_time)
+            print("El tiempo en ejecutar el device"+str(i)+" es : "+str(total_time))
 
-    execute_total_time=sum(execute_times)
-    dictionary = {
-        "execute_total_time_seconds" : execute_total_time
-    }
-    with open(new_path+"/config.json", "r+") as file:
-        data = json.load(file)
-        data.update(dictionary)
-        file.seek(0)
-        json.dump(data, file)
-    print(str(num_devices)+" dispositivos han tardado en ejecutarse un total de: "+str(execute_total_time)+" segundos")
+        execute_total_time=sum(execute_times)
+        dictionary = {
+            "execute_total_time_seconds" : execute_total_time
+        }
+        with open(new_path+"/config.json", "r+") as file:
+            data = json.load(file)
+            data.update(dictionary)
+            file.seek(0)
+            json.dump(data, file)
+        print(str(num_devices)+" dispositivos han tardado en ejecutarse un total de: "+str(execute_total_time)+" segundos")
 
-    
-    #Se ejecuta el merge
-    print("Se empieza a ejecutar el merge")
-    server = Server()
-    server.merge(new_path)#("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/28-04-2022 13-31")
-
-    evaluate_times=[]
-    for i in range(num_devices):
-        print("Ejecuta un dispositivo")
-        path_param=new_path+"/d"+str(i)
-        start_device_evaluate = time.time()
-        device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size)
-        device.evaluate_new(new_path)
-        end_device_evaluate = time.time()
-        total_ev_time=end_device_evaluate-start_device_evaluate
-        evaluate_times.append(total_ev_time)
-        print("El tiempo en evaluar el device"+str(i)+" es : "+str(total_ev_time))
-
-    dictionary = {
-        "evaluate_total_time_seconds" : evaluate_times
-    }
-    with open("config.json", "r+") as file:
-        data = json.load(file)
-        data.update(dictionary)
-        file.seek(0)
-        json.dump(data, file)
         
-    print(str(num_devices)+" dispositivos han tardado en evaluarse un total de: "+str(execute_total_time)+" segundos")
+        #Se ejecuta el merge
+        print("Se empieza a ejecutar el merge")
+        server = Server()
+        server.merge(new_path)#("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/28-04-2022 13-31")
+
+        evaluate_times=[]
+        for i in range(num_devices):
+            print("Ejecuta un dispositivo")
+            path_param=new_path+"/d"+str(i)+"_day"+str(day)
+            start_device_evaluate = time.time()
+            device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
+                steps_per_epoch, image_height, image_width, batch_size, day)
+            device.evaluate_new(new_path+"/model_merged.h5")
+            end_device_evaluate = time.time()
+            total_ev_time=end_device_evaluate-start_device_evaluate
+            evaluate_times.append(total_ev_time)
+            print("El tiempo en evaluar el device"+str(i)+" es : "+str(total_ev_time))
+
+        dictionary = {
+            "evaluate_total_time_seconds" : evaluate_times
+        }
+        with open("config"+str(day)+".json", "r+") as file:
+            data = json.load(file)
+            data.update(dictionary)
+            file.seek(0)
+            json.dump(data, file)
+            
+        print(str(num_devices)+" dispositivos han tardado en evaluarse un total de: "+str(execute_total_time)+" segundos")
+
 
 
     """

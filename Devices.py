@@ -37,9 +37,9 @@ class Device:
             path: Ruta donde se guarda cada dispositivo
             data_percentage: Cantidad de datos que utilizará de nuestro dataset 
     """
-    def __init__(self, number, path, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size):
+    def __init__(self, number, path, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size, day):
         self.number = number
-        random.seed(number)
+        random.seed(number) #number+day d0 -> primer dia seed 0, d1 primer dia seed 1, d0 segundo dia seed 1, d1 segundia dia seed 2 ... y asi siempre es diferente con lo que entrenan.. o no deberia ser eso?
         self.path = path
         if(os.path.isdir(path+"/tmp")==False):
                 os.mkdir(path+"/tmp")
@@ -54,6 +54,7 @@ class Device:
         self.image_width = image_width
         self.batch_size = batch_size
         self.steps_per_epoch = steps_per_epoch
+        self.day = day
         print("Termina init")
         warnings.filterwarnings('ignore')
 
@@ -303,67 +304,81 @@ class Device:
 
 
     def loadModelType(self):
-        if self.model_type==1:
-            #Cargamos VGG16
-            model = VGG16(include_top=False, input_shape=(self.image_height, self.image_width, 3))
-            for layer in model.layers:
-                layer.trainable = False
+        if self.day == 0: #Primera ejecución nos descargamos el model
+            if self.model_type==1:
+                #Cargamos VGG16
+                model = VGG16(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+                for layer in model.layers:
+                    layer.trainable = False
 
-            # add new classifier layers
-            """flat1 = Flatten()(model.layers[-1].output)
-            class1 = Dense(512, activation='relu')(flat1)
-            output = Dense(2, activation='softmax')(class1)"""
-            x=GlobalAveragePooling2D()(model.layers[-1].output)
-            class1 = Dense(512, activation='relu')(x)
-            output = Dense(2, activation='softmax')(class1)
+                # add new classifier layers
+                """flat1 = Flatten()(model.layers[-1].output)
+                class1 = Dense(512, activation='relu')(flat1)
+                output = Dense(2, activation='softmax')(class1)"""
+                x=GlobalAveragePooling2D()(model.layers[-1].output)
+                class1 = Dense(512, activation='relu')(x)
+                output = Dense(2, activation='softmax')(class1)
 
 
-            #output = Flatten()(output)
-            model = Model(inputs=model.inputs, outputs=output)
+                #output = Flatten()(output)
+                model = Model(inputs=model.inputs, outputs=output)
+                return model
+            elif self.model_type==2:
+                #Cargamos InceptionV3
+                model = InceptionV3(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+                for layer in model.layers:
+                    layer.trainable = False
+
+                # add new classifier layers
+                """flat1 = Flatten()(model.layers[-1].output)
+                class1 = Dense(512, activation='relu')(flat1)
+                output = Dense(2, activation='softmax')(class1)"""
+                x=GlobalAveragePooling2D()(model.layers[-1].output)
+                class1 = Dense(512, activation='relu')(x)
+                output = Dense(2, activation='softmax')(class1)
+
+                #output = Flatten()(output)
+                model = Model(inputs=model.inputs, outputs=output)
+                return model
+            elif self.model_type==3:
+                #Cargamos ResNet50
+                model = ResNet50(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+                for layer in model.layers:
+                    layer.trainable = False
+
+                # add new classifier layers
+                """flat1 = Flatten()(model.layers[-1].output)
+                class1 = Dense(512, activation='relu')(flat1)
+                output = Dense(2, activation='softmax')(class1)"""
+                x=GlobalAveragePooling2D()(model.layers[-1].output)
+                class1 = Dense(512, activation='relu')(x)
+                output = Dense(2, activation='softmax')(class1)
+
+                #output = Flatten()(output)
+                model = Model(inputs=model.inputs, outputs=output)
+                return model
+            elif self.model_type==4:
+                #Cargamos MobileNetV2
+                model = MobileNetV2(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+                for layer in model.layers:
+                    layer.trainable = False
+
+                # add new classifier layers
+                """flat1 = Flatten()(model.layers[-1].output)
+                class1 = Dense(512, activation='relu')(flat1)
+                output = Dense(2, activation='softmax')(class1)"""
+                x=GlobalAveragePooling2D()(model.layers[-1].output)
+                class1 = Dense(512, activation='relu')(x)
+                output = Dense(2, activation='softmax')(class1)
+
+                #output = Flatten()(output)
+                model = Model(inputs=model.inputs, outputs=output)
+                return model
+        else: #ya llevamos al menos una ejecución, el modelo deberia de entrenar con el que ya tiene
+            model=tf.keras.models.load_model(self.path+'/model.h5')
             return model
-        elif self.model_type==2:
-            #Cargamos InceptionV3
-            model = InceptionV3(include_top=False, input_shape=(self.image_height, self.image_width, 3))
-            for layer in model.layers:
-                layer.trainable = False
 
-            # add new classifier layers
-            flat1 = Flatten()(model.layers[-1].output)
-            class1 = Dense(512, activation='relu')(flat1)
-            output = Dense(2, activation='softmax')(class1)
 
-            #output = Flatten()(output)
-            model = Model(inputs=model.inputs, outputs=output)
-            return model
-        elif self.model_type==3:
-            #Cargamos ResNet50
-            model = ResNet50(include_top=False, input_shape=(self.image_height, self.image_width, 3))
-            for layer in model.layers:
-                layer.trainable = False
-
-            # add new classifier layers
-            flat1 = Flatten()(model.layers[-1].output)
-            class1 = Dense(512, activation='relu')(flat1)
-            output = Dense(2, activation='softmax')(class1)
-
-            #output = Flatten()(output)
-            model = Model(inputs=model.inputs, outputs=output)
-            return model
-        elif self.model_type==4:
-            #Cargamos MobileNetV2
-            model = MobileNetV2(include_top=False, input_shape=(self.image_height, self.image_width, 3))
-            for layer in model.layers:
-                layer.trainable = False
-
-            # add new classifier layers
-            flat1 = Flatten()(model.layers[-1].output)
-            class1 = Dense(512, activation='relu')(flat1)
-            output = Dense(2, activation='softmax')(class1)
-
-            #output = Flatten()(output)
-            model = Model(inputs=model.inputs, outputs=output)
-            return model
-            
 
     def plotHistory(self, history):
 
@@ -458,3 +473,20 @@ class Device:
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
         results = model.evaluate(train_generator)
         print(results)
+        #load the json to a string
+        history = json.loads(self.path+'/history.json')
+        #extract an element in the response
+        last_acc=history["accuracy"]["1"]
+        print("last accuracy: "+last_acc)
+            
+        #Si tengo mejores resultados frente al que tenía cuando entrené, me quedo con el ultimo modelo -> Se renombra el anterior y se guarda con el mismo nombre
+        if(float(results[1])>float(last_acc)):
+            print("Mi modelo anterior es reemplazado por el que me pasa el servidor")
+            path_modelo_anterior=self.path+"/model.h5"
+            path_modelo_renombrado=self.path+"/model_acc_"+str(last_acc)+".h5"
+            shutil.copy(path_modelo_anterior, path_modelo_renombrado)
+
+            #Copio el merged al mio
+            shutil.copy(path, path_modelo_anterior)
+        else:
+            print("Mantengo mi modelo actual con el que sigo trabajando y descarto el anterior")

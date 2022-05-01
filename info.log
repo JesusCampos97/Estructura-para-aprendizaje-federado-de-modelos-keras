@@ -5,4 +5,14 @@
     D0 -> acc 0.8821 y val_acc 0.9633 - loss 0.2977 y val_loss 0.2373
     D1 -> acc 0.8918 y val_acc 0.8991 - loss 0.2974 y val_loss 0.22
     MERGED evaluate by d0 -> acc 0.9183 y loss 0.4444
-    MERGED evaluate by d1 -> acc y val_acc
+    MERGED evaluate by d1 -> acc 0.9060 y val_acc 0.45 
+
+*- 01/05/22 -*
+    Se crea la parte de reentrenaimiento y se comprueba con 2 modelos y 2 días reentrenando. Se arregla el plot y se comprueba
+    * Día-1
+        D0 -> acc 0.8821 y val_acc 0.9633 - loss 0.2977 y val_loss 0.2373
+        D1 -> acc 0.8918 y val_acc 0.8991 - loss 0.2974 y val_loss 0.22
+        MERGED evaluate by d0 -> acc 0.9183 y loss 0.4444
+        MERGED evaluate by d1 -> acc 0.9060 y val_acc 0.45 
+
+    * Día-2 tras el reentreno
