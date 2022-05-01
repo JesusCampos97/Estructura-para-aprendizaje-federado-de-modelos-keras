@@ -374,6 +374,7 @@ class Device:
         plt.xlabel('epoch')
         plt.legend(['train', 'val'], loc='upper left')
         plt.savefig(self.path+'/accuracy.png')
+        plt.clf()
         print("*****")
         print(history.history)
         print("*****")
@@ -384,6 +385,7 @@ class Device:
         plt.xlabel('epoch')
         plt.legend(['train', 'val'], loc='upper left')
         plt.savefig(self.path+'/loss.png')
+        plt.clf()
 
     def saveConfig(self, history):
         # Data to be written
