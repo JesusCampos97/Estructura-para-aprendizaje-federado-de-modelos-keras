@@ -19,6 +19,6 @@ new_path=path_devices+str(num_devices)
 print(new_path)
 if(os.path.isdir(new_path)==False):
 	os.mkdir(new_path)
-path_param=new_path+"/30-04-2022 23-32/d0"
-device = Device(0, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size)
+path_param=new_path+"/30-04-2022 23-32/d1"
+device = Device(1, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size)
 device.evaluate_new("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/30-04-2022 23-32/model_merged.h5")
