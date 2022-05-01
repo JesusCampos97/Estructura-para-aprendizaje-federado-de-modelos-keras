@@ -21,4 +21,4 @@ if(os.path.isdir(new_path)==False):
 	os.mkdir(new_path)
 path_param=new_path+"/30-04-2022/d0"
 device = Device(0, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size)
-device.evaluate_new("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/30-04-2022/model_merged.h5")
+device.evaluate_new("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/30-04-2022 23-32/model_merged.h5")
