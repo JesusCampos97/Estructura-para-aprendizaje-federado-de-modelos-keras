@@ -481,7 +481,7 @@ class Device:
             history = json.loads(f.read())
         #extract an element in the response
         last_acc=history["accuracy"]["1"]
-        print("last accuracy: "+last_acc)
+        print("last accuracy: "+str(last_acc))
             
         #Si tengo mejores resultados frente al que tenía cuando entrené, me quedo con el ultimo modelo -> Se renombra el anterior y se guarda con el mismo nombre
         if(float(results[1])>float(last_acc)):
