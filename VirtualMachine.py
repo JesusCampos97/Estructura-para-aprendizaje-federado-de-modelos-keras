@@ -113,7 +113,7 @@ if __name__ == "__main__":
         #Se crean tantos folders como dispositivos
         for i in range(num_devices):
             print("Ejecuta un dispositivo")
-            path_param=new_path+"/d"+str(i)+"_day"+str(day)
+            path_param=new_path+"/d"+str(i)#+"_day"+str(day)
             os.mkdir(path_param)
             start_device_execute = time.time()
             device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
@@ -157,7 +157,7 @@ if __name__ == "__main__":
         evaluate_times=[]
         for i in range(num_devices):
             print("Ejecuta un dispositivo")
-            path_param=new_path+"/d"+str(i)+"_day"+str(day)
+            path_param=new_path+"/d"+str(i)#+"_day"+str(day)
             start_device_evaluate = time.time()
             device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
                 steps_per_epoch, image_height, image_width, batch_size, day)
