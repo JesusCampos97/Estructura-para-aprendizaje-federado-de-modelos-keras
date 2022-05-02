@@ -28,7 +28,7 @@ from tensorflow.keras.layers import GlobalAveragePooling2D
 from matplotlib import pyplot as plt
 import json
 from sklearn.preprocessing import LabelEncoder
-
+from sklearn import preprocessing
 
 ##FALTA POR PONER LA CLASE 0 Y 1 QUE ES DEPENDIENDO D ELO QUE HAA EN EL DATASET DE INICIO
 class Device:
@@ -241,8 +241,18 @@ class Device:
         trainData['labels'] = labelsData
         trainData['binary_labels'] = binary_labelsData
         testData = pd.DataFrame({'file': test})
-        print(trainData)
         trainData.head(10)
+        
+        le = preprocessing.LabelEncoder()
+        le.fit(labelsData)
+        y_train_enc = le.transform(trainData)
+        print("****")
+        print(trainData)
+        print(y_train_enc)
+        y_test_enc = le.transform(testData)
+        print("****")
+        print(testData)
+        print(y_test_enc)
 
         return trainData, testData
 
