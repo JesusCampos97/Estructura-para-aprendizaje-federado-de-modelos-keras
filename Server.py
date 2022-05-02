@@ -97,7 +97,7 @@ class Server:
         ListDevices = []
         
         list_devices = os.listdir(pathp+"/") # dir is your directory path
-        num_devices = len(list_devices)
+        num_devices = len(list_devices)-1 #es el results.csv
         print("num devices "+str(num_devices))
         for i in range(num_devices):
             for file in os.listdir(pathp+"/d"+str(i)):
