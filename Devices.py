@@ -227,28 +227,24 @@ class Device:
 
         trainData = pd.DataFrame({'file': train})
         labelsData = []
-        binary_labelsData=[]
+        #binary_labelsData=[]
 
         for i in train:
             if 'crosswalk' in i:
                 labelsData.append('crosswalk')
-                binary_labelsData.append(1)
+                #binary_labelsData.append(0)
             else:
                 labelsData.append('road')
-                binary_labelsData.append(0)
+                #binary_labelsData.append(1)
 
         #print("La clase 0 es: "+labelsData[0])
         trainData['labels'] = labelsData
-        trainData['binary_labels'] = binary_labelsData
-        testData = pd.DataFrame({'file': test})
-        trainData.head(10)
-        
         le = preprocessing.LabelEncoder()
         le.fit(labelsData)
-        y_train_enc = le.transform(labelsData)
-        print("****")
-        print(trainData)
-        print(y_train_enc)
+        binary_labelsData_new = le.transform(labelsData)
+        trainData['binary_labels'] = binary_labelsData_new #binary_labelsData
+        testData = pd.DataFrame({'file': test})
+        trainData.head(10)
 
         return trainData, testData
 
