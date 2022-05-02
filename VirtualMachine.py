@@ -8,6 +8,7 @@ import time
 import PIL
 from tqdm import tqdm
 import json
+import pandas as pd
 
 """
 
@@ -31,9 +32,8 @@ model_type = 4 -> MobileNetV2
             print('%s (%.2f%%)' % (label[1], label[2]*100)) -> XXX (YY.YY%)
 
         *Generar los modelos de los demás tipos posibles
-        *Dataframe con tablas de resultados
         *Consumo de raspberry
-        *Codigo para que itere n días y coja el modelo que mas le convenga rspecto al ultimo para entrenar
+        *Reducir a una epoca ya que tenemos el reentrenamiento-> menos tiempos de ejecución, practicamente la mitad
 """
 def processImages(path_dataset):
     filepath = path_dataset+'/allDataset/'
@@ -106,6 +106,10 @@ if __name__ == "__main__":
     for day in range(num_etapas):
         print("**** Dia de ejecucion: "+str(day)+" de "+str(num_etapas)+" ****")
         execute_times=[]
+        accuracy_list=[]
+        val_accuracy_list=[]
+        loss_list=[]
+        val_loss_list=[]
         #Se crean tantos folders como dispositivos
         for i in range(num_devices):
             print("Ejecuta un dispositivo")
@@ -114,24 +118,37 @@ if __name__ == "__main__":
             start_device_execute = time.time()
             device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
                 steps_per_epoch, image_height, image_width, batch_size, day)
-            device.execute_new()
+            accuracy, val_accuracy, loss, val_loss = device.execute_new()
+            accuracy_list.append(accuracy)
+            val_accuracy_list.append(val_accuracy)
+            loss_list.append(loss)
+            val_loss_list.append(val_loss)
+
             end_device_execute = time.time()
             total_time=end_device_execute-start_device_execute
             execute_times.append(total_time)
             print("El tiempo en ejecutar el device"+str(i)+" es : "+str(total_time))
 
-        execute_total_time=sum(execute_times)
         dictionary = {
-            "execute_total_time_seconds" : execute_total_time
+            "device" : range(num_devices),
+            "accuracy": accuracy_list,
+            "val_accuracy": val_accuracy_list,
+            "loss": loss_list,
+            "val_loss": val_loss_list,
+            "day": day,
+            "execute_time_seconds" : execute_times
         }
-        with open(new_path+"/config.json", "r+") as file:
-            data = json.load(file)
-            data.update(dictionary)
-            file.seek(0)
-            json.dump(data, file)
-        print(str(num_devices)+" dispositivos han tardado en ejecutarse un total de: "+str(execute_total_time)+" segundos")
 
-        
+        if(day==0): #Guardo el dict en csv
+            df = pd.DataFrame(dictionary)
+            df.to_csv(new_path+"/results.csv")
+
+        else: #append el dict al csv
+            df = pd.DataFrame(dictionary)
+            df.to_csv(new_path+"/results.csv", mode='a', header=False)
+
+
+            
         #Se ejecuta el merge
         print("Se empieza a ejecutar el merge")
         server = Server()
@@ -150,16 +167,12 @@ if __name__ == "__main__":
             evaluate_times.append(total_ev_time)
             print("El tiempo en evaluar el device"+str(i)+" es : "+str(total_ev_time))
 
-        dictionary = {
-            "evaluate_total_time_seconds" : evaluate_times
-        }
-        with open("config"+str(day)+".json", "r+") as file:
-            data = json.load(file)
-            data.update(dictionary)
-            file.seek(0)
-            json.dump(data, file)
-            
-        print(str(num_devices)+" dispositivos han tardado en evaluarse un total de: "+str(execute_total_time)+" segundos")
+        print(str(num_devices)+" dispositivos han tardado en evaluarse un total de: "+str(sum(evaluate_times))+" segundos")
+
+    
+        df = pd.read_csv(new_path+"/results.csv")  
+        df['evaluate_time_seconds']=evaluate_times
+        df.to_csv(new_path+"/results.csv")
 
 
 

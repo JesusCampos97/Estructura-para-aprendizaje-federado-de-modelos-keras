@@ -130,6 +130,7 @@ class Device:
         self.plotHistory(history)
         self.saveConfig(history)
         #self.deleteTempFiles()
+        return history.history['accuracy'], history.history['val_accuracy'], history.history['loss'], history.history['val_loss']
 
 
     def loadDataIntoPaths(self):
@@ -236,7 +237,7 @@ class Device:
                 labelsData.append('road')
                 binary_labelsData.append(0)
 
-        print("La clase 0 es: "+labelsData[0])
+        #print("La clase 0 es: "+labelsData[0])
         trainData['labels'] = labelsData
         trainData['binary_labels'] = binary_labelsData
         testData = pd.DataFrame({'file': test})

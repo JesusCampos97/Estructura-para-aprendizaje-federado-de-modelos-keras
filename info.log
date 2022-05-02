@@ -15,4 +15,8 @@
         MERGED evaluate by d0 -> acc 0.9183 y loss 0.4444
         MERGED evaluate by d1 -> acc 0.9060 y val_acc 0.45 
 
-    * Día-2 tras el reentreno
+    Cascazo
+
+*- 02/05/22 -*
+    Se generan reusltados en csv y se hecha a andar con 2 devices y 2 días de reentreno pero con una sola época para comprobar si e smejor 1 epoc ay más días con el merge
+    Habría que comprobar si, 2 epocas y 2 días >= a 1 epoca y 4 días y qu edarnso con ese resultado
