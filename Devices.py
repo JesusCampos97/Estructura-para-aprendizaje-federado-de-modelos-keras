@@ -429,7 +429,7 @@ class Device:
         hist_df = pd.DataFrame(history.history) 
         hist_json_file = self.path+'/history.json' 
         with open(hist_json_file, mode='w') as f:
-            hist_df.to_json(f)
+            hist_df.to_json(f, orient='records')
 
 
     def deleteTempFiles(self):
@@ -477,7 +477,8 @@ class Device:
         results = model.evaluate(train_generator)
         print(results)
         #load the json to a string
-        history = json.loads(self.path+'/history.json')
+        with open(self.path+'/history.json', 'r') as f:
+            history = json.loads(f.read())
         #extract an element in the response
         last_acc=history["accuracy"]["1"]
         print("last accuracy: "+last_acc)
