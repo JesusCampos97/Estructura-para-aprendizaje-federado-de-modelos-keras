@@ -42,6 +42,6 @@ print("El tiempo en evaluar el devic 0 es : "+str(total_ev_time))
 print(str(num_devices)+" dispositivos han tardado en evaluarse un total de: "+str(sum(evaluate_times))+" segundos")
 
 
-df = pd.read_csv(new_path+"/results.csv")  
+df = pd.read_csv(new_path+"/02-05-2022 18-55/results.csv")  
 df['evaluate_time_seconds']=evaluate_times
-df.to_csv(new_path+"/results.csv")
+df.to_csv(new_path+"/02-05-2022 18-55/results.csv")
