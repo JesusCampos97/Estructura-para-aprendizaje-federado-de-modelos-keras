@@ -28,17 +28,16 @@ if(os.path.isdir(new_path)==False):
 
 
 evaluate_times=[]
-for i in range(num_devices):
-	print("Ejecuta un dispositivo")
-	path_param=new_path+"/d"+str(i)#+"_day"+str(day)
-	start_device_evaluate = time.time()
-	device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
-		steps_per_epoch, image_height, image_width, batch_size, day)
-	device.evaluate_new(new_path+"/model_merged.h5")
-	end_device_evaluate = time.time()
-	total_ev_time=end_device_evaluate-start_device_evaluate
-	evaluate_times.append(total_ev_time)
-	print("El tiempo en evaluar el device"+str(i)+" es : "+str(total_ev_time))
+print("Ejecuta un dispositivo")
+path_param="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/02-05-2022 18-55/d0"#+"_day"+str(day)
+start_device_evaluate = time.time()
+device = Device(0, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
+	steps_per_epoch, image_height, image_width, batch_size, day)
+device.evaluate_new("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/02-05-2022 18-55/model_merged.h5")
+end_device_evaluate = time.time()
+total_ev_time=end_device_evaluate-start_device_evaluate
+evaluate_times.append(total_ev_time)
+print("El tiempo en evaluar el devic 0 es : "+str(total_ev_time))
 
 print(str(num_devices)+" dispositivos han tardado en evaluarse un total de: "+str(sum(evaluate_times))+" segundos")
 
