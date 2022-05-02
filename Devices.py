@@ -245,14 +245,10 @@ class Device:
         
         le = preprocessing.LabelEncoder()
         le.fit(labelsData)
-        y_train_enc = le.transform(trainData)
+        y_train_enc = le.transform(labelsData)
         print("****")
         print(trainData)
         print(y_train_enc)
-        y_test_enc = le.transform(testData)
-        print("****")
-        print(testData)
-        print(y_test_enc)
 
         return trainData, testData
 
