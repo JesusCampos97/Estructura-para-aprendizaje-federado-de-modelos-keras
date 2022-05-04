@@ -96,11 +96,17 @@ class Server:
         #me meto todos los modelos en un array
         ListDevices = []
         
+        num_devices=0
+        list_files=os.listdir("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/04-05-2022 19-41")
+        for i in list_files:
+            if i.startswith("d"):
+                num_devices+=1
+
         list_devices = os.listdir(pathp+"/") # dir is your directory path
-        num_devices = len(list_devices)-1 #es el results.csv
+        #num_devices = len(list_devices)-1 #es el results.csv
         print("num devices "+str(num_devices))
         for i in range(num_devices):
-            for file in os.listdir(pathp+"/d"+str(i)):
+            for file in os.listdir(pathp+"/d*""""+str(i)"""):
                 if file.endswith(".h5"):
                     path_aux=pathp+"/d"+str(i)+"/"+file
                     print(path_aux)
