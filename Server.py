@@ -106,7 +106,7 @@ class Server:
         #num_devices = len(list_devices)-1 #es el results.csv
         print("num devices "+str(num_devices))
         for i in range(num_devices):
-            for file in os.listdir(pathp+"/d*""""+str(i)"""):
+            for file in os.listdir(pathp+"/d"+str(i)):
                 if file.endswith(".h5"):
                     path_aux=pathp+"/d"+str(i)+"/"+file
                     print(path_aux)
