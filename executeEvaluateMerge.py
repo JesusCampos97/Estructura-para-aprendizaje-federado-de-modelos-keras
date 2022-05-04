@@ -43,5 +43,6 @@ print(str(num_devices)+" dispositivos han tardado en evaluarse un total de: "+st
 
 
 df = pd.read_csv(new_path+"/02-05-2022 18-55/results.csv")  
+df.show()
 df['evaluate_time_seconds']=evaluate_times
 df.to_csv(new_path+"/02-05-2022 18-55/results.csv")

@@ -171,7 +171,10 @@ if __name__ == "__main__":
 
     
         df = pd.read_csv(new_path+"/results.csv")  
+        print(df.head())
         df['evaluate_time_seconds']=evaluate_times
+        print(df.head())
+
         df.to_csv(new_path+"/results.csv")
 
 
