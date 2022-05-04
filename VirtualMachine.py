@@ -52,13 +52,13 @@ if __name__ == "__main__":
     path_devices="./Devices/"#"Devices/5/20042022 (2)"
     path_dataset="/datasets" #path donde se encuentra el dataset descomprimido
     model_type=1 #Se debera de pasar por parametros
-    epochs=2 #Se debera de pasar por parametros
+    epochs=1 #Se debera de pasar por parametros
     image_height = 256 #224
     image_width = 256 #224
     batch_size = 5
     steps_per_epoch = 10
     dataset_rename = False
-    num_etapas=2 #Serian 2 días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
+    num_etapas=4 #Serian 2 días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
 
 
     #Creo las carpetas de los datasets y los renombro
@@ -114,7 +114,9 @@ if __name__ == "__main__":
         for i in range(num_devices):
             print("Ejecuta un dispositivo")
             path_param=new_path+"/d"+str(i)#+"_day"+str(day)
-            os.mkdir(path_param)
+            if(os.path.isdir(path_param)==False):
+                os.mkdir(path_param)
+
             start_device_execute = time.time()
             device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
                 steps_per_epoch, image_height, image_width, batch_size, day)
