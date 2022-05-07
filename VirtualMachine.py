@@ -143,11 +143,13 @@ if __name__ == "__main__":
 
         if(day==0): #Guardo el dict en csv
             df = pd.DataFrame(dictionary)
-            df.to_csv(new_path+"/results.csv")
+            df.to_csv(new_path+"/results.csv",index=False)
+            print(df.head())
 
         else: #append el dict al csv
             df = pd.DataFrame(dictionary)
-            df.to_csv(new_path+"/results.csv", mode='a', header=False)
+            df.to_csv(new_path+"/results.csv", mode='a', header=False,index=False)
+            print(df.head())
 
 
             
@@ -174,6 +176,8 @@ if __name__ == "__main__":
     
         df = pd.read_csv(new_path+"/results.csv")  
         print(df.head())
+        if(df['evaluate_time_seconds'].size!=0):
+            evaluate_times=df['evaluate_time_seconds'].concatenate(evaluate_times)
         df['evaluate_time_seconds']=evaluate_times
         print(df.head())
 
