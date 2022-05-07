@@ -176,7 +176,7 @@ if __name__ == "__main__":
     
         df = pd.read_csv(new_path+"/results.csv")  
         print(df.head())
-        if(df['evaluate_time_seconds'].size!=0):
+        if(('evaluate_time_seconds' in df.columns) and (df['evaluate_time_seconds'].size!=0)):
             evaluate_times=df['evaluate_time_seconds'].concatenate(evaluate_times)
         df['evaluate_time_seconds']=evaluate_times
         print(df.head())
