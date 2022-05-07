@@ -97,7 +97,7 @@ class Server:
         ListDevices = []
         
         num_devices=0
-        list_files=os.listdir("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/04-05-2022 19-41")
+        list_files=os.listdir(pathp+"/")
         for i in list_files:
             if i.startswith("d"):
                 num_devices+=1
