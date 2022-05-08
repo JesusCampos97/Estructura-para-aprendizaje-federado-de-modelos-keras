@@ -17,9 +17,30 @@ for i in list_files:
 print(num_devices)
 """
 
-evaluate_times=[0.00002, 20130340]
 new_path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/07-05-2022 10-53"
 
+num_devices=2
+accuracy_list=[1111,2222]
+val_accuracy_list=[1111,2222]
+loss_list=[1111,2222]
+val_loss_list=[1111,2222]
+day=1
+execute_times=[1111,2222]
+dictionary = {
+	"device" : range(num_devices),
+	"accuracy": accuracy_list,
+	"val_accuracy": val_accuracy_list,
+	"loss": loss_list,
+	"val_loss": val_loss_list,
+	"day": day,
+	"execute_time_seconds" : execute_times
+}
+
+df = pd.DataFrame(dictionary)
+df.to_csv(new_path+"/results.csv", mode='a', header=False, index=False)
+print(df.head())
+
+evaluate_times=[0.00002, 20130340]
 df = pd.read_csv(new_path+"/results.csv")  
 print(df.head())
 if(('evaluate_time_seconds' in df.columns) and (df['evaluate_time_seconds'].size!=0)):
