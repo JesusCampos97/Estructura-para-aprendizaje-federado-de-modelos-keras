@@ -51,7 +51,7 @@ if __name__ == "__main__":
     train_percentage=0.8
     path_devices="./Devices/"#"Devices/5/20042022 (2)"
     path_dataset="/datasets" #path donde se encuentra el dataset descomprimido
-    model_type=1 #Se debera de pasar por parametros
+    model_type=4 #Se debera de pasar por parametros
     epochs=1 #Se debera de pasar por parametros
     image_height = 224 #224
     image_width = 224 #224

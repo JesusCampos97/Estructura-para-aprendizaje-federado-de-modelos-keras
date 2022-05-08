@@ -20,3 +20,7 @@
 *- 02/05/22 -*
     Se generan reusltados en csv y se hecha a andar con 2 devices y 2 días de reentreno pero con una sola época para comprobar si e smejor 1 epoc ay más días con el merge
     Habría que comprobar si, 2 epocas y 2 días >= a 1 epoca y 4 días y qu edarnso con ese resultado
+
+*- 08/05/22 -* 
+    Se generan todas las tablas bien y tenemos muy buenos resultados con el modelo VGG16 en el '08-05-2022 16-13'. Todos mejoran. aprox 2h de ejecucion con 2 devices y 4 days
+    Generamos lo mismo con el model MobileNetV2
