@@ -496,7 +496,7 @@ class Device:
 
             #Copio el merged al mio
             shutil.copy(path, path_modelo_anterior)
-            return 1
+            return 1, float(results[1])
         else:
             print("Mantengo mi modelo actual con el que sigo trabajando y descarto el anterior")
-            return 0
+            return 0, float(results[1])

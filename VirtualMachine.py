@@ -160,14 +160,16 @@ if __name__ == "__main__":
 
         evaluate_times=[]
         is_model_changed_list=[]
+        evaluate_accuracy_list=[]
         for i in range(num_devices):
             print("Ejecuta un dispositivo")
             path_param=new_path+"/d"+str(i)#+"_day"+str(day)
             start_device_evaluate = time.time()
             device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
                 steps_per_epoch, image_height, image_width, batch_size, day)
-            is_model_changed=device.evaluate_new(new_path+"/model_merged.h5")
+            is_model_changed, evaluate_accuracy=device.evaluate_new(new_path+"/model_merged.h5")
             is_model_changed_list.append(is_model_changed)
+            evaluate_accuracy_list.append(evaluate_accuracy)
             end_device_evaluate = time.time()
             total_ev_time=end_device_evaluate-start_device_evaluate
             evaluate_times.append(total_ev_time)
@@ -195,6 +197,14 @@ if __name__ == "__main__":
             print(is_model_changed_list.head())
         else:
             df['is_model_changed']=is_model_changed_list
+
+        if(('evaluate_accuracy' in df.columns) and (df['evaluate_accuracy'].size!=0)):
+            isna_evaluate_accuracy = df['evaluate_accuracy'].isna()
+            df.loc[isna_evaluate_accuracy, 'evaluate_accuracy']=evaluate_accuracy_list
+            evaluate_accuracy_list=df
+            print(evaluate_accuracy_list.head())
+        else:
+            df['is_model_changed']=evaluate_accuracy_list
 
         df.to_csv(new_path+"/results.csv", index=False)
 
