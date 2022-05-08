@@ -8,8 +8,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/08-05-2022 16-13/results.csv"
-df = pd.read_csv(path)  
+path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/08-05-2022 16-13"
+df = pd.read_csv(path+"/results.csv")  
 df_aux_d0=df[(df.device==0)]
 print(df_aux_d0.head())
 df_aux_d1=df[(df.device==1)]
