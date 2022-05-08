@@ -204,7 +204,7 @@ if __name__ == "__main__":
             evaluate_accuracy_list=df
             print(evaluate_accuracy_list.head())
         else:
-            df['is_model_changed']=evaluate_accuracy_list
+            df['evaluate_accuracy']=evaluate_accuracy_list
 
         df.to_csv(new_path+"/results.csv", index=False)
 
