@@ -159,13 +159,15 @@ if __name__ == "__main__":
         server.merge(new_path)#("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/28-04-2022 13-31")
 
         evaluate_times=[]
+        is_model_changed_list=[]
         for i in range(num_devices):
             print("Ejecuta un dispositivo")
             path_param=new_path+"/d"+str(i)#+"_day"+str(day)
             start_device_evaluate = time.time()
             device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
                 steps_per_epoch, image_height, image_width, batch_size, day)
-            device.evaluate_new(new_path+"/model_merged.h5")
+            is_model_changed=device.evaluate_new(new_path+"/model_merged.h5")
+            is_model_changed_list.append(is_model_changed)
             end_device_evaluate = time.time()
             total_ev_time=end_device_evaluate-start_device_evaluate
             evaluate_times.append(total_ev_time)
@@ -182,9 +184,15 @@ if __name__ == "__main__":
             df.loc[isna, 'evaluate_time_seconds']=evaluate_times
             evaluate_times=df
             print(evaluate_times.head())
+
+            isna_model_change = df['is_model_changed'].isna()
+            df.loc[isna_model_change, 'is_model_changed']=is_model_changed_list
+            is_model_changed_list=df
+            print(is_model_changed_list.head())
+
         else:
             df['evaluate_time_seconds']=evaluate_times
-        print(df.head())
+            df['is_model_changed']=is_model_changed_list
 
         df.to_csv(new_path+"/results.csv", index=False)
 

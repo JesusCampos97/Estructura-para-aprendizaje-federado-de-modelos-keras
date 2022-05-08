@@ -462,6 +462,7 @@ class Device:
         results = model.evaluate(train_generator)
         print(results)
         
+    """Return 1 if the model change and 0 if hold the same model"""
     def evaluate_new(self, path):
         trainData, testData = self.loadDataImages_new()
         trainData.head()
@@ -492,5 +493,7 @@ class Device:
 
             #Copio el merged al mio
             shutil.copy(path, path_modelo_anterior)
+            return 1
         else:
             print("Mantengo mi modelo actual con el que sigo trabajando y descarto el anterior")
+            return 0
