@@ -55,7 +55,6 @@ else:
 	df['evaluate_time_seconds']=evaluate_times
 
 
-df = pd.read_csv(new_path+"/results.csv")  
 if(('is_model_changed' in df.columns) and (df['is_model_changed'].size!=0)):
 	isna_model_change = df['is_model_changed'].isna()
 	df.loc[isna_model_change, 'is_model_changed']=is_model_changed_list
