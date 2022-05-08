@@ -58,7 +58,7 @@ if __name__ == "__main__":
     batch_size = 5
     steps_per_epoch = 10
     dataset_rename = False
-    num_etapas=4 #Serian 2 días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
+    num_etapas=4 #Serian 4 días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
 
 
     #Creo las carpetas de los datasets y los renombro
@@ -104,7 +104,7 @@ if __name__ == "__main__":
         os.mkdir(new_path)
 
     for day in range(num_etapas):
-        print("**** Dia de ejecucion: "+str(day)+" de "+str(num_etapas)+" ****")
+        print("**** Dia de ejecucion: "+str((day+1))+" de "+str(num_etapas)+" ****")
         execute_times=[]
         accuracy_list=[]
         val_accuracy_list=[]
@@ -184,14 +184,16 @@ if __name__ == "__main__":
             df.loc[isna, 'evaluate_time_seconds']=evaluate_times
             evaluate_times=df
             print(evaluate_times.head())
+        else:
+            df['evaluate_time_seconds']=evaluate_times
 
+
+        if(('is_model_changed' in df.columns) and (df['is_model_changed'].size!=0)):
             isna_model_change = df['is_model_changed'].isna()
             df.loc[isna_model_change, 'is_model_changed']=is_model_changed_list
             is_model_changed_list=df
             print(is_model_changed_list.head())
-
         else:
-            df['evaluate_time_seconds']=evaluate_times
             df['is_model_changed']=is_model_changed_list
 
         df.to_csv(new_path+"/results.csv", index=False)
