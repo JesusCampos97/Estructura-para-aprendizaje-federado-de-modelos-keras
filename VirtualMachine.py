@@ -143,12 +143,12 @@ if __name__ == "__main__":
 
         if(day==0): #Guardo el dict en csv
             df = pd.DataFrame(dictionary)
-            df.to_csv(new_path+"/results.csv",index=False)
+            df.to_csv(new_path+"/results.csv", index=False)
             print(df.head())
 
         else: #append el dict al csv
             df = pd.DataFrame(dictionary)
-            df.to_csv(new_path+"/results.csv", mode='a', header=False,index=False)
+            df.to_csv(new_path+"/results.csv", mode='a', header=False, index=False)
             print(df.head())
 
 
@@ -174,14 +174,19 @@ if __name__ == "__main__":
         print(str(num_devices)+" dispositivos han tardado en evaluarse un total de: "+str(sum(evaluate_times))+" segundos")
 
     
-        df = pd.read_csv(new_path+"/results.csv")  
+        df = pd.read_csv(new_path+"/results.csv", index=False)  
         print(df.head())
         if(('evaluate_time_seconds' in df.columns) and (df['evaluate_time_seconds'].size!=0)):
-            evaluate_times=df['evaluate_time_seconds'].concatenate(evaluate_times)
-        df['evaluate_time_seconds']=evaluate_times
+            #evaluate_times=df['evaluate_time_seconds'].concatenate(evaluate_times)
+            isna = df['evaluate_time_seconds'].isna()
+            df.loc[isna, 'evaluate_time_seconds']=evaluate_times
+            evaluate_times=df
+            print(evaluate_times.head())
+        else:
+            df['evaluate_time_seconds']=evaluate_times
         print(df.head())
 
-        df.to_csv(new_path+"/results.csv")
+        df.to_csv(new_path+"/results.csv", index=False)
 
 
 

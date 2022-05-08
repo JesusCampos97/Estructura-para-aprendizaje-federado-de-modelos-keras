@@ -17,9 +17,19 @@ for i in list_files:
 print(num_devices)
 """
 
-df = pd.read_csv("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/04-05-2022 23-41/results.csv")  
+evaluate_times=[0.00002, 20130340]
+new_path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/07-05-2022 10-53"
+
+df = pd.read_csv(new_path+"/results.csv", index=False)  
 print(df.head())
-if(df['evaluate_time_seconds'].size!=0):
-	evaluate_times=df['evaluate_time_seconds'].concatenate(evaluate_times)
-df['evaluate_time_seconds']=evaluate_times
+if(('evaluate_time_seconds' in df.columns) and (df['evaluate_time_seconds'].size!=0)):
+	#evaluate_times=df['evaluate_time_seconds'].concatenate(evaluate_times)
+	isna = df['evaluate_time_seconds'].isna()
+	df.loc[isna, 'evaluate_time_seconds']=evaluate_times
+	evaluate_times=df
+	print(evaluate_times.head())
+else:
+	df['evaluate_time_seconds']=evaluate_times
 print(df.head())
+
+df.to_csv(new_path+"/results.csv", index=False)
