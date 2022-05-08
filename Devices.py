@@ -133,7 +133,7 @@ class Device:
         self.plotHistory(history)
         self.saveConfig(history)
         #self.deleteTempFiles()
-        return history.history['accuracy'], history.history['val_accuracy'], history.history['loss'], history.history['val_loss']
+        return history.history['accuracy'][0], history.history['val_accuracy'][0], history.history['loss'][0], history.history['val_loss'][0]
 
 
     def loadDataIntoPaths(self):
