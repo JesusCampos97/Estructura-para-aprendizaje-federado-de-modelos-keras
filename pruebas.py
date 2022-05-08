@@ -27,7 +27,7 @@ val_loss_list=[1111,2222]
 day=1
 execute_times=[1111,2222]
 is_model_changed_list=[1,1]
-"""dictionary = {
+dictionary = {
 	"device" : range(num_devices),
 	"accuracy": accuracy_list,
 	"val_accuracy": val_accuracy_list,
@@ -53,7 +53,7 @@ if(('evaluate_time_seconds' in df.columns) and (df['evaluate_time_seconds'].size
 
 else:
 	df['evaluate_time_seconds']=evaluate_times
-"""
+
 
 df = pd.read_csv(new_path+"/results.csv")  
 if(('is_model_changed' in df.columns) and (df['is_model_changed'].size!=0)):
