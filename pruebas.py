@@ -20,7 +20,7 @@ print(num_devices)
 evaluate_times=[0.00002, 20130340]
 new_path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/07-05-2022 10-53"
 
-df = pd.read_csv(new_path+"/results.csv", index=False)  
+df = pd.read_csv(new_path+"/results.csv")  
 print(df.head())
 if(('evaluate_time_seconds' in df.columns) and (df['evaluate_time_seconds'].size!=0)):
 	#evaluate_times=df['evaluate_time_seconds'].concatenate(evaluate_times)
