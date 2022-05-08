@@ -92,6 +92,7 @@ class Server:
         return model
 
     def merge(self, pathp):
+        tf.keras.backend.clear_session()
         #cojo todos los device dese path con el len del folder
         #me meto todos los modelos en un array
         ListDevices = []
@@ -104,18 +105,18 @@ class Server:
 
         list_devices = os.listdir(pathp+"/") # dir is your directory path
         #num_devices = len(list_devices)-1 #es el results.csv
-        print("num devices "+str(num_devices))
+        #print("num devices "+str(num_devices))
         for i in range(num_devices):
             for file in os.listdir(pathp+"/d"+str(i)):
                 if file.endswith(".h5"):
                     path_aux=pathp+"/d"+str(i)+"/"+file
                     print(path_aux)
                     model_aux=tf.keras.models.load_model(path_aux)
-                    model_aux.summary()
+                    #model_aux.summary()
                     ListDevices.append(model_aux)
 
                 
-        print(ListDevices)
+        #print(ListDevices)
         
         #ejecuto el merge que hay en colab
         #modelA = tf.keras.models.load_model('/modelo_vgg16_epoch_2.h5')
@@ -129,17 +130,17 @@ class Server:
 
         # prepare an array of equal weights
         n_models = len(ListDevices) #len(model_list)
-        print(n_models)
+        #print(n_models)
         mode=1
         if mode==2:
             # prepare an array of exponentially decreasing weights
             alpha = 2.0
             weights = [exp(-i/alpha) for i in range(1, n_models+1)]
-            print("Tengo weights="+str(weights))
+            #print("Tengo weights="+str(weights))
             new_model = self.model_weight_ensemble_2(ListDevices, weights)
         else:
             weights = [1/n_models for i in range(1, n_models+1)]
-            print("Tengo weights="+str(weights))
+            #print("Tengo weights="+str(weights))
             # create a new model with the weighted average of all model weights
             new_model = self.model_weight_ensemble(ListDevices, weights)
             # summarize the created model

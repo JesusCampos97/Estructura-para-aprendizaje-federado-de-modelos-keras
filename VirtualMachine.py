@@ -53,8 +53,8 @@ if __name__ == "__main__":
     path_dataset="/datasets" #path donde se encuentra el dataset descomprimido
     model_type=1 #Se debera de pasar por parametros
     epochs=1 #Se debera de pasar por parametros
-    image_height = 256 #224
-    image_width = 256 #224
+    image_height = 224 #224
+    image_width = 224 #224
     batch_size = 5
     steps_per_epoch = 10
     dataset_rename = False

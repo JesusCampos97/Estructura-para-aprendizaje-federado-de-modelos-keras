@@ -38,6 +38,7 @@ class Device:
             data_percentage: Cantidad de datos que utilizará de nuestro dataset 
     """
     def __init__(self, number, path, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size, day):
+        tf.keras.backend.clear_session()
         self.number = number
         random.seed(number) #number+day d0 -> primer dia seed 0, d1 primer dia seed 1, d0 segundo dia seed 1, d1 segundia dia seed 2 ... y asi siempre es diferente con lo que entrenan.. o no deberia ser eso?
         self.path = path
@@ -57,6 +58,8 @@ class Device:
         self.day = day
         print("Termina init")
         warnings.filterwarnings('ignore')
+        
+
 
 
     #El método execute se encargará de ejecutar el aprendizaje del modelo propio con su partición de datos del dataset según un random con seed que guardaremos.
@@ -66,26 +69,26 @@ class Device:
         y guarda su accuracy
     """
     def execute(self):
-        print("Comienza execute")
+        #print("Comienza execute")
         train, test = self.loadDataIntoPaths()
-        print("loaddataintopaths cargado")
+        #print("loaddataintopaths cargado")
         trainData, testData = self.loadDataImages()
-        print("dataimages cargadas")
+        #print("dataimages cargadas")
         trainData.head()
         testData.head()
-        print("imagenes procesadas")
+        #print("imagenes procesadas")
         train_set, val_set = train_test_split(trainData,
                                             test_size=0.1)
-        print("split realziado")
-        print(len(train_set), len(val_set))
+        #print("split realziado")
+        #print(len(train_set), len(val_set))
         train_generator, validation_generator= self.loadValidationDatasets(train_set, val_set)
-        print("train generador cargado")
+        #print("train generador cargado")
         model=self.loadModelType()
         
         # summarize
-        model.summary()
+        #model.summary()
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
-        print("modleo compilado")
+        #print("modleo compilado")
         tf.compat.v1.reset_default_graph()
         with tf.device('/device:CPU:0'):
             history = model.fit(train_generator, 
@@ -99,26 +102,26 @@ class Device:
         self.deleteTempFiles()
 
     def execute_new(self):
-        print("Comienza execute")
+        #print("Comienza execute")
         trainData, testData = self.loadDataImages_new()
-        print("dataimages cargadas")
-        print(trainData.head(10))
+        #print("dataimages cargadas")
+        #print(trainData.head(10))
         testData.head()
-        print("imagenes procesadas")
+        #print("imagenes procesadas")
         train_set, val_set = train_test_split(trainData,
                                             test_size=0.1)
-        print(train_set.head(10))
-        print("validation split realizado")
-        print(len(train_set), len(val_set))
+        #print(train_set.head(10))
+        #print("validation split realizado")
+        #print(len(train_set), len(val_set))
         train_generator, validation_generator= self.loadValidationDatasets_new(train_set, val_set)
-        print("train generador cargado")
+        #print("train generador cargado")
         model=self.loadModelType()
-        print("modelo cargado")
+        #print("modelo cargado")
         
         # summarize
-        model.summary()
+        #model.summary()
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
-        print("modelo compilado")
+        #print("modelo compilado")
         tf.compat.v1.reset_default_graph()
         with tf.device('/device:CPU:0'):
             history = model.fit(train_generator, 
@@ -126,7 +129,7 @@ class Device:
                             epochs = self.epochs, steps_per_epoch = int(len(train_generator)/self.batch_size)) #model.fit_generator
 
         model.save(self.path+"/model.h5")
-        print("modelo guardado")
+        #print("modelo guardado")
         self.plotHistory(history)
         self.saveConfig(history)
         #self.deleteTempFiles()
@@ -168,8 +171,8 @@ class Device:
         train= labels[:final]
         test= labels[final:]
 
-        print(len(train))
-        print(len(test))
+        #print(len(train))
+        #print(len(test))
 
         dst_dir = self.path+"/tmp/train/"
         if(os.path.isdir(dst_dir)==False):
@@ -200,11 +203,11 @@ class Device:
                 labelsData.append('road')
                 binary_labelsData.append(0)
 
-        print("La clase 0 es: "+labelsData[0])
+        #print("La clase 0 es: "+labelsData[0])
         trainData['labels'] = labelsData
         trainData['binary_labels'] = binary_labelsData
         testData = pd.DataFrame({'file': os.listdir(self.path+'/tmp/test')})
-        print(trainData)
+        #print(trainData)
 
         return trainData, testData
 
@@ -222,8 +225,8 @@ class Device:
         train = labels[:num_max_labels]
         test = labels[num_max_labels:]
 
-        print("Num imagenes train "+str(len(train)))
-        print("Num imagenes test "+str(len(test)))
+        #print("Num imagenes train "+str(len(train)))
+        #print("Num imagenes test "+str(len(test)))
 
         trainData = pd.DataFrame({'file': train})
         labelsData = []
@@ -262,8 +265,8 @@ class Device:
             target_size = (self.image_height,self.image_width),
             batch_size = self.batch_size
         )
-        print(train_set.head())
-        print(train_generator.labels)
+        #print(train_set.head())
+        #print(train_generator.labels)
 
         validation_generator = val_gen.flow_from_dataframe(
             dataframe = val_set,
@@ -393,9 +396,9 @@ class Device:
         plt.legend(['train', 'val'], loc='upper left')
         plt.savefig(self.path+'/accuracy.png')
         plt.clf()
-        print("*****")
-        print(history.history)
-        print("*****")
+        #print("*****")
+        #print(history.history)
+        #print("*****")
         plt.plot(history.history['loss'])
         plt.plot(history.history['val_loss'])
         plt.title('model loss')
@@ -454,13 +457,13 @@ class Device:
 
         train_set, val_set = train_test_split(trainData,
                                             test_size=0.1)
-        print(len(train_set), len(val_set))
+        #print(len(train_set), len(val_set))
         train_generator, _ = self.loadValidationDatasets(train_set, val_set)
 
         model=tf.keras.models.load_model(self.path+'/model.h5')
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
         results = model.evaluate(train_generator)
-        print(results)
+        #print(results)
         
     """Return 1 if the model change and 0 if hold the same model"""
     def evaluate_new(self, path):
@@ -470,19 +473,19 @@ class Device:
 
         train_set, val_set = train_test_split(trainData,
                                             test_size=0.1)
-        print(len(train_set), len(val_set))
+        #print(len(train_set), len(val_set))
         train_generator, val_generator = self.loadValidationDatasets_new(train_set, val_set)
 
         model=tf.keras.models.load_model(path)
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
         results = model.evaluate(val_generator) #Se ha cambiado el train_generator por val_generator para probarlo.
-        print(results)
+        #print(results)
         #load the json to a string
         with open(self.path+'/history.json', 'r') as f:
             history = json.loads(f.read())
         #extract an element in the response
         last_acc=history[-1]["accuracy"]
-        print("last accuracy: "+str(last_acc))
+        #print("last accuracy: "+str(last_acc))
             
         #Si tengo mejores resultados frente al que tenía cuando entrené, me quedo con el ultimo modelo -> Se renombra el anterior y se guarda con el mismo nombre
         if(float(results[1])>float(last_acc)):
