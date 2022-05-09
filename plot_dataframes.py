@@ -28,6 +28,8 @@ plt.plot(df_aux_d1['val_accuracy'])
 plt.plot(df_aux_d2['val_accuracy'])
 plt.plot(df_aux_d3['val_accuracy'])
 plt.plot(df_aux_d4['val_accuracy'])
+plt.xticks(5, range(5))
+
 plt.title('Accuracy comparation')
 plt.ylabel('accuracy')
 plt.xlabel('days')
