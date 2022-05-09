@@ -472,19 +472,19 @@ class Device:
         trainData.head()
         testData.head()
 
-        """train_set, val_set = train_test_split(trainData,
+        train_set, val_set = train_test_split(trainData,
                                             test_size=0.1, shuffle=False)
         #print(len(train_set), len(val_set))
         train_generator, val_generator = self.loadValidationDatasets_new(train_set, val_set)
-        """
-        test_set, val_test_set = train_test_split(testData,
+        
+        """test_set, val_test_set = train_test_split(testData,
                                             test_size=0.1)
         #print(len(train_set), len(val_set))
-        test_generator, val_test_generator = self.loadValidationDatasets_new(test_set, val_test_set)
+        test_generator, val_test_generator = self.loadValidationDatasets_new(test_set, val_test_set)"""
 
         model=tf.keras.models.load_model(path)
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
-        results = model.evaluate(val_test_generator) #Se ha cambiado el train_generator por val_generator para probarlo. -> tarda menos claro
+        results = model.evaluate(val_set) #Se ha cambiado el train_generator por val_generator para probarlo. -> tarda menos claro
         #print(results)
         #load the json to a string
         with open(self.path+'/history.json', 'r') as f:
