@@ -490,10 +490,11 @@ class Device:
             history = json.loads(f.read())
         #extract an element in the response
         last_acc=history[-1]["accuracy"]
+        last_val_acc=history[-1]["val_accuracy"]
         #print("last accuracy: "+str(last_acc))
             
         #Si tengo mejores resultados frente al que tenía cuando entrené, me quedo con el ultimo modelo -> Se renombra el anterior y se guarda con el mismo nombre
-        if(float(results[1])>float(last_acc)):
+        if(float(results[1])>float(last_val_acc)):
             print("Mi modelo anterior es reemplazado por el que me pasa el servidor")
             path_modelo_anterior=self.path+"/model.h5"
             path_modelo_renombrado=self.path+"/model_acc_"+str(last_acc)+".h5"
