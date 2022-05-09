@@ -53,12 +53,12 @@ if __name__ == "__main__":
     path_dataset="/datasets" #path donde se encuentra el dataset descomprimido
     model_type=4 #Se debera de pasar por parametros
     epochs=1 #Se debera de pasar por parametros
-    image_height = 224 #224
-    image_width = 224 #224
+    image_height = 256 #224
+    image_width = 256 #224
     batch_size = 5
     steps_per_epoch = 10
     dataset_rename = False
-    num_etapas=5 #Serian 4 días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
+    num_etapas=5 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
 
 
     #Creo las carpetas de los datasets y los renombro
@@ -185,7 +185,6 @@ if __name__ == "__main__":
             isna = df['evaluate_time_seconds'].isna()
             df.loc[isna, 'evaluate_time_seconds']=evaluate_times
             evaluate_times=df
-            print(evaluate_times.head())
         else:
             df['evaluate_time_seconds']=evaluate_times
 
@@ -194,7 +193,6 @@ if __name__ == "__main__":
             isna_model_change = df['is_model_changed'].isna()
             df.loc[isna_model_change, 'is_model_changed']=is_model_changed_list
             is_model_changed_list=df
-            print(is_model_changed_list.head())
         else:
             df['is_model_changed']=is_model_changed_list
 
@@ -202,9 +200,10 @@ if __name__ == "__main__":
             isna_evaluate_accuracy = df['evaluate_accuracy'].isna()
             df.loc[isna_evaluate_accuracy, 'evaluate_accuracy']=evaluate_accuracy_list
             evaluate_accuracy_list=df
-            print(evaluate_accuracy_list.head())
         else:
             df['evaluate_accuracy']=evaluate_accuracy_list
+            
+        print(df.head(20))
 
         df.to_csv(new_path+"/results.csv", index=False)
 
