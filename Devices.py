@@ -478,7 +478,7 @@ class Device:
         train_generator, val_generator = self.loadValidationDatasets_new(train_set, val_set)
         """
         test_set, val_test_set = train_test_split(testData,
-                                            test_size=0.1, shuffle=False)
+                                            test_size=0.1)
         #print(len(train_set), len(val_set))
         test_generator, val_test_generator = self.loadValidationDatasets_new(test_set, val_test_set)
 
