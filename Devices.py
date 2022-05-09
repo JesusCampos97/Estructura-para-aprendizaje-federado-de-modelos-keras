@@ -230,6 +230,7 @@ class Device:
 
         trainData = pd.DataFrame({'file': train})
         labelsData = []
+        labelsData_test = []
         #binary_labelsData=[]
 
         for i in train:
@@ -240,14 +241,27 @@ class Device:
                 labelsData.append('road')
                 #binary_labelsData.append(1)
 
+        for i in test:
+            if 'crosswalk' in i:
+                labelsData_test.append('crosswalk')
+                #binary_labelsData.append(0)
+            else:
+                labelsData_test.append('road')
+                #binary_labelsData.append(1)
+
         #print("La clase 0 es: "+labelsData[0])
         trainData['labels'] = labelsData
         le = preprocessing.LabelEncoder()
         le.fit(labelsData)
         binary_labelsData_new = le.transform(labelsData)
         trainData['binary_labels'] = binary_labelsData_new #binary_labelsData
+
         testData = pd.DataFrame({'file': test})
-        trainData.head(10)
+        testData['labels'] = labelsData_test
+        le = preprocessing.LabelEncoder()
+        le.fit(labelsData_test)
+        binary_labelsData_test_new = le.transform(labelsData_test)
+        testData['binary_labels'] = binary_labelsData_test_new #binary_labelsData
 
         return trainData, testData
 
@@ -472,19 +486,19 @@ class Device:
         trainData.head()
         testData.head()
 
-        train_set, val_set = train_test_split(trainData,
+        """train_set, val_set = train_test_split(trainData,
                                             test_size=0.1, shuffle=False)
         #print(len(train_set), len(val_set))
         train_generator, val_generator = self.loadValidationDatasets_new(train_set, val_set)
-        
-        """test_set, val_test_set = train_test_split(testData,
-                                            test_size=0.1)
+        """
+        test_set, val_test_set = train_test_split(testData,
+                                            test_size=0.1, shuffle=False)
         #print(len(train_set), len(val_set))
-        test_generator, val_test_generator = self.loadValidationDatasets_new(test_set, val_test_set)"""
+        test_generator, val_test_generator = self.loadValidationDatasets_new(test_set, val_test_set)
 
         model=tf.keras.models.load_model(path)
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
-        results = model.evaluate(val_set) #Se ha cambiado el train_generator por val_generator para probarlo. -> tarda menos claro
+        results = model.evaluate(val_test_generator) #Se ha cambiado el train_generator por val_generator para probarlo. -> tarda menos claro
         #print(results)
         #load the json to a string
         with open(self.path+'/history.json', 'r') as f:
