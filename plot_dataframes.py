@@ -19,8 +19,15 @@ df_aux_d3=df[(df.device==3)]
 df_aux_d4=df[(df.device==4)]
 
 
+df_aux_d0.plot(kind='line',x='day',y='val_accuracy',color='red')
+df_aux_d1.plot(kind='line',x='day',y='val_accuracy',color='yellow')
+df_aux_d2.plot(kind='line',x='day',y='val_accuracy',color='blue')
+df_aux_d3.plot(kind='line',x='day',y='val_accuracy',color='green')
+df_aux_d4.plot(kind='line',x='day',y='val_accuracy',color='black')
+
+
 #df_aux_d0.plot(x='accuracy', kind='line')
-print(df_aux_d0['val_accuracy'])
+"""print(df_aux_d0['val_accuracy'])
 print(df_aux_d0['val_accuracy'][0])
 
 plt.plot(df_aux_d0['val_accuracy'])
@@ -28,8 +35,7 @@ plt.plot(df_aux_d1['val_accuracy'])
 plt.plot(df_aux_d2['val_accuracy'])
 plt.plot(df_aux_d3['val_accuracy'])
 plt.plot(df_aux_d4['val_accuracy'])
-plt.xticks(5, range(5))
-
+"""
 plt.title('Accuracy comparation')
 plt.ylabel('accuracy')
 plt.xlabel('days')
