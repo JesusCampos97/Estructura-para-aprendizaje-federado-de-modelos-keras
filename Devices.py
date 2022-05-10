@@ -216,6 +216,7 @@ class Device:
 
         labels=[]
         dst_dir = self.path_dataset+"/allDataset"
+        print("path de imagenes "+dst_dir)
         for filename in enumerate(os.listdir(dst_dir)):
             labels.append(filename[1])
 
@@ -225,8 +226,8 @@ class Device:
         train = labels[:num_max_labels]
         test = labels[num_max_labels:]
 
-        #print("Num imagenes train "+str(len(train)))
-        #print("Num imagenes test "+str(len(test)))
+        print("Num imagenes totales "+str(len(train)+len(test)))
+        print("la seed del rendom es "+str(self.number))
 
         trainData = pd.DataFrame({'file': train})
         labelsData = []
@@ -262,6 +263,10 @@ class Device:
         le.fit(labelsData_test)
         binary_labelsData_test_new = le.transform(labelsData_test)
         testData['binary_labels'] = binary_labelsData_test_new #binary_labelsData
+
+        print("---------------------------")
+        print(trainData.head(20))
+        print("---------------------------")
 
         return trainData, testData
 
@@ -483,11 +488,14 @@ class Device:
     """Return 1 if the model change and 0 if hold the same model"""
     def evaluate_new(self, path):
         trainData, testData = self.loadDataImages_new()
-        trainData.head()
-        testData.head()
 
         train_set, val_set = train_test_split(trainData,
-                                            test_size=0.1, shuffle=False)
+                                            test_size=0.2, shuffle=False)
+
+        print("***********")
+        print(train_set.head(20))
+        print("***********")
+
         #print(len(train_set), len(val_set))
         train_generator, val_generator = self.loadValidationDatasets_new(train_set, val_set)
         
