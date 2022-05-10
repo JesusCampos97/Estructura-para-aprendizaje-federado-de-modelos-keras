@@ -109,7 +109,7 @@ class Device:
         testData.head()
         #print("imagenes procesadas")
         train_set, val_set = train_test_split(trainData,
-                                            test_size=0.1)
+                                            test_size=0.2, shuffle=False)
         #print(train_set.head(10))
         #print("validation split realizado")
         #print(len(train_set), len(val_set))
@@ -122,13 +122,13 @@ class Device:
         #model.summary()
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
         #print("modelo compilado")
-        tf.compat.v1.reset_default_graph()
+        #tf.compat.v1.reset_default_graph()
         with tf.device('/device:CPU:0'):
             history = model.fit(train_generator, 
                             validation_data = validation_generator, 
                             epochs = self.epochs, steps_per_epoch = int(len(train_generator)/self.batch_size)) #model.fit_generator
 
-        model.save(self.path+"/model.h5")
+        model.save(self.path+"/model.h5", overwrite=True)
         #print("modelo guardado")
         self.plotHistory(history)
         self.saveConfig(history)
@@ -224,7 +224,7 @@ class Device:
         random.shuffle(labels)
         num_max_labels=int(num*self.train_percentage) #se usa un 80 para train y un 20 para test de forma normal
         train = labels[:num_max_labels]
-        test = labels[num_max_labels:]
+        test = labels[num_max_labels-1:]
 
         print("Num imagenes totales "+str(len(train)+len(test)))
         print("la seed del rendom es "+str(self.number))
@@ -264,9 +264,9 @@ class Device:
         binary_labelsData_test_new = le.transform(labelsData_test)
         testData['binary_labels'] = binary_labelsData_test_new #binary_labelsData
 
-        print("---------------------------")
-        print(trainData.head(20))
-        print("---------------------------")
+        #print("---------------------------")
+        #print(trainData.head(20))
+        #print("---------------------------")
 
         return trainData, testData
 
@@ -492,9 +492,9 @@ class Device:
         train_set, val_set = train_test_split(trainData,
                                             test_size=0.2, shuffle=False)
 
-        print("***********")
-        print(train_set.head(20))
-        print("***********")
+        #print("***********")
+        #print(train_set.head(20))
+        #print("***********")
 
         #print(len(train_set), len(val_set))
         train_generator, val_generator = self.loadValidationDatasets_new(train_set, val_set)
