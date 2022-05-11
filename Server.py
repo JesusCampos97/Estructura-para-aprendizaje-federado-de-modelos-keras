@@ -108,7 +108,7 @@ class Server:
         #print("num devices "+str(num_devices))
         for i in range(num_devices):
             for file in os.listdir(pathp+"/d"+str(i)):
-                if file.endswith(".h5"):
+                if file.endswith("model.h5"):
                     path_aux=pathp+"/d"+str(i)+"/"+file
                     print(path_aux)
                     model_aux=tf.keras.models.load_model(path_aux)
