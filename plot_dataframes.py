@@ -13,7 +13,7 @@ df = pd.read_csv(path+"/results.csv")
 
 df_aux_acc_mean=df.groupby(['day'])['val_accuracy'].mean()
 df_aux_loss_mean=df.groupby(['day'])['val_loss'].mean()
-media_cambios=df['is_model_change'].mean()
+media_cambios=df['is_model_changed'].mean()
 
 time_min=(df.groupby(['day'])['execute_time_seconds'].sum()+df.groupby(['day'])['evaluate_time_seconds'].sum())/60.0
 print(time_min)
