@@ -21,7 +21,7 @@ print(media_cambios)
 
 
 ax_aux=df_aux_acc_mean.plot(kind='line',x='day',y='val_accuracy',color='red')
-ax_aux=df_aux_loss_mean.plot(kind='line',x='day',y='val_accuracy',color='yellow', ax=ax_aux)
+ax_aux=df_aux_loss_mean.plot(kind='line',x='day',y='val_accuracy',color='blue', ax=ax_aux)
 
 """
 
