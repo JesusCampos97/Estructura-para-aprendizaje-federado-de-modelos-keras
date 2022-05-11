@@ -30,4 +30,11 @@
     Hay que dejar el mobilenet el mismo tiempo que tarda el vgg16 (unas 6h) y ver como funciona.
     Se deja ejecutando vgg16 5devices, 5 días para comprovar resultados
     /home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/11-05-2022 13-37 -> dense de 1024 -> buenos resultados
-    /home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/11-05-2022 13-37 -> dense de 512
+    /home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/11-05-2022 17-23 -> dense de 512
+
+    *Probar que Mobilenetv2 con 1024 y 512
+    *Probar un modelo muy bueno como referencia
+    *PRobar el tiempo dle VGG16 en 5 días y 5 devices
+    *PRobar el MobileNet 10 y 15 días y 5 devices
+    *Probar el MobileNEt 5,10,15 días y 10,15 devices
+    *Probar el vgg16 con 10 y 15 días 5 y 10 devices

@@ -8,7 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/11-05-2022 13-37"
+path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/11-05-2022 17-23"
 df = pd.read_csv(path+"/results.csv")  
 
 df_aux_acc_mean=df.groupby(['day'])['accuracy'].mean()
@@ -56,4 +56,4 @@ plt.title('Accuracy comparation')
 plt.ylabel('accuracy')
 plt.xlabel('days')
 plt.legend(['acc', 'loss', 'd2', 'd3', 'd4'], loc='upper left')
-plt.savefig(path+'/pruebas.png')
+plt.savefig(path+'/pruebas_normal.png')
