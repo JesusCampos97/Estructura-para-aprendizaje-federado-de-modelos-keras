@@ -392,20 +392,19 @@ class Device:
                 """flat1 = Flatten()(model.layers[-1].output)
                 class1 = Dense(512, activation='relu')(flat1)
                 output = Dense(2, activation='softmax')(class1)"""
-                """x=GlobalAveragePooling2D()(model.layers[-1].output)
+                x=GlobalAveragePooling2D()(model.layers[-1].output)
                 #maybe 1024?????????????????????????????????????????????????????????????????????????????????
                 class0 = Dense(1024, activation='relu')(x)
                 class1 = Dense(512, activation='relu')(class0)
-                output = Dense(2, activation='softmax')(class1) #2, softmax"""
+                output = Dense(2, activation='softmax')(class1) #2, softmax
 
-                flat1 = Flatten()(model.layers[-1].output)
+                """flat1 = Flatten()(model.layers[-1].output)
                 drop = Dropout(0.5)(flat1)
                 class1 = Dense(512, activation='relu')(drop)
-                output = Dense(2, activation='softmax')(class1)
+                output = Dense(2, activation='softmax')(class1)"""
 
                 #output = Flatten()(output)
                 model = Model(inputs=model.inputs, outputs=output)
-                model.summary()
                 return model
         else: #ya llevamos al menos una ejecución, el modelo deberia de entrenar con el que ya tiene
             model=tf.keras.models.load_model(self.path+'/model.h5')
