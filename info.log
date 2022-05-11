@@ -29,3 +29,5 @@
     Hay que agregar un dispositivo entrenado bien que sea el pilar del que aprenden todos de inciio  yprobar que tal va. Por ahora no hay malos resultados parece ser
     Hay que dejar el mobilenet el mismo tiempo que tarda el vgg16 (unas 6h) y ver como funciona.
     Se deja ejecutando vgg16 5devices, 5 días para comprovar resultados
+    /home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/11-05-2022 13-37 -> dense de 1024 -> buenos resultados
+    /home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/11-05-2022 13-37 -> dense de 512
