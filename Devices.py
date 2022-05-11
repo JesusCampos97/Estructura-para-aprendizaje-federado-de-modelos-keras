@@ -24,7 +24,7 @@ from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import Flatten
-from tensorflow.keras.layers import GlobalAveragePooling2D
+from tensorflow.keras.layers import GlobalAveragePooling2D, Dropout
 from matplotlib import pyplot as plt
 import json
 from sklearn.preprocessing import LabelEncoder
@@ -392,14 +392,20 @@ class Device:
                 """flat1 = Flatten()(model.layers[-1].output)
                 class1 = Dense(512, activation='relu')(flat1)
                 output = Dense(2, activation='softmax')(class1)"""
-                x=GlobalAveragePooling2D()(model.layers[-1].output)
+                """x=GlobalAveragePooling2D()(model.layers[-1].output)
                 #maybe 1024?????????????????????????????????????????????????????????????????????????????????
                 class0 = Dense(1024, activation='relu')(x)
                 class1 = Dense(512, activation='relu')(class0)
+                output = Dense(2, activation='softmax')(class1) #2, softmax"""
+
+                flat1 = Flatten()(model.layers[-1].output)
+                drop = Dropout(0.5)(flat1)
+                class1 = Dense(512, activation='relu')(drop)
                 output = Dense(2, activation='softmax')(class1)
 
                 #output = Flatten()(output)
                 model = Model(inputs=model.inputs, outputs=output)
+                model.summary()
                 return model
         else: #ya llevamos al menos una ejecución, el modelo deberia de entrenar con el que ya tiene
             model=tf.keras.models.load_model(self.path+'/model.h5')

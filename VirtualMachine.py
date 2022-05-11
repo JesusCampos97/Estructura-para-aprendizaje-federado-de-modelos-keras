@@ -46,19 +46,19 @@ def processImages(path_dataset):
 if __name__ == "__main__":
 
 
-    num_devices=5
+    num_devices=1
     data_percentage=0.8
     train_percentage=0.8
     path_devices="./Devices/"#"Devices/5/20042022 (2)"
     path_dataset="/datasets" #path donde se encuentra el dataset descomprimido
     model_type=4 #Se debera de pasar por parametros
-    epochs=1 #Se debera de pasar por parametros
+    epochs=5 #Se debera de pasar por parametros
     image_height = 256 #224
     image_width = 256 #224
     batch_size = 5
     steps_per_epoch = 10
     dataset_rename = False
-    num_etapas=5 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
+    num_etapas=1 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
 
 
     #Creo las carpetas de los datasets y los renombro
