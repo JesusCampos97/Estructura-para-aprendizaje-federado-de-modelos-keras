@@ -52,7 +52,7 @@ if __name__ == "__main__":
     path_devices="./Devices/"#"Devices/5/20042022 (2)"
     path_dataset="/datasets" #path donde se encuentra el dataset descomprimido
     model_type=4 #Se debera de pasar por parametros
-    epochs=8 #Se debera de pasar por parametros
+    epochs=15 #Se debera de pasar por parametros
     image_height = 256 #224
     image_width = 256 #224
     batch_size = 5
