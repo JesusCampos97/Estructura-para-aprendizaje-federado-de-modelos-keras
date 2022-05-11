@@ -24,3 +24,8 @@
 *- 08/05/22 -* 
     Se generan todas las tablas bien y tenemos muy buenos resultados con el modelo VGG16 en el '08-05-2022 16-13'. Todos mejoran. aprox 2h de ejecucion con 2 devices y 4 days
     Generamos lo mismo con el model MobileNetV2
+
+*- 11/05/22 -*
+    Hay que agregar un dispositivo entrenado bien que sea el pilar del que aprenden todos de inciio  yprobar que tal va. Por ahora no hay malos resultados parece ser
+    Hay que dejar el mobilenet el mismo tiempo que tarda el vgg16 (unas 6h) y ver como funciona.
+    Se deja ejecutando vgg16 5devices, 5 días para comprovar resultados
