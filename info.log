@@ -42,7 +42,7 @@
 *- 12/05/22 -*
     Se prueba el mejor modelo de 0.9 de acc para empezar con el-> validations no mejores y trains no mejores, aprox iguales, se prueban otras cosas a ver que tal->5/12-05-22 10-15
     Se prueba el mejor modelo de 0.9 como pilar de merge
-    Se prueba el mejor modelo de 0.9 como comienzo y pilar de merge-> 
+    Se prueba el mejor modelo de 0.9 como comienzo y pilar de merge-> resultados del train un pelin mejores
 
     Se prueba el mejor modelo de 0.85 de acc para empezar con el
     Se prueba el mejor modelo de 0.85 como pilar de merge
