@@ -44,7 +44,8 @@
     Se prueba el mejor modelo de 0.9 como pilar de merge
     Se prueba el mejor modelo de 0.9 como comienzo y pilar de merge-> resultados del train un pelin mejores y val igual aunque val_loss raro -> 5/12-05-22 15-28
 
-    Se prueba el mejor modelo de 0.85 de acc para empezar con el-> 5/12-05-22 18-32 ->
+    Se prueba el mejor modelo de 0.85 de acc para empezar con el-> 5/12-05-22 18-32 -> es aprox igual que el de 0.9 misma grafica casi. Al saber eso se prueba que
+    pasa con más devices (10 y 15)
     Se prueba el mejor modelo de 0.85 como pilar de merge
     Se prueba el mejor modelo de 0.85 como comienzo y pilar de merge
 
