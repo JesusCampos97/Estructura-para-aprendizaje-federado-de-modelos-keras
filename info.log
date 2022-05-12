@@ -40,6 +40,6 @@
     *Probar el vgg16 con 10 y 15 días 5 y 10 devices
 
 *- 12/05/22 -*
-    Se prueba el mejor modelo de 0.9 de acc para el pilar
-    Se prueba el modelo de 512 dense con 5,10,15 dias y 5 devices
-    Se prueba el modelo de 1024 dense con 5,10,15 dias y 5 devices
+    Se prueba el mejor modelo de 0.9 de acc para empezar con el
+    Se prueba el mejor modelo de 0.9 como pilar de merge
+    Se prueba el mejor modelo de 0.9 como comienzo y pilar de merge
