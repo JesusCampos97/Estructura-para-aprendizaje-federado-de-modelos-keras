@@ -41,4 +41,5 @@
 
 *- 12/05/22 -*
     Se prueba el mejor modelo de 0.9 de acc para el pilar
+    Se prueba el modelo de 512 dense con 5,10,15 dias y 5 devices
     Se prueba el modelo de 1024 dense con 5,10,15 dias y 5 devices

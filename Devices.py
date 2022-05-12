@@ -405,7 +405,11 @@ class Device:
 
                 #output = Flatten()(output)
                 model = Model(inputs=model.inputs, outputs=output)
-                return model
+                #return model
+                
+                best_model=tf.keras.models.load_model("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5")
+                return best_model
+                
         else: #ya llevamos al menos una ejecución, el modelo deberia de entrenar con el que ya tiene
             model=tf.keras.models.load_model(self.path+'/model.h5')
             return model
