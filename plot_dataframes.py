@@ -8,7 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/12-05-2022 10-15"
+path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/12-05-2022 15-28"
 df = pd.read_csv(path+"/results.csv")  
 
 df_aux_acc_mean=df.groupby(['day'])['accuracy'].mean()
