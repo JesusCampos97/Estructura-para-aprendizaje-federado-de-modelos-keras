@@ -96,6 +96,8 @@ class Server:
         #cojo todos los device dese path con el len del folder
         #me meto todos los modelos en un array
         ListDevices = []
+        best_model=tf.keras.models.load_model("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5")
+        ListDevices.append(best_model) #0.9 acc
         
         num_devices=0
         list_files=os.listdir(pathp+"/")

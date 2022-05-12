@@ -34,7 +34,11 @@
 
     *Probar que Mobilenetv2 con 1024 y 512
     *Probar un modelo muy bueno como referencia
-    *PRobar el tiempo dle VGG16 en 5 días y 5 devices
-    *PRobar el MobileNet 10 y 15 días y 5 devices
+    *Probar el tiempo dle VGG16 en 5 días y 5 devices
+    *Probar el MobileNet 10 y 15 días y 5 devices
     *Probar el MobileNEt 5,10,15 días y 10,15 devices
     *Probar el vgg16 con 10 y 15 días 5 y 10 devices
+
+*- 12/05/22 -*
+    Se prueba el mejor modelo de 0.9 de acc para el pilar
+    Se prueba el modelo de 1024 dense con 5,10,15 dias y 5 devices
