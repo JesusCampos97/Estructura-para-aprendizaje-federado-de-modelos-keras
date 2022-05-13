@@ -55,3 +55,12 @@
     Se prueba el modelo con 10 devices, merge y pilar de 0.85 y tenemos graficas de train y loss mejores, leves, pero mejorando. 
         las graficas de val salen raras peor mejoran al final->10/12-05-22 21-25
     Se prueba el modelo con 5 devices durante 10 días con pilar y merge y se comprueba si mejora.
+    Lo de arriba deberia de ser similar??  hay diferencia
+
+*- 13/05/22 -*
+    Se prueba un tamaño del lote de 20 a ver si no casca por memoria...
+    Probar 10 dispositivos a 5 dias
+    Probar 5 dispositivos a 5 días
+    Proar 5 dispositivos a 10 días 
+    Probar 10 dispositivos a 10 días
+    Ver la diferencia
