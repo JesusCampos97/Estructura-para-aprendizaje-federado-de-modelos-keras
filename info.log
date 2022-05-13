@@ -51,3 +51,5 @@
 
     coger lo mejor y dejarlo en 10, 15 días con  devices
     dejarlo 5,10,15 dias para 10 devices
+
+    Se prueba el modelo con 10 devices, merge y pilar de 0.85 y tenemos graficas de train y loss mejores, leves, pero mejorando
