@@ -221,10 +221,10 @@ class Device:
         print("path de imagenes "+dst_dir)
         for filename in enumerate(os.listdir(dst_dir)):
             labels.append(filename[1])
-            if "crosswalk" in filename[1]:
+            """if "crosswalk" in filename[1]:
                 labels_positive.append(filename[1])
             else:
-                labels_negative.append(filename[1])
+                labels_negative.append(filename[1])"""
 
         #Cogemos 80% labels y 80% tests para que no haya problemas 
         """ SI CUANDO TERMINE CON 32 D EBATCHSIZE Y 5 DIAS 5 DEVICES, EL VAL SIGUE SALIENDO MAL, SE PRUEBA CON ESTA PARTE DE CODIGO PARA QUE 

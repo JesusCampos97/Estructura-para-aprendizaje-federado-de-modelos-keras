@@ -201,7 +201,7 @@ if __name__ == "__main__":
         else:
             df['evaluate_accuracy']=evaluate_accuracy_list
             
-        print(df.head(20))
+        print(df)
 
         df.to_csv(new_path+"/results.csv", index=False)
 
