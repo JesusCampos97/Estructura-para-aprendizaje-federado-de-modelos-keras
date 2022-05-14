@@ -288,9 +288,9 @@ class Device:
         testData['binary_labels'] = binary_labelsData_test_new #binary_labelsData
 
         print("---------------------------")
-        print(trainData.head(20))
+        print(trainData.head(50))
         print("---------------------------")
-        print(testData.head(20))
+        print(testData.head(50))
 
         return trainData, testData
 
