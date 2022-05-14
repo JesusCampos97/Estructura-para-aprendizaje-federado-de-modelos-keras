@@ -215,16 +215,36 @@ class Device:
         #Aqui hay que cmabiar al forma de trabajar. La clase 0 tiene que ser siempre la misma... si no cascará al mergear 2 modelos siempre.... es decir no irá bien
 
         labels=[]
+        labels_positive=[]
+        labels_negative=[]
         dst_dir = self.path_dataset+"/allDataset"
         print("path de imagenes "+dst_dir)
         for filename in enumerate(os.listdir(dst_dir)):
             labels.append(filename[1])
+            if "crosswalk" in filename[1]:
+                labels_positive.append(filename[1])
+            else:
+                labels_negative.append(filename[1])
 
-        num=len(labels)
+        print("labels_positive: "+str(len(labels_positive)))
+        #Cogemos 80% labels y 80% tests para que no haya problemas 
+        """ SI CUANDO TERMINE CON 32 D EBATCHSIZE Y 5 DIAS 5 DEVICES, EL VAL SIGUE SALIENDO MAL, SE PRUEBA CON ESTA PARTE DE CODIGO PARA QUE 
+            TENGAN LAS CLASES MÁS IGUALADAS Y NO SE VAYABN JODIENDO ENTRE SI"""
+        num_positive=len(labels_positive)
+        num_positive_labels=int(num_positive*self.train_percentage)
+        num_negative=len(labels_negative)
+        num_negative_labels=int(num_negative*self.train_percentage)
+        random.shuffle(labels_positive)
+        random.shuffle(labels_negative)
+        train=labels_positive[:num_positive_labels]+labels_negative[:num_negative_labels]
+        test = labels_positive[num_positive_labels-1:]+labels_negative[num_negative_labels-1:]
+        
+
+        """num=len(labels)
         random.shuffle(labels)
         num_max_labels=int(num*self.train_percentage) #se usa un 80 para train y un 20 para test de forma normal
         train = labels[:num_max_labels]
-        test = labels[num_max_labels-1:]
+        test = labels[num_max_labels-1:]"""
 
         print("Num imagenes totales "+str(len(train)+len(test)))
         print("la seed del rendom es "+str(self.number))

@@ -8,6 +8,7 @@ from tensorflow import keras
 from tensorflow.keras.models import clone_model
 from math import exp
 from numpy import array
+import json
 
 class Server:
 
@@ -79,6 +80,7 @@ class Server:
         avg_model_weights = []
         for layer in range(n_layers):
             # collect this layer from each model
+            
             layer_weights = array([model.get_weights()[layer] for model in members])
             # weighted average of weights for this layer
             avg_layer_weights = average(layer_weights, axis=0, weights=weights)
@@ -110,12 +112,25 @@ class Server:
         #print("num devices "+str(num_devices))
         for i in range(num_devices):
             for file in os.listdir(pathp+"/d"+str(i)):
-                if file.endswith("model.h5"):
-                    path_aux=pathp+"/d"+str(i)+"/"+file
-                    print(path_aux)
-                    model_aux=tf.keras.models.load_model(path_aux)
-                    #model_aux.summary()
-                    ListDevices.append(model_aux)
+                if file.endswith("history.json"):
+                    with open(pathp+"/d"+str(i)+'/history.json', 'r') as f:
+                        history = json.loads(f.read())
+                    #extract an element in the response
+                    last_acc=history[-1]["accuracy"]
+                    last_val_acc=history[-1]["val_accuracy"]
+                    if float(last_val_acc)>0.756: #si el accuracy del modelo esta por encima del accuracy de mi modelo inicial, entonces que no hay tanto overfitting
+                        path_aux=pathp+"/d"+str(i)+"/model.h5"
+                        print(path_aux)
+                        model_aux=tf.keras.models.load_model(path_aux)
+                        #model_aux.summary()
+                        ListDevices.append(model_aux)
+
+            """if file.endswith("model.h5"):
+                path_aux=pathp+"/d"+str(i)+"/"+file
+                print(path_aux)
+                model_aux=tf.keras.models.load_model(path_aux)
+                #model_aux.summary()
+                ListDevices.append(model_aux)"""
 
                 
         #print(ListDevices)

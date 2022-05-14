@@ -61,3 +61,11 @@
     Se prueba un tamaño del lote de 10 a ver si no casca por memoria...
     Probar 5 devices 10 dias y comparar.. y ver si no peta.
     Si va mejor, ejecutamos con 10 devices y 5 días y vemos si no peta etc
+
+
+*- 14/05/22 -*
+    Se prueba un batch size de 32
+    Se quiere probar que los datasets tengan las clases igualdas, cogiendo 80% de positivos y negativos (clases) y que así el val accuracy luego no se ponga tan loco
+    Si con esto ultimo el val sigue oscilando tanto, es debido a que hay sobreajuste y hay que realizar algo para tener más imagenes en el dataset
+    Mergear solo los modelos con un val accuracy superior a un umbral como diciendo que este modelo no tiene sobreajuste.
+    Hay que probar si quitando el pilar de merge mantiene los resultados
