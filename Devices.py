@@ -527,7 +527,7 @@ class Device:
         #print("last accuracy: "+str(last_acc))
             
         #Si tengo mejores resultados frente al que tenía cuando entrené, me quedo con el ultimo modelo -> Se renombra el anterior y se guarda con el mismo nombre
-        if(float(results[1])>float(last_val_acc) and float(results[1])>0.756): #0.75 es el val_accuracy que me sale en el best model-> Esto es para que no coja cosas con mal val accuracy
+        if(float(results[1])>float(last_val_acc)):
             print("Mi modelo anterior es reemplazado por el que me pasa el servidor")
             path_modelo_anterior=self.path+"/model.h5"
             path_modelo_renombrado=self.path+"/model_acc_"+str(last_acc)+".h5"
