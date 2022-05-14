@@ -239,8 +239,9 @@ class Device:
         train=labels_positive[:num_positive_labels]+labels_negative[:num_negative_labels]
         test = labels_positive[num_positive_labels-1:]+labels_negative[num_negative_labels-1:]
         
-        print(train.head(30))
-        print(test.head(30))
+        print(*train)
+        print("++++++++")
+        print(*test)
 
         """num=len(labels)
         random.shuffle(labels)
