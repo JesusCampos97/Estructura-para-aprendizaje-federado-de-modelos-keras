@@ -226,11 +226,10 @@ class Device:
             else:
                 labels_negative.append(filename[1])
 
-        print("labels_positive: "+str(len(labels_positive)))
         #Cogemos 80% labels y 80% tests para que no haya problemas 
         """ SI CUANDO TERMINE CON 32 D EBATCHSIZE Y 5 DIAS 5 DEVICES, EL VAL SIGUE SALIENDO MAL, SE PRUEBA CON ESTA PARTE DE CODIGO PARA QUE 
             TENGAN LAS CLASES MÁS IGUALADAS Y NO SE VAYABN JODIENDO ENTRE SI"""
-        num_positive=len(labels_positive)
+        """num_positive=len(labels_positive)
         num_positive_labels=int(num_positive*self.train_percentage)
         num_negative=len(labels_negative)
         num_negative_labels=int(num_negative*self.train_percentage)
@@ -238,13 +237,13 @@ class Device:
         random.shuffle(labels_negative)
         train=labels_positive[:num_positive_labels]+labels_negative[:num_negative_labels]
         test = labels_positive[num_positive_labels-1:]+labels_negative[num_negative_labels-1:]
-        
+        """
 
-        """num=len(labels)
+        num=len(labels)
         random.shuffle(labels)
         num_max_labels=int(num*self.train_percentage) #se usa un 80 para train y un 20 para test de forma normal
         train = labels[:num_max_labels]
-        test = labels[num_max_labels-1:]"""
+        test = labels[num_max_labels-1:]
 
         print("Num imagenes totales "+str(len(train)+len(test)))
         print("la seed del rendom es "+str(self.number))
@@ -283,10 +282,6 @@ class Device:
         le.fit(labelsData_test)
         binary_labelsData_test_new = le.transform(labelsData_test)
         testData['binary_labels'] = binary_labelsData_test_new #binary_labelsData
-
-        print("---------------------------")
-        print(trainData)
-        print("---------------------------")
 
         return trainData, testData
 
