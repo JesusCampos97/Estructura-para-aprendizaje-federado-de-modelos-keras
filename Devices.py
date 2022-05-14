@@ -239,9 +239,9 @@ class Device:
         train=labels_positive[:num_positive_labels]+labels_negative[:num_negative_labels]
         test = labels_positive[num_positive_labels-1:]+labels_negative[num_negative_labels-1:]
         
-        print(*train)
+        print(str(len(train)))
         print("++++++++")
-        print(*test)
+        print(str(len(test)))
 
         """num=len(labels)
         random.shuffle(labels)
@@ -287,9 +287,10 @@ class Device:
         binary_labelsData_test_new = le.transform(labelsData_test)
         testData['binary_labels'] = binary_labelsData_test_new #binary_labelsData
 
-        #print("---------------------------")
-        #print(trainData.head(20))
-        #print("---------------------------")
+        print("---------------------------")
+        print(trainData.head(20))
+        print("---------------------------")
+        print(testData.head(20))
 
         return trainData, testData
 
