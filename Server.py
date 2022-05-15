@@ -125,12 +125,12 @@ class Server:
                         #model_aux.summary()
                         ListDevices.append(model_aux)
 
-                if file.endswith("model.h5"):
+                """if file.endswith("model.h5"):
                     path_aux=pathp+"/d"+str(i)+"/"+file
                     print(path_aux)
                     model_aux=tf.keras.models.load_model(path_aux)
                     #model_aux.summary()
-                    ListDevices.append(model_aux)
+                    ListDevices.append(model_aux)"""
 
                 
         #print(ListDevices)
