@@ -11,6 +11,12 @@ import matplotlib.pyplot as plt
 path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/15-05-2022 10-45"
 df = pd.read_csv(path+"/results.csv")  
 
+df_add_aux = {'device': -1, 'accuracy': 0.8529411554, 'val_accuracy': 0.7568807602,'loss':0.2944834175, 'val_loss':0.4638305307,'day':-1,
+    'execute_time_seconds':0.0,'evaluate_time_seconds':0.0,'is_model_changed':0,'evaluate_accuracy':0.0}
+
+df = df.append(df_add_aux, ignore_index=True)
+
+print(df)
 
 df_aux_acc_mean=df.groupby(['day'])['accuracy'].mean()
 df_aux_loss_mean=df.groupby(['day'])['loss'].mean()
@@ -23,8 +29,8 @@ print(time_min)
 print(media_cambios)
 
 
-ax_aux=df_aux_acc_mean.plot(kind='line',x='day',y='val_accuracy',color='red')
-ax_aux=df_aux_loss_mean.plot(kind='line',x='day',y='val_accuracy',color='blue', ax=ax_aux)
+ax_aux=df_aux_acc_mean.plot(kind='line',x='day',y='accuracy',color='red')
+ax_aux=df_aux_loss_mean.plot(kind='line',x='day',y='accuracy',color='blue', ax=ax_aux)
 ax_aux=df_aux_evaluate_acc_mean.plot(kind='line',x='day',y='evaluate_accuracy',color='black', ax=ax_aux)
 
 """
