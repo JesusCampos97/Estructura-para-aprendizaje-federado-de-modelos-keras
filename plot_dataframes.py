@@ -11,8 +11,8 @@ import matplotlib.pyplot as plt
 path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/15-05-2022 10-45"
 df = pd.read_csv(path+"/results.csv")  
 
-df_aux_acc_mean=df.groupby(['day'])['val_accuracy'].mean()
-df_aux_loss_mean=df.groupby(['day'])['val_loss'].mean()
+df_aux_acc_mean=df.groupby(['day'])['vaccuracy'].mean()
+df_aux_loss_mean=df.groupby(['day'])['loss'].mean()
 df_aux_evaluate_acc_mean=df.groupby(['day'])['evaluate_accuracy'].mean()
 
 media_cambios=df['is_model_changed'].mean()
@@ -59,4 +59,4 @@ plt.title('Accuracy comparation')
 plt.ylabel('accuracy')
 plt.xlabel('days')
 plt.legend(['acc', 'loss', 'evaluate_acc'], loc='upper left')
-plt.savefig(path+'/pruebas_val.png')
+plt.savefig(path+'/pruebas.png')
