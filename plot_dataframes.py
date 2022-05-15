@@ -8,11 +8,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/14-05-2022 22-18"
+path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/15-05-2022 10-45"
 df = pd.read_csv(path+"/results.csv")  
 
 df_aux_acc_mean=df.groupby(['day'])['val_accuracy'].mean()
 df_aux_loss_mean=df.groupby(['day'])['val_loss'].mean()
+df_aux_evaluate_acc_mean=df.groupby(['day'])['evaluate_accuracy'].mean()
+
 media_cambios=df['is_model_changed'].mean()
 
 time_min=(df.groupby(['day'])['execute_time_seconds'].sum()+df.groupby(['day'])['evaluate_time_seconds'].sum())/60.0
@@ -22,6 +24,7 @@ print(media_cambios)
 
 ax_aux=df_aux_acc_mean.plot(kind='line',x='day',y='val_accuracy',color='red')
 ax_aux=df_aux_loss_mean.plot(kind='line',x='day',y='val_accuracy',color='blue', ax=ax_aux)
+ax_aux=df_aux_evaluate_acc_mean.plot(kind='line',x='day',y='evaluate_accuracy',color='black', ax=ax_aux)
 
 """
 

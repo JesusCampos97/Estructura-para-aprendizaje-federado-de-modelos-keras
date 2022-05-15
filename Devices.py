@@ -109,7 +109,7 @@ class Device:
         testData.head()
         #print("imagenes procesadas")
         train_set, val_set = train_test_split(trainData,
-                                            test_size=0.2, shuffle=False)
+                                            test_size=0.2, shuffle=True, random_state=self.number)
         #print(train_set.head(10))
         #print("validation split realizado")
         #print(len(train_set), len(val_set))
@@ -534,7 +534,7 @@ class Device:
         trainData, testData = self.loadDataImages_new()
 
         train_set, val_set = train_test_split(trainData,
-                                            test_size=0.2, shuffle=False)
+                                            test_size=0.2, shuffle=True, random_state=self.number)
 
         #print("***********")
         #print(train_set.head(20))
