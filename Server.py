@@ -112,7 +112,7 @@ class Server:
         #print("num devices "+str(num_devices))
         for i in range(num_devices):
             for file in os.listdir(pathp+"/d"+str(i)):
-                """if file.endswith("history.json"):
+                if file.endswith("history.json"):
                     with open(pathp+"/d"+str(i)+'/history.json', 'r') as f:
                         history = json.loads(f.read())
                     #extract an element in the response
@@ -123,7 +123,7 @@ class Server:
                         print(path_aux)
                         model_aux=tf.keras.models.load_model(path_aux)
                         #model_aux.summary()
-                        ListDevices.append(model_aux)"""
+                        ListDevices.append(model_aux)
 
                 if file.endswith("model.h5"):
                     path_aux=pathp+"/d"+str(i)+"/"+file

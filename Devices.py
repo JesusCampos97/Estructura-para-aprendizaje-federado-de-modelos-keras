@@ -253,23 +253,33 @@ class Device:
         labelsData_test = []
         #binary_labelsData=[]
 
+        num_crosswalk_train=0
+        num_road_train=0
         for i in train:
             if 'crosswalk' in i:
                 labelsData.append('crosswalk')
+                num_crosswalk_train+=1
                 #binary_labelsData.append(0)
             else:
                 labelsData.append('road')
+                num_road_train+=1
                 #binary_labelsData.append(1)
 
+        num_crosswalk_test=0
+        num_road_test=0
         for i in test:
             if 'crosswalk' in i:
                 labelsData_test.append('crosswalk')
+                num_crosswalk_test+=1
                 #binary_labelsData.append(0)
             else:
                 labelsData_test.append('road')
+                num_road_test+=1
                 #binary_labelsData.append(1)
 
-        #print("La clase 0 es: "+labelsData[0])
+        print("tenemos en train: "str(num_crosswalk_train)+" para crosswalk y "+str(num_road_train)+" para road")
+        print("tenemos en test: "str(num_crosswalk_test)+" para crosswalk y "+str(num_road_test)+" para road")
+
         trainData['labels'] = labelsData
         le = preprocessing.LabelEncoder()
         le.fit(labelsData)
