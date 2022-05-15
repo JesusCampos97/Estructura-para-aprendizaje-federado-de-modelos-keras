@@ -66,14 +66,14 @@ plt.plot(df_aux_d1['val_accuracy'])
 plt.plot(df_aux_d2['val_accuracy'])
 plt.plot(df_aux_d3['val_accuracy'])
 plt.plot(df_aux_d4['val_accuracy'])
-"""
+
 plt.title('Accuracy comparation')
 plt.ylabel('accuracy')
 plt.xlabel('days')
 plt.legend(['acc', 'val_acc', 'evaluate_acc'], loc='lower right')
 plt.savefig(path+'/pruebas_acc.png')
 
-plt.clf()
+plt.clf()"""
 
 df_aux_loss_mean=df.groupby(['day'])['loss'].mean()
 df_aux_val_loss_mean=df.groupby(['day'])['val_loss'].mean()
@@ -85,6 +85,6 @@ ax_aux_loss=df_aux_val_loss_mean.plot(kind='line',x='day',y='val_loss',color='bl
 plt.title('Loss comparation')
 plt.ylabel('loss')
 plt.xlabel('days')
-plt.legend(['loss', 'val_loss'], loc='upper right')
-plt.savefig(path+'/pruebas_loss.png')
+plt.legend(['acc', 'val_acc', 'evaluate_acc','loss', 'val_loss'], loc='upper right')
+plt.savefig(path+'/grafica_comparativa.png')
 
