@@ -10,6 +10,9 @@ import matplotlib.pyplot as plt
 
 
 
+fig, (ax_aux, ax_aux_loss) = plt.subplots(1, 2)
+fig.suptitle('Grafica comparativa')
+
 path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/15-05-2022 10-45"
 df = pd.read_csv(path+"/results.csv")  
 
@@ -79,9 +82,6 @@ df_aux_val_loss_mean=df.groupby(['day'])['val_loss'].mean()
 ax_aux_loss=df_aux_loss_mean.plot(kind='line',x='day',y='loss',color='red')
 ax_aux_loss=df_aux_val_loss_mean.plot(kind='line',x='day',y='val_loss',color='blue', ax=ax_aux_loss)
 
-
-fig, (ax_aux, ax_aux_loss) = plt.subplots(1, 2)
-fig.suptitle('Grafica comparativa')
 
 
 plt.title('Loss comparation')
