@@ -12,7 +12,7 @@ path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-
 df = pd.read_csv(path+"/results.csv")  
 
 df_add_aux = {'device': -1, 'accuracy': 0.8529411554, 'val_accuracy': 0.7568807602,'loss':0.2944834175, 'val_loss':0.4638305307,'day':-1,
-    'execute_time_seconds':0.0,'evaluate_time_seconds':0.0,'is_model_changed':0,'evaluate_accuracy':0.0}
+    'execute_time_seconds':0.0,'evaluate_time_seconds':0.0,'is_model_changed':0,'evaluate_accuracy':0.7568807602}
 
 df = df.append(df_add_aux, ignore_index=True)
 
