@@ -297,14 +297,7 @@ class Device:
 
     def loadValidationDatasets(self, train_set, val_set):
         train_gen = ImageDataGenerator(
-            rescale=1./255,
-            rotation_range=20,
-            width_shift_range=0.2,
-            height_shift_range=0.2,
-            shear_range=0.2,
-            zoom_range=0.2,
-            horizontal_flip=True,
-            fill_mode='nearest')
+            rescale=1./255)
             
         val_gen = ImageDataGenerator(rescale=1./255)
 
@@ -335,7 +328,16 @@ class Device:
         return train_generator,validation_generator
 
     def loadValidationDatasets_new(self, train_set, val_set):
-        train_gen = ImageDataGenerator(rescale=1./255)
+        train_gen = ImageDataGenerator(
+            rescale=1./255,
+            rotation_range=20,
+            width_shift_range=0.2,
+            height_shift_range=0.2,
+            shear_range=0.2,
+            zoom_range=0.2,
+            horizontal_flip=True,
+            fill_mode='nearest')
+            
         val_gen = ImageDataGenerator(rescale=1./255)
 
         train_generator = train_gen.flow_from_dataframe(
