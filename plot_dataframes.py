@@ -8,7 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/15-05-2022 10-45"
+path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/15-05-2022 16-33"
 df = pd.read_csv(path+"/results.csv")  
 
 df_add_aux = {'device': -1, 'accuracy': 0.8529411554, 'val_accuracy': 0.7568807602,'loss':0.2944834175, 'val_loss':0.4638305307,'day':-1,
