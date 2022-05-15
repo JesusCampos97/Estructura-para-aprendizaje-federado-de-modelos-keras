@@ -277,8 +277,8 @@ class Device:
                 num_road_test+=1
                 #binary_labelsData.append(1)
 
-        print("tenemos en train: "str(num_crosswalk_train)+" para crosswalk y "+str(num_road_train)+" para road")
-        print("tenemos en test: "str(num_crosswalk_test)+" para crosswalk y "+str(num_road_test)+" para road")
+        print("tenemos en train: "+str(num_crosswalk_train)+" para crosswalk y "+str(num_road_train)+" para road")
+        print("tenemos en test: "+str(num_crosswalk_test)+" para crosswalk y "+str(num_road_test)+" para road")
 
         trainData['labels'] = labelsData
         le = preprocessing.LabelEncoder()
