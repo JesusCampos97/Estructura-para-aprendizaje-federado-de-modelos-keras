@@ -3,7 +3,7 @@ from numpy import array
 import os
 import Devices
 import tensorflow as tf
-from numpy import average
+from numpy import average, median
 from tensorflow import keras
 from tensorflow.keras.models import clone_model
 from math import exp
