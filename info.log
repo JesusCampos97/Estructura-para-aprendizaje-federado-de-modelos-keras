@@ -69,3 +69,8 @@
     Si con esto ultimo el val sigue oscilando tanto, es debido a que hay sobreajuste y hay que realizar algo para tener más imagenes en el dataset
     Mergear solo los modelos con un val accuracy superior a un umbral como diciendo que este modelo no tiene sobreajuste.
     Hay que probar si quitando el pilar de merge mantiene los resultados
+
+*- 16/05/22 -*
+    Se crea con dropout server_model_dropout.h5
+    Hay que probar con la mediana
+    

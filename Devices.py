@@ -441,8 +441,8 @@ class Device:
                 #output = Flatten()(output)
                 model = Model(inputs=model.inputs, outputs=output)
                 #return model
-                
-                best_model=tf.keras.models.load_model("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5")
+                #"/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5"
+                best_model=tf.keras.models.load_model("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model_dropout.h5")
                 return best_model
 
             elif self.model_type==5: #Entrenamiento de una red normal con dropout
