@@ -460,8 +460,7 @@ class Device:
                 #class0 = Dense(1024, activation='relu')(x)
                 dropout1 = Dropout(0.2)(x)
                 class1 = Dense(512, activation='relu')(dropout1)
-                dropout2 = Dropout(0.2)(class1)
-                output = Dense(2, activation='softmax')(dropout2) #2, softmax
+                output = Dense(2, activation='softmax')(class1) #2, softmax
 
                 """flat1 = Flatten()(model.layers[-1].output)
                 drop = Dropout(0.5)(flat1)
