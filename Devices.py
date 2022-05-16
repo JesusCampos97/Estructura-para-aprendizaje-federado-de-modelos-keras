@@ -330,7 +330,7 @@ class Device:
     def loadValidationDatasets_new(self, train_set, val_set):
         train_gen = ImageDataGenerator(
             rescale=1./255,
-            rotation_range=30,
+            rotation_range=20,
             width_shift_range=0.2,
             height_shift_range=0.2,
             shear_range=0.2,
