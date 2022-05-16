@@ -330,7 +330,7 @@ class Device:
     def loadValidationDatasets_new(self, train_set, val_set):
         train_gen = ImageDataGenerator(
             rescale=1./255,
-            rotation_range=20,
+            rotation_range=30,
             width_shift_range=0.2,
             height_shift_range=0.2,
             shear_range=0.2,
@@ -357,8 +357,7 @@ class Device:
             y_col = 'labels',
             class_mode = 'categorical',
             target_size = (self.image_height,self.image_width),
-            batch_size = self.batch_size,
-            shuffle = False
+            batch_size = self.batch_size
         )
 
         return train_generator,validation_generator
@@ -445,6 +444,33 @@ class Device:
                 
                 best_model=tf.keras.models.load_model("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5")
                 return best_model
+
+            elif self.model_type==5: #Entrenamiento de una red normal con dropout
+                #Cargamos MobileNetV2
+                model = MobileNetV2(include_top=False, input_shape=(self.image_height, self.image_width, 3))
+                for layer in model.layers:
+                    layer.trainable = False
+
+                # add new classifier layers
+                """flat1 = Flatten()(model.layers[-1].output)
+                class1 = Dense(512, activation='relu')(flat1)
+                output = Dense(2, activation='softmax')(class1)"""
+                x=GlobalAveragePooling2D()(model.layers[-1].output)
+                #maybe 1024?????????????????????????????????????????????????????????????????????????????????
+                #class0 = Dense(1024, activation='relu')(x)
+                dropout1 = Dropout(0.2)(x)
+                class1 = Dense(512, activation='relu')(dropout1)
+                dropout2 = Dropout(0.2)(class1)
+                output = Dense(2, activation='softmax')(dropout2) #2, softmax
+
+                """flat1 = Flatten()(model.layers[-1].output)
+                drop = Dropout(0.5)(flat1)
+                class1 = Dense(512, activation='relu')(drop)
+                output = Dense(2, activation='softmax')(class1)"""
+
+                #output = Flatten()(output)
+                model = Model(inputs=model.inputs, outputs=output)
+                return model
                 
         else: #ya llevamos al menos una ejecución, el modelo deberia de entrenar con el que ya tiene
             model=tf.keras.models.load_model(self.path+'/model.h5')

@@ -118,7 +118,8 @@ class Server:
                     #extract an element in the response
                     last_acc=history[-1]["accuracy"]
                     last_val_acc=history[-1]["val_accuracy"]
-                    if float(last_val_acc)>0.756: #si el accuracy del modelo esta por encima del accuracy de mi modelo inicial, entonces que no hay tanto overfitting
+                    val_loss=history[-1]["val_loss"]
+                    if float(last_val_acc)>0.756: # and float(val_loss)>0.463: #si el accuracy del modelo esta por encima del accuracy de mi modelo inicial, entonces que no hay tanto overfitting
                         path_aux=pathp+"/d"+str(i)+"/model.h5"
                         print(path_aux)
                         model_aux=tf.keras.models.load_model(path_aux)
