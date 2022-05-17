@@ -74,3 +74,7 @@
     Se crea con dropout server_model_dropout.h5
     Hay que probar con la mediana
     
+*- 17/05/22 -*
+    Se prueba la mediana y el dropout
+    Se deja ejecutando con mediana 5 dispositivos 10 días
+    Se deja ejecutando con mediana 5 dispositivos 5 días si el anterior va bien para ver si hay diferencia.
