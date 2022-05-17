@@ -457,11 +457,10 @@ class Device:
                 output = Dense(2, activation='softmax')(class1)"""
                 x=GlobalAveragePooling2D()(model.layers[-1].output)
                 #maybe 1024?????????????????????????????????????????????????????????????????????????????????
-                #class0 = Dense(1024, activation='relu')(x)
-                #dropout1 = Dropout(0.2)(x)
+                class0 = Dense(1024, activation='relu')(x)
+                dropout1 = Dropout(0.2)(class0)
                 class1 = Dense(512, activation='relu')(x)
-                dropout1 = Dropout(0.2)(class1)
-                output = Dense(2, activation='softmax')(dropout1) #2, softmax
+                output = Dense(2, activation='softmax')(class1) #2, softmax
 
                 """flat1 = Flatten()(model.layers[-1].output)
                 drop = Dropout(0.5)(flat1)
