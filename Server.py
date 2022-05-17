@@ -62,7 +62,8 @@ class Server:
             # collect this layer from each model
             layer_weights = array([model.get_weights()[layer] for model in members])
             # weighted average of weights for this layer
-            avg_layer_weights = average(layer_weights, axis=0, weights=weights)
+            #avg_layer_weights = average(layer_weights, axis=0, weights=weights)
+            avg_layer_weights = median(layer_weights, axis=0) #probar la mediana
             # store average layer weights
             avg_model_weights.append(avg_layer_weights)
             # create a new model with the same structure
