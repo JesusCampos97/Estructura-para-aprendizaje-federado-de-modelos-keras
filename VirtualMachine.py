@@ -44,7 +44,7 @@ def processImages(path_dataset):
 if __name__ == "__main__":
 
 
-    num_devices=5
+    num_devices=10
     data_percentage=0.8
     train_percentage=0.8
     path_devices="./Devices/"#"Devices/5/20042022 (2)"
