@@ -126,7 +126,7 @@ class Device:
         with tf.device('/device:CPU:0'):
             history = model.fit(train_generator, 
                             validation_data = validation_generator, 
-                            epochs = self.epochs""", steps_per_epoch = int(len(train_generator)/self.batch_size)""") #model.fit_generator
+                            epochs = self.epochs) #model.fit_generator , steps_per_epoch = int(len(train_generator)/self.batch_size)
 
         model.save(self.path+"/model.h5", overwrite=True)
         #print("modelo guardado")
