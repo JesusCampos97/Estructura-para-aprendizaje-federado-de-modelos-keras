@@ -56,8 +56,9 @@ if __name__ == "__main__":
     batch_size = 64
     steps_per_epoch = 10
     dataset_rename = False
-    num_etapas=5 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
-
+    #num_etapas=5 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
+    num_etapas_list=[5,10,15]
+    num_devices_list=[5,10,15,20]
 
     #Creo las carpetas de los datasets y los renombro
     start_dataset_renames = time.time()
@@ -101,108 +102,111 @@ if __name__ == "__main__":
     if(os.path.isdir(new_path)==False):
         os.mkdir(new_path)
 
-    for day in range(num_etapas):
-        print("**** Dia de ejecucion: "+str((day+1))+" de "+str(num_etapas)+" ****")
-        execute_times=[]
-        accuracy_list=[]
-        val_accuracy_list=[]
-        loss_list=[]
-        val_loss_list=[]
-        #Se crean tantos folders como dispositivos
-        for i in range(num_devices):
-            print("Ejecuta un dispositivo")
-            path_param=new_path+"/d"+str(i)#+"_day"+str(day)
-            if(os.path.isdir(path_param)==False):
-                os.mkdir(path_param)
+    for num_etapas in num_etapas_list:
+        for day in range(num_etapas):
+            print("**** Dia de ejecucion: "+str((day+1))+" de "+str(num_etapas)+" ****")
+            execute_times=[]
+            accuracy_list=[]
+            val_accuracy_list=[]
+            loss_list=[]
+            val_loss_list=[]
+            
+            for num_devices in num_devices_list:
+                #Se crean tantos folders como dispositivos
+                for i in range(num_devices):
+                    print("Ejecuta un dispositivo")
+                    path_param=new_path+"/d"+str(i)#+"_day"+str(day)
+                    if(os.path.isdir(path_param)==False):
+                        os.mkdir(path_param)
 
-            start_device_execute = time.time()
-            device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
-                steps_per_epoch, image_height, image_width, batch_size, day)
-            accuracy, val_accuracy, loss, val_loss = device.execute_new()
-            accuracy_list.append(accuracy)
-            val_accuracy_list.append(val_accuracy)
-            loss_list.append(loss)
-            val_loss_list.append(val_loss)
+                    start_device_execute = time.time()
+                    device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
+                        steps_per_epoch, image_height, image_width, batch_size, day)
+                    accuracy, val_accuracy, loss, val_loss = device.execute_new()
+                    accuracy_list.append(accuracy)
+                    val_accuracy_list.append(val_accuracy)
+                    loss_list.append(loss)
+                    val_loss_list.append(val_loss)
 
-            end_device_execute = time.time()
-            total_time=end_device_execute-start_device_execute
-            execute_times.append(total_time)
-            print("El tiempo en ejecutar el device"+str(i)+" es : "+str(total_time))
+                    end_device_execute = time.time()
+                    total_time=end_device_execute-start_device_execute
+                    execute_times.append(total_time)
+                    print("El tiempo en ejecutar el device"+str(i)+" es : "+str(total_time))
 
-        dictionary = {
-            "device" : range(num_devices),
-            "accuracy": accuracy_list,
-            "val_accuracy": val_accuracy_list,
-            "loss": loss_list,
-            "val_loss": val_loss_list,
-            "day": day,
-            "execute_time_seconds" : execute_times
-        }
+                dictionary = {
+                    "device" : range(num_devices),
+                    "accuracy": accuracy_list,
+                    "val_accuracy": val_accuracy_list,
+                    "loss": loss_list,
+                    "val_loss": val_loss_list,
+                    "day": day,
+                    "execute_time_seconds" : execute_times
+                }
 
-        if(day==0): #Guardo el dict en csv
-            df = pd.DataFrame(dictionary)
-            df.to_csv(new_path+"/results.csv", index=False)
-            print(df.head())
+                if(day==0): #Guardo el dict en csv
+                    df = pd.DataFrame(dictionary)
+                    df.to_csv(new_path+"/results.csv", index=False)
+                    print(df.head())
 
-        else: #append el dict al csv
-            df = pd.DataFrame(dictionary)
-            df.to_csv(new_path+"/results.csv", mode='a', header=False, index=False)
-            print(df.head())
+                else: #append el dict al csv
+                    df = pd.DataFrame(dictionary)
+                    df.to_csv(new_path+"/results.csv", mode='a', header=False, index=False)
+                    print(df.head())
 
+
+                    
+                #Se ejecuta el merge
+                print("Se empieza a ejecutar el merge")
+                server = Server()
+                server.merge(new_path)#("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/28-04-2022 13-31")
+
+                evaluate_times=[]
+                is_model_changed_list=[]
+                evaluate_accuracy_list=[]
+                for i in range(num_devices):
+                    print("Ejecuta un dispositivo")
+                    path_param=new_path+"/d"+str(i)#+"_day"+str(day)
+                    start_device_evaluate = time.time()
+                    device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
+                        steps_per_epoch, image_height, image_width, batch_size, day)
+                    is_model_changed, evaluate_accuracy=device.evaluate_new(new_path+"/model_merged.h5")
+                    is_model_changed_list.append(is_model_changed)
+                    evaluate_accuracy_list.append(evaluate_accuracy)
+                    end_device_evaluate = time.time()
+                    total_ev_time=end_device_evaluate-start_device_evaluate
+                    evaluate_times.append(total_ev_time)
+                    print("El tiempo en evaluar el device"+str(i)+" es : "+str(total_ev_time))
+
+                print(str(num_devices)+" dispositivos han tardado en evaluarse un total de: "+str(sum(evaluate_times))+" segundos")
 
             
-        #Se ejecuta el merge
-        print("Se empieza a ejecutar el merge")
-        server = Server()
-        server.merge(new_path)#("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/28-04-2022 13-31")
-
-        evaluate_times=[]
-        is_model_changed_list=[]
-        evaluate_accuracy_list=[]
-        for i in range(num_devices):
-            print("Ejecuta un dispositivo")
-            path_param=new_path+"/d"+str(i)#+"_day"+str(day)
-            start_device_evaluate = time.time()
-            device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
-                steps_per_epoch, image_height, image_width, batch_size, day)
-            is_model_changed, evaluate_accuracy=device.evaluate_new(new_path+"/model_merged.h5")
-            is_model_changed_list.append(is_model_changed)
-            evaluate_accuracy_list.append(evaluate_accuracy)
-            end_device_evaluate = time.time()
-            total_ev_time=end_device_evaluate-start_device_evaluate
-            evaluate_times.append(total_ev_time)
-            print("El tiempo en evaluar el device"+str(i)+" es : "+str(total_ev_time))
-
-        print(str(num_devices)+" dispositivos han tardado en evaluarse un total de: "+str(sum(evaluate_times))+" segundos")
-
-    
-        df = pd.read_csv(new_path+"/results.csv")  
-        if(('evaluate_time_seconds' in df.columns) and (df['evaluate_time_seconds'].size!=0)):
-            #evaluate_times=df['evaluate_time_seconds'].concatenate(evaluate_times)
-            isna = df['evaluate_time_seconds'].isna()
-            df.loc[isna, 'evaluate_time_seconds']=evaluate_times
-            evaluate_times=df
-        else:
-            df['evaluate_time_seconds']=evaluate_times
+                df = pd.read_csv(new_path+"/results.csv")  
+                if(('evaluate_time_seconds' in df.columns) and (df['evaluate_time_seconds'].size!=0)):
+                    #evaluate_times=df['evaluate_time_seconds'].concatenate(evaluate_times)
+                    isna = df['evaluate_time_seconds'].isna()
+                    df.loc[isna, 'evaluate_time_seconds']=evaluate_times
+                    evaluate_times=df
+                else:
+                    df['evaluate_time_seconds']=evaluate_times
 
 
-        if(('is_model_changed' in df.columns) and (df['is_model_changed'].size!=0)):
-            isna_model_change = df['is_model_changed'].isna()
-            df.loc[isna_model_change, 'is_model_changed']=is_model_changed_list
-            is_model_changed_list=df
-        else:
-            df['is_model_changed']=is_model_changed_list
+                if(('is_model_changed' in df.columns) and (df['is_model_changed'].size!=0)):
+                    isna_model_change = df['is_model_changed'].isna()
+                    df.loc[isna_model_change, 'is_model_changed']=is_model_changed_list
+                    is_model_changed_list=df
+                else:
+                    df['is_model_changed']=is_model_changed_list
 
-        if(('evaluate_accuracy' in df.columns) and (df['evaluate_accuracy'].size!=0)):
-            isna_evaluate_accuracy = df['evaluate_accuracy'].isna()
-            df.loc[isna_evaluate_accuracy, 'evaluate_accuracy']=evaluate_accuracy_list
-            evaluate_accuracy_list=df
-        else:
-            df['evaluate_accuracy']=evaluate_accuracy_list
-            
-        print(df)
+                if(('evaluate_accuracy' in df.columns) and (df['evaluate_accuracy'].size!=0)):
+                    isna_evaluate_accuracy = df['evaluate_accuracy'].isna()
+                    df.loc[isna_evaluate_accuracy, 'evaluate_accuracy']=evaluate_accuracy_list
+                    evaluate_accuracy_list=df
+                else:
+                    df['evaluate_accuracy']=evaluate_accuracy_list
+                    
+                print(df)
 
-        df.to_csv(new_path+"/results.csv", index=False)
+                df.to_csv(new_path+"/results.csv", index=False)
 
 
 
