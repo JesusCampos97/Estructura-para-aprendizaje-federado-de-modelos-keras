@@ -78,3 +78,7 @@
     Se prueba la mediana y el dropout
     Se deja ejecutando con mediana 5 dispositivos 10 días
     Se deja ejecutando con mediana 5 dispositivos 5 días si el anterior va bien para ver si hay diferencia.
+
+*- 22/05/22 -*
+    5 dispositivos -> 15 días -> /5/22-05-2022 22-11
+    Se prueba con otro tpo de merge con 5 device sy 5 días (ponderedAverage)

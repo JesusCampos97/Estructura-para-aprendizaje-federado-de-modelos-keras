@@ -60,8 +60,6 @@ class Device:
         warnings.filterwarnings('ignore')
         
 
-
-
     #El método execute se encargará de ejecutar el aprendizaje del modelo propio con su partición de datos del dataset según un random con seed que guardaremos.
     """
         ejecuta todo lo del colab

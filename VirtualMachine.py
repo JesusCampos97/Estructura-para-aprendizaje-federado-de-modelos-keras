@@ -57,7 +57,8 @@ if __name__ == "__main__":
     steps_per_epoch = 10
     dataset_rename = False
     #num_etapas=5 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
-    num_etapas_list=[5,10,15]
+    num_etapas_list=[5] #[5,10,15]
+    merge_type=1 #1-FederatedAverage, 2-exponentially decreasing weights, 3- PonderedFederatedAverage
 
     #Creo las carpetas de los datasets y los renombro
     start_dataset_renames = time.time()
@@ -156,7 +157,7 @@ if __name__ == "__main__":
                 
             #Se ejecuta el merge
             print("Se empieza a ejecutar el merge")
-            server = Server()
+            server = Server(merge_type)
             server.merge(new_path)#("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/28-04-2022 13-31")
 
             evaluate_times=[]

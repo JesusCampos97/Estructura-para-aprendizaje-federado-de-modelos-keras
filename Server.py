@@ -7,10 +7,13 @@ from numpy import average, median
 from tensorflow import keras
 from tensorflow.keras.models import clone_model
 from math import exp
-from numpy import array
 import json
+import numpy as np
 
 class Server:
+
+    def __init__(self, merge_type):
+        self.merge_type=merge_type
 
     def weight_scalling_factor(self, clients_trn_data, client_name):
         client_names = list(clients_trn_data.keys())
@@ -74,6 +77,60 @@ class Server:
         return model
 
     # create a model from the weights of multiple models
+    def model_weight_ensemble_3(self, members, weights):
+        # determine how many layers need to be averaged
+        n_layers = len(members[0].get_weights())
+        # create an set of average model weights
+        avg_model_weights = []
+        print("HOAL TENGO N LAYERS = "+str(n_layers))
+        for layer in range(n_layers):
+            # collect this layer from each model
+
+            layer_weights=array()
+            layer_weights_non_trainable=array()
+            for model in members:
+                if model.layers.trainable == False:
+                    layer_weights.append([model.get_weights()[layer]])
+                else:
+                    layer_weights_non_trainable.append([model.get_weights()[layer]])
+
+            #layer_weights = array([model.get_weights()[layer] for model in members])
+            # weighted average of weights for this layer
+            avg_layer_weights = average(layer_weights, axis=0, weights=weights)
+            #avg_layer_weights = median(layer_weights, axis=0) #probar la mediana
+            # store average layer weights
+            avg_model_weights.append(layer_weights_non_trainable,avg_layer_weights)
+            # create a new model with the same structure
+        model = clone_model(members[0])
+        # set the weights in the new
+        avg_model_weights=np.concatenate(avg_model_weights)
+        model.set_weights(avg_model_weights)
+        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+        return model
+
+    # create a model from the weights of multiple models
+    def model_weight_ensemble_4(self, members, weights):
+        # determine how many layers need to be averaged
+        n_layers = len(members[0].get_weights())
+        # create an set of average model weights
+        print("HOAL TENGO N LAYERS = "+str(n_layers))
+        layer_x=array([model.get_layer("x").get_weights() for model in members])
+        layer_class1=array([model.get_layer("class1").get_weights() for model in members])
+        layer_output=array([model.get_layer("output").get_weights() for model in members])
+        avg_layer_weights_x = average(layer_x, axis=0, weights=weights)
+        avg_layer_weights_class1 = average(layer_class1, axis=0, weights=weights)
+        avg_layer_weights_output = average(layer_output, axis=0, weights=weights)
+
+        model = clone_model(members[0])
+        # set the weights in the new
+        model.get_layer("x").set_weights(avg_layer_weights_x)
+        model.get_layer("class1").set_weights(avg_layer_weights_class1)
+        model.get_layer("output").set_weights(avg_layer_weights_output)
+
+        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+        return model
+
+    # create a model from the weights of multiple models
     def model_weight_ensemble_2(self, members, weights):
         # determine how many layers need to be averaged
         n_layers = len(members[0].get_weights())
@@ -81,7 +138,6 @@ class Server:
         avg_model_weights = []
         for layer in range(n_layers):
             # collect this layer from each model
-            
             layer_weights = array([model.get_weights()[layer] for model in members])
             # weighted average of weights for this layer
             avg_layer_weights = average(layer_weights, axis=0, weights=weights)
@@ -99,6 +155,7 @@ class Server:
         #cojo todos los device dese path con el len del folder
         #me meto todos los modelos en un array
         ListDevices = []
+        list_devices_val_acc=[]
         #best_model=tf.keras.models.load_model("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5")
         #ListDevices.append(best_model) #0.9 acc
         
@@ -126,6 +183,7 @@ class Server:
                         model_aux=tf.keras.models.load_model(path_aux)
                         #model_aux.summary()
                         ListDevices.append(model_aux)
+                        list_devices_val_acc.append(last_val_acc)
 
                 """if file.endswith("model.h5"):
                     path_aux=pathp+"/d"+str(i)+"/"+file
@@ -134,29 +192,24 @@ class Server:
                     #model_aux.summary()
                     ListDevices.append(model_aux)"""
 
-                
-        #print(ListDevices)
+        devices_list_sorted = [i for _,i in sorted(zip(list_devices_val_acc,ListDevices),reverse=True)] #max to min
         
-        #ejecuto el merge que hay en colab
-        #modelA = tf.keras.models.load_model('/modelo_vgg16_epoch_2.h5')
         # Check its architecture
-        #modelA.summary()
-        #model_A.get_weights()
-
-        #modelB=tf.keras.models.load_model('/modelo_vgg16_epoch_2_80_percentage.h5')
-
-        #model_list=[modelB,modelA]
-
         # prepare an array of equal weights
-        n_models = len(ListDevices) #len(model_list)
-        #print(n_models)
-        mode=1
-        if mode==2:
+        n_models = len(ListDevices)
+        #mode=1
+        if self.merge_type==2:
             # prepare an array of exponentially decreasing weights
             alpha = 2.0
             weights = [exp(-i/alpha) for i in range(1, n_models+1)]
             #print("Tengo weights="+str(weights))
-            new_model = self.model_weight_ensemble_2(ListDevices, weights)
+            new_model = self.model_weight_ensemble_2(devices_list_sorted, weights) #se agrega el sorted para que sea lineal en funcion a eso (ListDevices, weights)
+        elif self.merge_type==3:
+            #se suman los arrays de validaciones
+            suma=np.sum(list_devices_val_acc)
+            weights = [i/suma for i in list_devices_val_acc]
+            new_model = self.model_weight_ensemble_3(ListDevices, weights)
+
         else:
             weights = [1/n_models for i in range(1, n_models+1)]
             #print("Tengo weights="+str(weights))
