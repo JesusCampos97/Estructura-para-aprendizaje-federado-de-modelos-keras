@@ -209,7 +209,7 @@ class Server:
             print("Merge type 3")
             suma=np.sum(list_devices_val_acc)
             weights = [i/suma for i in list_devices_val_acc]
-            new_model = self.model_weight_ensemble_3(ListDevices, weights)
+            new_model = self.model_weight_ensemble_4(ListDevices, weights)
 
         else:
             weights = [1/n_models for i in range(1, n_models+1)]
