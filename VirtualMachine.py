@@ -44,7 +44,7 @@ def processImages(path_dataset):
 if __name__ == "__main__":
 
 
-    num_devices=5 # se ha hehco con 5, quedan 10 y 20
+    num_devices=10 # se ha hehco con 5, quedan 10 y 20
     data_percentage=0.8
     train_percentage=0.8
     path_devices="./Devices/"#"Devices/5/20042022 (2)"
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     steps_per_epoch = 10
     dataset_rename = False
     #num_etapas=5 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
-    num_etapas_list=[5] #[5,10,15]
+    num_etapas_list=[15] #[5,10,15]
     merge_type=2 #1-FederatedAverage, 2-exponentially decreasing weights, 3- PonderedFederatedAverage
 
     #Creo las carpetas de los datasets y los renombro
