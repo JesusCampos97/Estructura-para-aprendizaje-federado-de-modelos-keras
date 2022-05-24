@@ -173,14 +173,14 @@ class Server:
             weights = [exp(-i/alpha) for i in range(1, n_models+1)]
             print("Tengo weights="+str(weights))
             #print("Tengo weights="+str(weights))
-            new_model = self.model_weight_ensemble(devices_list_sorted, weights) #se agrega el sorted para que sea lineal en funcion a eso (ListDevices, weights)
+            new_model = self.model_weight_ensemble(ListDevices, weights) #se agrega el sorted para que sea lineal en funcion a eso (ListDevices, weights)
         elif self.merge_type==3:
             #se suman los arrays de validaciones
             print("Merge type 3")
             suma=np.sum(list_devices_val_acc)
             weights = [i/suma for i in list_devices_val_acc]
             print("Tengo weights="+str(weights))
-            new_model = self.model_weight_ensemble(devices_list_sorted, weights)
+            new_model = self.model_weight_ensemble(ListDevices, weights)
 
         else:
             weights = [1/n_models for i in range(1, n_models+1)]
