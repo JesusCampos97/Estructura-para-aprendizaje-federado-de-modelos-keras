@@ -113,6 +113,7 @@ class Server:
         # determine how many layers need to be averaged
         n_layers = len(members[0].get_weights())
         # create an set of average model weights
+        members[0].summary()
         print("HOAL TENGO N LAYERS = "+str(n_layers))
         layer_x=array([model.get_layer("x").get_weights() for model in members])
         layer_class1=array([model.get_layer("class1").get_weights() for model in members])
