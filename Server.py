@@ -206,6 +206,7 @@ class Server:
             new_model = self.model_weight_ensemble_2(devices_list_sorted, weights) #se agrega el sorted para que sea lineal en funcion a eso (ListDevices, weights)
         elif self.merge_type==3:
             #se suman los arrays de validaciones
+            print("Merge type 3")
             suma=np.sum(list_devices_val_acc)
             weights = [i/suma for i in list_devices_val_acc]
             new_model = self.model_weight_ensemble_3(ListDevices, weights)
