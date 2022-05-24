@@ -161,7 +161,7 @@ class Server:
                     #model_aux.summary()
                     ListDevices.append(model_aux)"""
 
-        devices_list_sorted = [i for _,i in sorted(zip(list_devices_val_acc,ListDevices),reverse=True)] #max to min
+        #devices_list_sorted = [i for _,i in sorted(zip(list_devices_val_acc,ListDevices),reverse=True)] #max to min
         
         # Check its architecture
         # prepare an array of equal weights
