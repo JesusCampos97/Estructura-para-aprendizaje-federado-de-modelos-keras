@@ -115,18 +115,18 @@ class Server:
         # create an set of average model weights
         members[0].summary()
         print("HOAL TENGO N LAYERS = "+str(n_layers))
-        layer_x=array([model.get_layer("x").get_weights() for model in members])
-        layer_class1=array([model.get_layer("class1").get_weights() for model in members])
-        layer_output=array([model.get_layer("output").get_weights() for model in members])
+        layer_x=array([model.get_layer("global_average_pooling2d").get_weights() for model in members])
+        layer_class1=array([model.get_layer("dense").get_weights() for model in members])
+        layer_output=array([model.get_layer("dense_1").get_weights() for model in members])
         avg_layer_weights_x = average(layer_x, axis=0, weights=weights)
         avg_layer_weights_class1 = average(layer_class1, axis=0, weights=weights)
         avg_layer_weights_output = average(layer_output, axis=0, weights=weights)
 
         model = clone_model(members[0])
         # set the weights in the new
-        model.get_layer("x").set_weights(avg_layer_weights_x)
-        model.get_layer("class1").set_weights(avg_layer_weights_class1)
-        model.get_layer("output").set_weights(avg_layer_weights_output)
+        model.get_layer("global_average_pooling2d").set_weights(avg_layer_weights_x)
+        model.get_layer("dense").set_weights(avg_layer_weights_class1)
+        model.get_layer("dense_1").set_weights(avg_layer_weights_output)
 
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         return model
