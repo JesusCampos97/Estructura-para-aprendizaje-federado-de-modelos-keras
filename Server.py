@@ -203,6 +203,7 @@ class Server:
             # prepare an array of exponentially decreasing weights
             alpha = 2.0
             weights = [exp(-i/alpha) for i in range(1, n_models+1)]
+            print("Tengo weights="+str(weights))
             #print("Tengo weights="+str(weights))
             new_model = self.model_weight_ensemble_4(devices_list_sorted, weights) #se agrega el sorted para que sea lineal en funcion a eso (ListDevices, weights)
         elif self.merge_type==3:
@@ -210,13 +211,14 @@ class Server:
             print("Merge type 3")
             suma=np.sum(list_devices_val_acc)
             weights = [i/suma for i in list_devices_val_acc]
+            print("Tengo weights="+str(weights))
             new_model = self.model_weight_ensemble_4(ListDevices, weights)
 
         else:
             weights = [1/n_models for i in range(1, n_models+1)]
-            #print("Tengo weights="+str(weights))
+            print("Tengo weights="+str(weights))
             # create a new model with the weighted average of all model weights
-            new_model = self.model_weight_ensemble(ListDevices, weights)
+            new_model = self.model_weight_ensemble_4(ListDevices, weights)
             # summarize the created model
             #el modelo resultante lo guardo en el path
             #new_model.summary()

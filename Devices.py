@@ -441,6 +441,8 @@ class Device:
                 #return model
                 #"/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5"
                 best_model=tf.keras.models.load_model("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5")
+                for l in best_model.layers:
+                    print(l.name, l.trainable)
                 return best_model
 
             elif self.model_type==5: #Entrenamiento de una red normal con dropout

@@ -85,3 +85,6 @@
 
 *- 24/05/22 -*
     la media ponderada se prueba con 5 devices y 5 días. No parece que funcione muy bien. -> /5/24-05-2022 10-54
+    se mira los layers entrenables
+    Se prueba el ensamble4 con el average normal
+    se purueba el decreasing exponential
