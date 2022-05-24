@@ -204,7 +204,7 @@ class Server:
             alpha = 2.0
             weights = [exp(-i/alpha) for i in range(1, n_models+1)]
             #print("Tengo weights="+str(weights))
-            new_model = self.model_weight_ensemble_2(devices_list_sorted, weights) #se agrega el sorted para que sea lineal en funcion a eso (ListDevices, weights)
+            new_model = self.model_weight_ensemble_4(devices_list_sorted, weights) #se agrega el sorted para que sea lineal en funcion a eso (ListDevices, weights)
         elif self.merge_type==3:
             #se suman los arrays de validaciones
             print("Merge type 3")

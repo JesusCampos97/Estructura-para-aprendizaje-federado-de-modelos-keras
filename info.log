@@ -82,3 +82,6 @@
 *- 22/05/22 -*
     5 dispositivos -> 15 días -> /5/22-05-2022 22-11
     Se prueba con otro tpo de merge con 5 device sy 5 días (ponderedAverage)
+
+*- 24/05/22 -*
+    la media ponderada se prueba con 5 devices y 5 días. No parece que funcione muy bien. -> /5/24-05-2022 10-54
