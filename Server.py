@@ -86,8 +86,8 @@ class Server:
         for layer in range(n_layers):
             # collect this layer from each model
 
-            layer_weights=array()
-            layer_weights_non_trainable=array()
+            layer_weights=[]
+            layer_weights_non_trainable=[]
             for model in members:
                 if model.layers.trainable == False:
                     layer_weights.append([model.get_weights()[layer]])
