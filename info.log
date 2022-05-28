@@ -98,3 +98,7 @@
 
 *- 27-05-22 -*
     10/27-05-2022 10-25 -> usa merge de tipo 1 -> 10 devices y 15 días
+
+*- 28-05-22 -*
+    Se ejecuta un VGG16 para 1 devices 5 epocas para ejecutarlo en federADO POSTERIORMENTE
+    sE NECESITA METER EL TIPO 1 CON 20 DEVICES
