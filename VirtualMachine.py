@@ -54,7 +54,7 @@ if __name__ == "__main__":
     image_height = 256 #224
     image_width = 256 #224
     batch_size = 32
-    steps_per_epoch = 10
+    steps_per_epoch = 1
     dataset_rename = False
     #num_etapas=5 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
     num_etapas_list=[5] #[5,10,15]
