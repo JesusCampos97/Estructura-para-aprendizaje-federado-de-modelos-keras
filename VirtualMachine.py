@@ -55,9 +55,9 @@ if __name__ == "__main__":
     image_width = 256 #224
     batch_size = 16
     steps_per_epoch = 1
-    dataset_rename = True
+    dataset_rename = False
     #num_etapas=5 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
-    num_etapas_list=[5] #[5,10,15]
+    num_etapas_list=[20] #[5,10,15]
     merge_type=1 #1-FederatedAverage, 2-exponentially decreasing weights, 3- PonderedFederatedAverage
 
     #Creo las carpetas de los datasets y los renombro

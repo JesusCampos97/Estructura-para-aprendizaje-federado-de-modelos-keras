@@ -241,7 +241,9 @@ class Device:
         random.shuffle(labels)
         num_max_labels=int(num*self.train_percentage) #se usa un 80 para train y un 20 para test de forma normal
         train = labels[:num_max_labels]
+        train= train[:2000] #Se cogen las primeras 2000 imagenes para ver si generaliza
         test = labels[num_max_labels-1:]
+        test = test[:800] #Se cogen las primeras 800 imagenes
 
         print("Num imagenes totales "+str(len(train)+len(test)))
         print("la seed del rendom es "+str(self.number))
