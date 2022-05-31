@@ -6,6 +6,10 @@ from pycoral.adapters import common
 from pycoral.adapters import classify
 from PIL import Image
 import tensorflow as tf
+
+from tensorflow.keras.preprocessing.image import load_img
+from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.models import load_model
 path="./Devices/5/30-05-2022 12-40/"
 
 h5_path=path+"model_merged.h5"
@@ -29,7 +33,7 @@ print(tf.__version__)
 script_dir = pathlib.Path(__file__).parent.absolute()
 model_file = os.path.join(script_dir, path+"model.tflite")
 label_file = os.path.join(script_dir, path+'labels.txt')
-image_file = os.path.join(script_dir,'/datasets/dataset positivo/crosswalk_400.jpg')
+img_path = '/datasets/dataset negativo/road_400.jpg'    # dog
 
 # Initialize the TF interpreter
 interpreter = edgetpu.make_interpreter(model_file)
