@@ -17,27 +17,11 @@ from os.path                    import splitext, basename
 
 print(tf.__version__)
 
-mod_path = "data/lp-detector/wpod-net_update1.h5"
 
-def load_model(path,custom_objects={},verbose=0):
-    #from tf.keras.models import model_from_json
-
-    path = splitext(path)[0]
-    with open('%s.json' % path,'r') as json_file:
-        model_json = json_file.read()
-    model = tf.keras.models.model_from_json(model_json, custom_objects=custom_objects)
-    model.load_weights('%s.h5' % path)
-    if verbose: print('Loaded from %s' % path)
-    return model
-
-keras_mod = load_model(h5_path)
-
-converter = tf.lite.TFLiteConverter.from_keras_model(keras_mod)
+model = tf.keras.models.load_model(h5_path)
+converter = tf.lite.TFLiteConverter.from_keras_model(model)
 tflite_model = converter.convert()
-
-# Save the TF Lite model.
-with tf.io.gfile.GFile(path+"model.tflite", 'wb') as f:
-    f.write(tflite_model)
+open(h5_path+"model.tflite", "wb").write(tflite_model)
 
 
 
