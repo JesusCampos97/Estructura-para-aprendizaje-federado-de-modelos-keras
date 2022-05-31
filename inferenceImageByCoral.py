@@ -27,7 +27,7 @@ print(tf.__version__)
 
 # Specify the TensorFlow model, labels, and image
 script_dir = pathlib.Path(__file__).parent.absolute()
-model_file = os.path.join(script_dir, h5_path+"model.tflite")
+model_file = os.path.join(script_dir, path+"model.tflite")
 label_file = os.path.join(script_dir, 'labels.txt')
 image_file = os.path.join(script_dir, '/home/pi/Downloads/crosswalk.jpg')
 
