@@ -56,6 +56,7 @@ interpreter.allocate_tensors()
 
 # Resize the image
 size = common.input_size(interpreter)
+from pygame import mixer
 
 # Run an inference
 for image in images_list:
@@ -67,4 +68,9 @@ for image in images_list:
     labels = dataset.read_label_file(label_file)
     for c in classes:
         print('%s: %.5f' % (labels.get(c.id, c.id), c.score))
+        if c.id==0:
+            mixer.init() 
+            alert=mixer.Sound('bell.wav')
+            alert.play()
+
 
