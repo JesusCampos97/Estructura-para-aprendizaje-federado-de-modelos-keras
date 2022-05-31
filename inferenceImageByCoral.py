@@ -45,7 +45,7 @@ def load_image(img_path, show=False):
 
 # image path
 img_path = '/home/pi/Downloads/crosswalk'    # dog
-img_path2 = '/home/pi/Downloads/road'      # cat
+img_path2 = '/datasets/dataset negativo/road_400.jpg'      # cat
 
 # load a single image
 images_list=[]
@@ -66,7 +66,6 @@ interpreter.allocate_tensors()
 
 # Resize the image
 size = common.input_size(interpreter)
-image = new_image
 
 # Run an inference
 for image in images_list:
