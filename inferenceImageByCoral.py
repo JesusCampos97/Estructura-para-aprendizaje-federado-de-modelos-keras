@@ -41,7 +41,7 @@ interpreter.allocate_tensors()
 
 # Resize the image
 size = common.input_size(interpreter)
-image = Image.open(image_file).convert('RGB').resize(size, Image.ANTIALIAS)
+image = Image.open(img_path).convert('RGB').resize(size, Image.ANTIALIAS)
 
 # Run an inference
 common.set_input(interpreter, image)
