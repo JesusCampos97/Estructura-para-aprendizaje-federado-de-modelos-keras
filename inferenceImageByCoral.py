@@ -62,7 +62,7 @@ def load_image(filename):
     img=img - [123.68, 116.779, 103.939]
     return img
 
-img=load_image('/datasets/dataset negativo/road_400.jpg') #/datasets/dataset negativo/road_40.jpg
+img=load_image('/datasets/dataset negativo/crosswalk_400.jpg') #/datasets/dataset negativo/road_40.jpg
 model=load_model(h5_path)
 result=model.predict(img)
 print(result)
