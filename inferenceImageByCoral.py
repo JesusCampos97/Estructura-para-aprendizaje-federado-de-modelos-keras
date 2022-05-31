@@ -48,3 +48,21 @@ classes = classify.get_classes(interpreter, top_k=1)
 labels = dataset.read_label_file(label_file)
 for c in classes:
   print('%s: %.5f' % (labels.get(c.id, c.id), c.score))
+
+
+from tensorflow.keras.preprocessing.image import load_img
+from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.models import load_model
+
+def load_image(filename):
+    img=load_img(filename, target_size=(256, 256))
+    img=img_to_array(img)
+    img=img.reshape(1,256,256,3)
+    img=img.astype('float32')
+    img=img - [123.68, 116.779, 103.939]
+    return img
+
+img=load_image('/datasets/dataset negativo/road_40.jpg')
+model=load_model(h5_path)
+result=model.predict(img)
+print(result)
