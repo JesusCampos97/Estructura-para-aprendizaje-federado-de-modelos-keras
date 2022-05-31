@@ -45,7 +45,7 @@ def load_image(img_path, show=False):
 
 # image path
 img_path = '/home/pi/Downloads/crosswalk'    # dog
-img_path2 = '/datasets/dataset negativo/road_400.jpg'      # cat
+img_path2 = '/home/pi/Downloads/test_road_2.jpg'#'/datasets/dataset negativo/road_400.jpg'      # cat
 
 # load a single image
 images_list=[]
