@@ -9,7 +9,7 @@ import tensorflow as tf
 path="./Devices/5/30-05-2022 12-40/"
 
 h5_path=path+"model_merged.h5"
-converter = tf.lite.TFLiteConverter.from_keras_model_file(h5_path)
+converter = tf.lite.TFLiteConverter.from_keras_model(h5_path)
 tfmodel = converter.convert()
 open(path+"model.tflite" , "wb").write(tfmodel)
 
