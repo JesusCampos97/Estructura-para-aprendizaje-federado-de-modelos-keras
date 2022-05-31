@@ -35,7 +35,7 @@ def load_image(img_path, show=False):
 
 # image path
 img_path = '/home/pi/Downloads/crosswalk_2'    # dog
-img_path2 = '/home/pi/Downloads/road'#'/datasets/dataset negativo/road_400.jpg'      # cat
+img_path2 = '/home/pi/Downloads/test_road_1'#'/datasets/dataset negativo/road_400.jpg'      # cat
 
 # load a single image
 images_list=[]
@@ -68,9 +68,9 @@ for image in images_list:
     labels = dataset.read_label_file(label_file)
     for c in classes:
         print('%s: %.5f' % (labels.get(c.id, c.id), c.score))
-        if c.id==0:
+        if c.id==1:
             mixer.init() 
-            alert=mixer.Sound('bell.wav')
+            alert=mixer.Sound('/home/pi/Downloads/beep-01a.wav')
             alert.play()
 
 
