@@ -5,12 +5,11 @@ from pycoral.utils import dataset
 from pycoral.adapters import common
 from pycoral.adapters import classify
 from PIL import Image
-from tensorflow.contrib import lite
-
+import tensorflow as tf
 path="./Devices/5/30-05-2022 12-40/"
 
 h5_path=path+"model_merged.h5"
-converter = lite.TFLiteConverter.from_keras_model_file(h5_path)
+converter = tf.lite.TFLiteConverter.from_keras_model_file(h5_path)
 tfmodel = converter.convert()
 open(path+"model.tflite" , "wb").write(tfmodel)
 
