@@ -18,16 +18,16 @@ from os.path                    import splitext, basename
 print(tf.__version__)
 
 
-model = tf.keras.models.load_model(h5_path)
-converter = tf.lite.TFLiteConverter.from_keras_model(model)
-tflite_model = converter.convert()
-open(h5_path+"model.tflite", "wb").write(tflite_model)
+#model = tf.keras.models.load_model(h5_path)
+#converter = tf.lite.TFLiteConverter.from_keras_model(model)
+#tflite_model = converter.convert()
+#open(h5_path+"model.tflite", "wb").write(tflite_model)
 
 
 
 # Specify the TensorFlow model, labels, and image
 script_dir = pathlib.Path(__file__).parent.absolute()
-model_file = os.path.join(script_dir, path+"model.tflite")
+model_file = os.path.join(script_dir, h5_path+"model.tflite")
 label_file = os.path.join(script_dir, 'labels.txt')
 image_file = os.path.join(script_dir, '/home/pi/Downloads/crosswalk.jpg')
 
