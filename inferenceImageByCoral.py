@@ -99,3 +99,4 @@ new_image = load_image(img_path)
 
 # check prediction
 pred = model.predict(new_image)
+print(pred)
