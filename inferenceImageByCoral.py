@@ -29,7 +29,7 @@ print(tf.__version__)
 script_dir = pathlib.Path(__file__).parent.absolute()
 model_file = os.path.join(script_dir, path+"model.tflite")
 label_file = os.path.join(script_dir, path+'labels.txt')
-image_file = os.path.join(script_dir, '/home/pi/Downloads/road')
+image_file = os.path.join(script_dir, '/datasets/dataset negativo/road_40.jpg')
 
 # Initialize the TF interpreter
 interpreter = edgetpu.make_interpreter(model_file)
