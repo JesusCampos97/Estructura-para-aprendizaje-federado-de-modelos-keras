@@ -21,7 +21,7 @@ print(tf.__version__)
 #model = tf.keras.models.load_model(h5_path)
 #converter = tf.lite.TFLiteConverter.from_keras_model(model)
 #tflite_model = converter.convert()
-#open(h5_path+"model.tflite", "wb").write(tflite_model)
+#open(path+"model.tflite", "wb").write(tflite_model)
 
 
 
