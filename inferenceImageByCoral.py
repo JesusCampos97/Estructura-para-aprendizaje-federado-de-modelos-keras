@@ -44,8 +44,8 @@ def load_image(img_path, show=False):
 #model = load_model(h5_path)
 
 # image path
-img_path = '/home/pi/Downloads/crosswalk'    # dog
-img_path2 = '/home/pi/Downloads/test_road_2.jpg'#'/datasets/dataset negativo/road_400.jpg'      # cat
+img_path = '/home/pi/Downloads/crosswalk_2'    # dog
+img_path2 = '/home/pi/Downloads/test_road_1'#'/datasets/dataset negativo/road_400.jpg'      # cat
 
 # load a single image
 images_list=[]
