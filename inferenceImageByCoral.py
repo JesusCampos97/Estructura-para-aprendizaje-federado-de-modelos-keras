@@ -1,25 +1,15 @@
-from operator import ne
 import os
 import pathlib
 from pycoral.utils import edgetpu
 from pycoral.utils import dataset
 from pycoral.adapters import common
 from pycoral.adapters import classify
-from PIL import Image
-import tensorflow as tf
 
 from tensorflow.keras.preprocessing.image import load_img
 from tensorflow.keras.preprocessing.image import img_to_array
-from tensorflow.keras.models import load_model
 path="./Devices/5/30-05-2022 12-40/"
 
-h5_path=path+"model_merged.h5"
-
-import sys, os
-import traceback
-
-from os.path                    import splitext, basename
-
+h5_path=path+"model_merged.h5"     
 
 # load_model_sample.py
 from tensorflow.keras.preprocessing import image
