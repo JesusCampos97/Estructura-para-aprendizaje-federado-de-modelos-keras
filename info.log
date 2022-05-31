@@ -103,4 +103,7 @@
     Se ejecuta un VGG16 para 1 devices 5 epocas para ejecutarlo en federADO POSTERIORMENTE-> bad aloc
     sE NECESITA METER EL TIPO 1 CON 20 DEVICES
     Se meten nuevas imagenes y se ejecuta:
-    5/28-05-2022 -> merge tipo 1 -> 5 devices 5 días de pruebas con mas imagenes
+    5/28-05-2022 -> merge tipo 1 -> 5 devices 5 días de pruebas con mas imagenes 
+
+*- 31-05-22 -*
+    5/30-05-2022 12-40 -> merge tipo 1 -> 5 devices 20 días con imagenes reducidas en cantdad. Terminado va flama
