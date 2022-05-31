@@ -97,7 +97,7 @@ for image in images_list:
     labels = dataset.read_label_file(label_file)
     for c in classes:
         print('%s: %.5f' % (labels.get(c.id, c.id), c.score))
-        if c.id==1:
+        #if c.id==1:
             #play_audio('/home/pi/Downloads/beep-01a.wav')
 
 
