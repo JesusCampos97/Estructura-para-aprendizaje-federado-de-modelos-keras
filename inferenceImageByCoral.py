@@ -98,6 +98,6 @@ for image in images_list:
     for c in classes:
         print('%s: %.5f' % (labels.get(c.id, c.id), c.score))
         if c.id==1:
-            play_audio('/home/pi/Downloads/beep-01a.wav')
+            #play_audio('/home/pi/Downloads/beep-01a.wav')
 
 
