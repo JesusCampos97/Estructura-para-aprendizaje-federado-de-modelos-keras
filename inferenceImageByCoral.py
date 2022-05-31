@@ -87,18 +87,15 @@ def load_image(img_path, show=False):
 
     return img_tensor
 
+# load model
+model = load_model(h5_path)
 
-if __name__ == "__main__":
+# image path
+img_path = '/datasets/dataset negativo/road_400.jpg'    # dog
+#img_path = '/home/pi/Downloads/crosswalk'      # cat
 
-    # load model
-    model = load_model(h5_path)
+# load a single image
+new_image = load_image(img_path)
 
-    # image path
-    img_path = '/datasets/dataset negativo/road_400.jpg'    # dog
-    #img_path = '/home/pi/Downloads/crosswalk'      # cat
-
-    # load a single image
-    new_image = load_image(img_path)
-
-    # check prediction
-    pred = model.predict(new_image)
+# check prediction
+pred = model.predict(new_image)

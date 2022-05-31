@@ -118,7 +118,8 @@ class Device:
         
         # summarize
         #model.summary()
-        model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
+        optimizer = keras.optimizers.Adam(lr=0.01)
+        model.compile(optimizer=optimizer, loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
         #print("modelo compilado")
         #tf.compat.v1.reset_default_graph()
         with tf.device('/device:CPU:0'):
