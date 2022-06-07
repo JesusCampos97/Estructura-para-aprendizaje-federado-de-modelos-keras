@@ -15,46 +15,6 @@ class Server:
     def __init__(self, merge_type):
         self.merge_type=merge_type
 
-    def weight_scalling_factor(self, clients_trn_data, client_name):
-        client_names = list(clients_trn_data.keys())
-        #get the bs
-        bs = list(clients_trn_data[client_name])[0][0].shape[0]
-        #first calculate the total training data points across clinets
-        global_count = sum([tf.data.experimental.cardinality(clients_trn_data[client_name]).numpy() for client_name in client_names])*bs
-        # get the total number of data points held by a client
-        local_count = tf.data.experimental.cardinality(clients_trn_data[client_name]).numpy()*bs
-        return local_count/global_count
-
-
-    def scale_model_weights(self, weight, scalar):
-        '''function for scaling a models weights'''
-        weight_final = []
-        steps = len(weight)
-        for i in range(steps):
-            weight_final.append(scalar * weight[i])
-        return weight_final
-
-
-
-    def sum_scaled_weights(self, scaled_weight_list):
-        #Return the sum of the listed scaled weights. The is equivalent to scaled avg of the weights
-        avg_grad = []
-        #get the average grad accross all client gradients
-        for grad_list_tuple in zip(*scaled_weight_list):
-            layer_mean = tf.math.reduce_sum(grad_list_tuple, axis=0)
-            avg_grad.append(layer_mean)
-        return avg_grad
-
-
-    '''def test_model(X_test, Y_test,  model, comm_round):
-        cce = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
-        #logits = model.predict(X_test, batch_size=100)
-        logits = model.predict(X_test)
-        loss = cce(Y_test, logits)
-        acc = accuracy_score(tf.argmax(logits, axis=1), tf.argmax(Y_test, axis=1))
-        print('comm_round: {} | global_acc: {:.3%} | global_loss: {}'.format(comm_round, acc, loss))
-        return acc, loss'''
-
     # create a model from the weights of multiple models
     def model_weight_ensemble(self, members, weights):
         # determine how many layers need to be averaged
@@ -70,49 +30,6 @@ class Server:
             # store average layer weights
             avg_model_weights.append(avg_layer_weights)
             # create a new model with the same structure
-        model = clone_model(members[0])
-        # set the weights in the new
-        model.set_weights(avg_model_weights)
-        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-        return model
-
-    # create a model from the weights of multiple models
-    def model_weight_ensemble_4(self, members, weights):
-        # determine how many layers need to be averaged
-        n_layers = len(members[0].get_weights())
-        # create an set of average model weights
-        #members[0].summary()
-        print("HOAL TENGO N LAYERS = "+str(n_layers))
-        layer_x=array([model.get_layer("global_average_pooling2d").get_weights() for model in members])
-        layer_class1=array([model.get_layer("dense").get_weights() for model in members])
-        layer_output=array([model.get_layer("dense_1").get_weights() for model in members])
-        avg_layer_weights_x = average(layer_x, axis=0, weights=weights)
-        avg_layer_weights_class1 = average(layer_class1, axis=0, weights=weights)
-        avg_layer_weights_output = average(layer_output, axis=0, weights=weights)
-
-        model = clone_model(members[0])
-        # set the weights in the new
-        model.get_layer("global_average_pooling2d").set_weights(avg_layer_weights_x)
-        model.get_layer("dense").set_weights(avg_layer_weights_class1)
-        model.get_layer("dense_1").set_weights(avg_layer_weights_output)
-
-        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-        return model
-
-    # create a model from the weights of multiple models
-    def model_weight_ensemble_2(self, members, weights):
-        # determine how many layers need to be averaged
-        n_layers = len(members[0].get_weights())
-        # create an set of average model weights
-        avg_model_weights = []
-        for layer in range(n_layers):
-            # collect this layer from each model
-            layer_weights = array([model.get_weights()[layer] for model in members])
-            # weighted average of weights for this layer
-            avg_layer_weights = average(layer_weights, axis=0, weights=weights)
-            # store average layer weights
-            avg_model_weights.append(avg_layer_weights)
-        # create a new model with the same structure
         model = clone_model(members[0])
         # set the weights in the new
         model.set_weights(avg_model_weights)
@@ -161,7 +78,6 @@ class Server:
                     #model_aux.summary()
                     ListDevices.append(model_aux)"""
 
-        #devices_list_sorted = [i for _,i in sorted(zip(list_devices_val_acc,ListDevices),reverse=True)] #max to min
         
         # Check its architecture
         # prepare an array of equal weights
