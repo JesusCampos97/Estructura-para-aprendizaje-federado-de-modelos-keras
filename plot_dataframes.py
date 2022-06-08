@@ -18,7 +18,7 @@ df_add_aux = {'device': -1, 'accuracy': 0.8529411554, 'val_accuracy': 0.75688076
 df = df.append(df_add_aux, ignore_index=True)
 print(df['day'])
 
-ids=[-1, 0,1,2,3,4,5]
+ids=np.arange(min(df['day']), max(df['day'])+1, 1.0)
 df.loc[df['day'].isin(ids), 'day'] += 1
 
 print(df['day'])
