@@ -15,6 +15,8 @@ df_add_aux = {'device': -1, 'accuracy': 0.8529411554, 'val_accuracy': 0.75688076
     'execute_time_seconds':0.0,'evaluate_time_seconds':0.0,'is_model_changed':0,'evaluate_accuracy':0.7568807602}
 
 df = df.append(df_add_aux, ignore_index=True)
+ids=[0, 20]
+df.loc[df['day'].isin(ids), 'day'] += 1
 
 print(df)
 
@@ -63,8 +65,8 @@ plt.plot(df_aux_d3['val_accuracy'])
 plt.plot(df_aux_d4['val_accuracy'])
 """
 plt.title('Accuracy comparation')
-plt.ylabel('accuracy')
-plt.xlabel('days')
+plt.ylabel('Accuracy')
+plt.xlabel('Days')
 plt.legend(['acc', 'val_acc', 'evaluate_acc'], loc='lower right')
 plt.savefig(path+'/grafica_acc.png')
 
