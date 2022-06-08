@@ -16,12 +16,10 @@ df_add_aux = {'device': -1, 'accuracy': 0.8529411554, 'val_accuracy': 0.75688076
     'execute_time_seconds':0.0,'evaluate_time_seconds':0.0,'is_model_changed':0,'evaluate_accuracy':0.7568807602}
 
 df = df.append(df_add_aux, ignore_index=True)
-print(df['day'])
 
 ids=np.arange(min(df['day']), max(df['day'])+1, 1.0)
 df.loc[df['day'].isin(ids), 'day'] += 1
 
-print(df['day'])
 
 df_aux_acc_mean=df.groupby(['day'])['accuracy'].mean()
 df_aux_loss_mean=df.groupby(['day'])['val_accuracy'].mean()
@@ -85,8 +83,8 @@ ax_aux_loss=df_aux_val_loss_mean.plot(kind='line',x='day',y='val_loss',color='bl
 
 
 plt.title('Loss comparation')
-plt.ylabel('loss')
-plt.xlabel('days')
+plt.ylabel('Loss')
+plt.xlabel('Days')
 plt.legend(['acc', 'val_acc', 'evaluate_acc','loss', 'val_loss'], loc='upper right')
 plt.xticks(np.arange(min(df['day']), max(df['day'])+1, 1.0))
 
