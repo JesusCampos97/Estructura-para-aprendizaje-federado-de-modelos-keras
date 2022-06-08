@@ -30,8 +30,6 @@ def load_image(img_path, show=False):
 
     return img_tensor
 
-# load model
-#model = load_model(h5_path)
 
 # image path
 img_path = '/home/pi/Downloads/crosswalk_2'    # dog
@@ -56,36 +54,6 @@ interpreter.allocate_tensors()
 
 # Resize the image
 size = common.input_size(interpreter)
-import pyaudio  
-import wave 
-
-def play_audio(path):
-    #define stream chunk   
-    chunk = 1024  
-
-    #open a wav format music  
-    f = wave.open(path,"rb")  
-    #instantiate PyAudio  
-    p = pyaudio.PyAudio()  
-    #open stream  
-    stream = p.open(format = p.get_format_from_width(f.getsampwidth()),  
-                    channels = f.getnchannels(),  
-                    rate = f.getframerate(),  
-                    output = True)  
-    #read data  
-    data = f.readframes(chunk)  
-
-    #play stream  
-    while data:  
-        stream.write(data)  
-        data = f.readframes(chunk)  
-
-    #stop stream  
-    stream.stop_stream()  
-    stream.close()  
-
-    #close PyAudio  
-    p.terminate()  
 
 # Run an inference
 for image in images_list:
@@ -97,7 +65,5 @@ for image in images_list:
     labels = dataset.read_label_file(label_file)
     for c in classes:
         print('%s: %.5f' % (labels.get(c.id, c.id), c.score))
-        #if c.id==1:
-            #play_audio('/home/pi/Downloads/beep-01a.wav')
 
 
