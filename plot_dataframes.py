@@ -16,6 +16,8 @@ df_add_aux = {'device': -1, 'accuracy': 0.8529411554, 'val_accuracy': 0.75688076
     'execute_time_seconds':0.0,'evaluate_time_seconds':0.0,'is_model_changed':0,'evaluate_accuracy':0.7568807602}
 
 df = df.append(df_add_aux, ignore_index=True)
+print(df['day'])
+
 ids=[-1, 20]
 df.loc[df['day'].isin(ids), 'day'] += 1
 
