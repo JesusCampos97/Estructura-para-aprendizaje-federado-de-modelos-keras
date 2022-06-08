@@ -18,7 +18,7 @@ df = df.append(df_add_aux, ignore_index=True)
 ids=[0, 20]
 df.loc[df['day'].isin(ids), 'day'] += 1
 
-print(df)
+print(df['day'])
 
 df_aux_acc_mean=df.groupby(['day'])['accuracy'].mean()
 df_aux_loss_mean=df.groupby(['day'])['val_accuracy'].mean()
