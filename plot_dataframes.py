@@ -69,6 +69,7 @@ plt.title('Accuracy comparation')
 plt.ylabel('Accuracy')
 plt.xlabel('Days')
 plt.legend(['acc', 'val_acc', 'evaluate_acc'], loc='lower right')
+plt.xticks(np.arange(min(df['day']), max(df['day'])+1, 1.0))
 plt.savefig(path+'/grafica_acc.png')
 
 plt.clf()
