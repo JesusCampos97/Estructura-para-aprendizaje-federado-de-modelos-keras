@@ -6,6 +6,7 @@ import time
 import json
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/24-05-2022 14-54"
@@ -84,5 +85,7 @@ plt.title('Loss comparation')
 plt.ylabel('loss')
 plt.xlabel('days')
 plt.legend(['acc', 'val_acc', 'evaluate_acc','loss', 'val_loss'], loc='upper right')
+plt.xticks(np.arange(min(df['day']), max(df['day'])+1, 1.0))
+
 plt.savefig(path+'/grafica_loss.png')
 
