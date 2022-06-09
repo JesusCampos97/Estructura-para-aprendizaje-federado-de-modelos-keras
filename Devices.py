@@ -37,7 +37,7 @@ class Device:
             path: Ruta donde se guarda cada dispositivo
             data_percentage: Cantidad de datos que utilizará de nuestro dataset 
     """
-    def __init__(self, number, path, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size, day):
+    def __init__(self, number, path, path_dataset, data_percentage, train_percentage, model_type, epochs, image_height, image_width, batch_size, day, path_best_model):
         tf.keras.backend.clear_session()
         self.number = number
         random.seed(number) #number+day d0 -> primer dia seed 0, d1 primer dia seed 1, d0 segundo dia seed 1, d1 segundia dia seed 2 ... y asi siempre es diferente con lo que entrenan.. o no deberia ser eso?
@@ -54,54 +54,16 @@ class Device:
         self.image_height = image_height
         self.image_width = image_width
         self.batch_size = batch_size
-        self.steps_per_epoch = steps_per_epoch
         self.day = day
+        self.path_best_model=path_best_model
         print("Termina init")
         warnings.filterwarnings('ignore')
         
 
     #El método execute se encargará de ejecutar el aprendizaje del modelo propio con su partición de datos del dataset según un random con seed que guardaremos.
-    """
-        ejecuta todo lo del colab
-        guarda el modelo en el path que se le pasa en el constructor
-        y guarda su accuracy
-    """
     def execute(self):
         #print("Comienza execute")
-        train, test = self.loadDataIntoPaths()
-        #print("loaddataintopaths cargado")
         trainData, testData = self.loadDataImages()
-        #print("dataimages cargadas")
-        trainData.head()
-        testData.head()
-        #print("imagenes procesadas")
-        train_set, val_set = train_test_split(trainData,
-                                            test_size=0.1)
-        #print("split realziado")
-        #print(len(train_set), len(val_set))
-        train_generator, validation_generator= self.loadValidationDatasets(train_set, val_set)
-        #print("train generador cargado")
-        model=self.loadModelType()
-        
-        # summarize
-        #model.summary()
-        model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
-        #print("modleo compilado")
-        tf.compat.v1.reset_default_graph()
-        with tf.device('/device:CPU:0'):
-            history = model.fit(train_generator, 
-                            validation_data = validation_generator, 
-                            epochs = self.epochs, steps_per_epoch = self.steps_per_epoch) #model.fit_generator
-
-        model.save(self.path+"/model.h5")
-        print("modelo guardado")
-        self.plotHistory(history)
-        self.saveConfig(history)
-        self.deleteTempFiles()
-
-    def execute_new(self):
-        #print("Comienza execute")
-        trainData, testData = self.loadDataImages_new()
         #print("dataimages cargadas")
         #print(trainData.head(10))
         testData.head()
@@ -111,7 +73,7 @@ class Device:
         #print(train_set.head(10))
         #print("validation split realizado")
         #print(len(train_set), len(val_set))
-        train_generator, validation_generator= self.loadValidationDatasets_new(train_set, val_set)
+        train_generator, validation_generator= self.loadValidationDatasets(train_set, val_set)
         #print("train generador cargado")
         model=self.loadModelType()
         #print("modelo cargado")
@@ -124,7 +86,7 @@ class Device:
         with tf.device('/device:CPU:0'):
             history = model.fit(train_generator, 
                             validation_data = validation_generator, 
-                            epochs = self.epochs) #model.fit_generator , steps_per_epoch = int(len(train_generator)/self.batch_size)
+                            epochs = self.epochs)
 
         model.save(self.path+"/model.h5", overwrite=True)
         #print("modelo guardado")
@@ -189,65 +151,24 @@ class Device:
         return train, test
 
     def loadDataImages(self):
-        trainData = pd.DataFrame({'file': os.listdir(self.path+'/tmp/train')})
-        labelsData = []
-        binary_labelsData=[]
-
-        for i in os.listdir(self.path+'/tmp/train'):
-            if 'crosswalk' in i:
-                labelsData.append('crosswalk')
-                binary_labelsData.append(1)
-            else:
-                labelsData.append('road')
-                binary_labelsData.append(0)
-
-        #print("La clase 0 es: "+labelsData[0])
-        trainData['labels'] = labelsData
-        trainData['binary_labels'] = binary_labelsData
-        testData = pd.DataFrame({'file': os.listdir(self.path+'/tmp/test')})
-        #print(trainData)
-
-        return trainData, testData
-
-    def loadDataImages_new(self):
         #Aqui hay que cmabiar al forma de trabajar. La clase 0 tiene que ser siempre la misma... si no cascará al mergear 2 modelos siempre.... es decir no irá bien
 
         labels=[]
-        labels_positive=[]
-        labels_negative=[]
         dst_dir = self.path_dataset+"/allDataset"
         print("path de imagenes "+dst_dir)
         for filename in enumerate(os.listdir(dst_dir)):
             labels.append(filename[1])
-            """if "crosswalk" in filename[1]:
-                labels_positive.append(filename[1])
-            else:
-                labels_negative.append(filename[1])"""
-
-        #Cogemos 80% labels y 80% tests para que no haya problemas 
-        """ SI CUANDO TERMINE CON 32 D EBATCHSIZE Y 5 DIAS 5 DEVICES, EL VAL SIGUE SALIENDO MAL, SE PRUEBA CON ESTA PARTE DE CODIGO PARA QUE 
-            TENGAN LAS CLASES MÁS IGUALADAS Y NO SE VAYABN JODIENDO ENTRE SI"""
-        """num_positive=len(labels_positive)
-        num_positive_labels=int(num_positive*self.train_percentage)
-        num_negative=len(labels_negative)
-        num_negative_labels=int(num_negative*self.train_percentage)
-        random.shuffle(labels_positive)
-        random.shuffle(labels_negative)
-        train=labels_positive[:num_positive_labels]+labels_negative[:num_negative_labels]
-        test = labels_positive[num_positive_labels-1:]+labels_negative[num_negative_labels-1:]
-        """
 
         num=len(labels)
         random.shuffle(labels)
         num_max_labels=int(num*self.train_percentage) #se usa un 80 para train y un 20 para test de forma normal
         train = labels[:num_max_labels]
-        train= train[:2000] #Se cogen las primeras 2000 imagenes para ver si generaliza
+        train= train[:2000] #Se cogen las primeras 2000 imagenes para ver si generaliza un 70% de train del total de 2800 img
         test = labels[num_max_labels-1:]
-        test = test[:800] #Se cogen las primeras 800 imagenes
+        test = test[:800] #Se cogen las primeras 800 imagenes un 30% de test del total de 2800 img
+        #el numero de imagenes está cogido así para no entrenar con demasiadas imagenes y que tarde en ejecutar en la raspberry una barbaridad
 
         print("Num imagenes totales "+str(len(train)+len(test)))
-        print("la seed del rendom es "+str(self.number))
-
         trainData = pd.DataFrame({'file': train})
         labelsData = []
         labelsData_test = []
@@ -259,11 +180,9 @@ class Device:
             if 'crosswalk' in i:
                 labelsData.append('crosswalk')
                 num_crosswalk_train+=1
-                #binary_labelsData.append(0)
             else:
                 labelsData.append('road')
                 num_road_train+=1
-                #binary_labelsData.append(1)
 
         num_crosswalk_test=0
         num_road_test=0
@@ -271,14 +190,12 @@ class Device:
             if 'crosswalk' in i:
                 labelsData_test.append('crosswalk')
                 num_crosswalk_test+=1
-                #binary_labelsData.append(0)
             else:
                 labelsData_test.append('road')
                 num_road_test+=1
-                #binary_labelsData.append(1)
 
-        print("tenemos en train: "+str(num_crosswalk_train)+" para crosswalk y "+str(num_road_train)+" para road")
-        print("tenemos en test: "+str(num_crosswalk_test)+" para crosswalk y "+str(num_road_test)+" para road")
+        print("Tenemos en train: "+str(num_crosswalk_train)+" para crosswalk y "+str(num_road_train)+" para road")
+        print("Tenemos en test: "+str(num_crosswalk_test)+" para crosswalk y "+str(num_road_test)+" para road")
 
         trainData['labels'] = labelsData
         le = preprocessing.LabelEncoder()
@@ -296,38 +213,6 @@ class Device:
         return trainData, testData
 
     def loadValidationDatasets(self, train_set, val_set):
-        train_gen = ImageDataGenerator(
-            rescale=1./255)
-            
-        val_gen = ImageDataGenerator(rescale=1./255)
-
-        destination = self.path+'/tmp'
-        train_generator = train_gen.flow_from_dataframe(
-            dataframe = train_set,
-            directory = destination + '/train/',
-            x_col = 'file',
-            y_col = 'labels',
-            class_mode = 'categorical',#binary
-            target_size = (self.image_height,self.image_width),
-            batch_size = self.batch_size
-        )
-        #print(train_set.head())
-        #print(train_generator.labels)
-
-        validation_generator = val_gen.flow_from_dataframe(
-            dataframe = val_set,
-            directory = destination + '/train/',
-            x_col = 'file',
-            y_col = 'labels',
-            class_mode = 'categorical',
-            target_size = (self.image_height,self.image_width),
-            batch_size = self.batch_size,
-            shuffle = False
-        )
-
-        return train_generator,validation_generator
-
-    def loadValidationDatasets_new(self, train_set, val_set):
         train_gen = ImageDataGenerator(
             rescale=1./255,
             rotation_range=20,
@@ -362,10 +247,9 @@ class Device:
 
         return train_generator,validation_generator
 
-
     def loadModelType(self):
         if self.day == 0: #Primera ejecución nos descargamos el model
-            if self.model_type==1:
+            if self.model_type==4:
                 #Cargamos VGG16
                 model = VGG16(include_top=False, input_shape=(self.image_height, self.image_width, 3))
                 for layer in model.layers:
@@ -390,9 +274,6 @@ class Device:
                     layer.trainable = False
 
                 # add new classifier layers
-                """flat1 = Flatten()(model.layers[-1].output)
-                class1 = Dense(512, activation='relu')(flat1)
-                output = Dense(2, activation='softmax')(class1)"""
                 x=GlobalAveragePooling2D()(model.layers[-1].output)
                 class1 = Dense(512, activation='relu')(x)
                 output = Dense(2, activation='softmax')(class1)
@@ -407,9 +288,6 @@ class Device:
                     layer.trainable = False
 
                 # add new classifier layers
-                """flat1 = Flatten()(model.layers[-1].output)
-                class1 = Dense(512, activation='relu')(flat1)
-                output = Dense(2, activation='softmax')(class1)"""
                 x=GlobalAveragePooling2D()(model.layers[-1].output)
                 class1 = Dense(512, activation='relu')(x)
                 output = Dense(2, activation='softmax')(class1)
@@ -417,65 +295,27 @@ class Device:
                 #output = Flatten()(output)
                 model = Model(inputs=model.inputs, outputs=output)
                 return model
-            elif self.model_type==4:
-                #Cargamos MobileNetV2
-                model = MobileNetV2(include_top=False, input_shape=(self.image_height, self.image_width, 3))
-                for layer in model.layers:
-                    layer.trainable = False
-
-                # add new classifier layers
-                """flat1 = Flatten()(model.layers[-1].output)
-                class1 = Dense(512, activation='relu')(flat1)
-                output = Dense(2, activation='softmax')(class1)"""
-                x=GlobalAveragePooling2D()(model.layers[-1].output)
-                #maybe 1024?????????????????????????????????????????????????????????????????????????????????
-                #class0 = Dense(1024, activation='relu')(x)
-                class1 = Dense(512, activation='relu')(x)
-                output = Dense(2, activation='softmax')(class1) #2, softmax
-
-                """flat1 = Flatten()(model.layers[-1].output)
-                drop = Dropout(0.5)(flat1)
-                class1 = Dense(512, activation='relu')(drop)
-                output = Dense(2, activation='softmax')(class1)"""
-
-                #output = Flatten()(output)
-                model = Model(inputs=model.inputs, outputs=output)
-                #return model
-                #"/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5"
-                best_model=tf.keras.models.load_model("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5")
-                
+            elif self.model_type==1:
+                best_model=tf.keras.models.load_model(self.path_best_model)
                 return best_model
 
-            elif self.model_type==5: #Entrenamiento de una red normal con dropout
-                #Cargamos MobileNetV2
+            elif self.model_type==5: #Entrenamiento de una red normal
+               #Cargamos MobileNetV2
                 model = MobileNetV2(include_top=False, input_shape=(self.image_height, self.image_width, 3))
                 for layer in model.layers:
                     layer.trainable = False
 
                 # add new classifier layers
-                """flat1 = Flatten()(model.layers[-1].output)
-                class1 = Dense(512, activation='relu')(flat1)
-                output = Dense(2, activation='softmax')(class1)"""
                 x=GlobalAveragePooling2D()(model.layers[-1].output)
-                #maybe 1024?????????????????????????????????????????????????????????????????????????????????
-                #class0 = Dense(1024, activation='relu')(x)
                 class1 = Dense(512, activation='relu')(x)
                 output = Dense(2, activation='softmax')(class1) #2, softmax
 
-                """flat1 = Flatten()(model.layers[-1].output)
-                drop = Dropout(0.5)(flat1)
-                class1 = Dense(512, activation='relu')(drop)
-                output = Dense(2, activation='softmax')(class1)"""
-
-                #output = Flatten()(output)
                 model = Model(inputs=model.inputs, outputs=output)
                 return model
                 
         else: #ya llevamos al menos una ejecución, el modelo deberia de entrenar con el que ya tiene
             model=tf.keras.models.load_model(self.path+'/model.h5')
             return model
-
-
 
     def plotHistory(self, history):
 
@@ -487,9 +327,7 @@ class Device:
         plt.legend(['train', 'val'], loc='upper left')
         plt.savefig(self.path+'/accuracy.png')
         plt.clf()
-        #print("*****")
-        #print(history.history)
-        #print("*****")
+        
         plt.plot(history.history['loss'])
         plt.plot(history.history['val_loss'])
         plt.title('model loss')
@@ -525,7 +363,6 @@ class Device:
         with open(hist_json_file, mode='w') as f:
             hist_df.to_json(f, orient='records')
 
-
     def deleteTempFiles(self):
         files = glob.glob(self.path+"/tmp/**/*.jpg", recursive=True)
 
@@ -539,53 +376,24 @@ class Device:
         ejecuta el evaluate que hay en colab con sus datos
         para ello crea otra vez sus temporales de imagenes y se evalua con esas image_names
         el accuracy del nuevo modelo se compara con el anterior y finalmente descarta el modleo con menos accuracy y nos dice con cual se queda
-    """
+        Return 1 if the model change and 0 if hold the same model"""
     def evaluate(self, path):
-        train,test = self.loadDataIntoPaths()
         trainData, testData = self.loadDataImages()
-        trainData.head()
-        testData.head()
-
-        train_set, val_set = train_test_split(trainData,
-                                            test_size=0.1)
-        #print(len(train_set), len(val_set))
-        train_generator, _ = self.loadValidationDatasets(train_set, val_set)
-
-        model=tf.keras.models.load_model(self.path+'/model.h5')
-        model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
-        results = model.evaluate(train_generator)
-        #print(results)
-        
-    """Return 1 if the model change and 0 if hold the same model"""
-    def evaluate_new(self, path):
-        trainData, testData = self.loadDataImages_new()
 
         train_set, val_set = train_test_split(trainData,
                                             test_size=0.2, shuffle=True, random_state=self.number)
 
-        #print("***********")
-        #print(train_set.head(20))
-        #print("***********")
-
-        #print(len(train_set), len(val_set))
-        train_generator, val_generator = self.loadValidationDatasets_new(train_set, val_set)
-        
-        """test_set, val_test_set = train_test_split(testData,
-                                            test_size=0.1, shuffle=False)
-        #print(len(train_set), len(val_set))
-        test_generator, val_test_generator = self.loadValidationDatasets_new(test_set, val_test_set)"""
+        train_generator, val_generator = self.loadValidationDatasets(train_set, val_set)
 
         model=tf.keras.models.load_model(path)
         model.compile(optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"])#binary_crossentropy
         results = model.evaluate(val_generator) #Se ha cambiado el train_generator por val_generator para probarlo. -> tarda menos claro
-        #print(results)
         #load the json to a string
         with open(self.path+'/history.json', 'r') as f:
             history = json.loads(f.read())
         #extract an element in the response
         last_acc=history[-1]["accuracy"]
         last_val_acc=history[-1]["val_accuracy"]
-        #print("last accuracy: "+str(last_acc))
             
         #Si tengo mejores resultados frente al que tenía cuando entrené, me quedo con el ultimo modelo -> Se renombra el anterior y se guarda con el mismo nombre
         if(float(results[1])>float(last_val_acc)):
