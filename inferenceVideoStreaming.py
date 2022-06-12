@@ -36,9 +36,20 @@ def time_elapsed(start_time,event):
        
 def load_image(img_path, show=False):
 
-    #img = image.load_img(img_path, target_size=(256, 256))
-    #img_tensor = image.img_to_array(img)                    # (height, width, channels)
-    #img_tensor = np.expand_dims(img_tensor, axis=0)         # (1, height, width, channels), add a dimension because the model expects this shape: (batch_size, height, width, channels)
+    img = image.load_img(img_path, target_size=(256, 256))
+    img_tensor = image.img_to_array(img)                    # (height, width, channels)
+    img_tensor = np.expand_dims(img_tensor, axis=0)         # (1, height, width, channels), add a dimension because the model expects this shape: (batch_size, height, width, channels)
+    img_tensor /= 255.                                      # imshow expects values in the range [0, 1]
+
+    if show:
+        plt.imshow(img_tensor[0])                           
+        plt.axis('off')
+        plt.show()
+
+    return img_tensor
+
+def load_image_tensor(img_tensor, show=False):
+
     img_tensor /= 255.                                      # imshow expects values in the range [0, 1]
 
     if show:
@@ -121,7 +132,7 @@ with picamera.PiCamera() as camera:
         start_t2=time.time()
         # Add a batch dimension
         input_data = np.expand_dims(img, axis=0)
-        input_data = load_image(input_data)
+        input_data = load_image_tensor(input_data)
 
         # feed data to input tensor and run the interpreter
         common.set_input(interpreter, input_data)
