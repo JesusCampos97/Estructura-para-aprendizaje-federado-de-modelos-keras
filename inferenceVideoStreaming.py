@@ -146,7 +146,7 @@ with picamera.PiCamera() as camera:
         #-------------------------------------------------------------
         
         #time_elapsed(start_time,"overall")
-        
+        print("*** "+str(pred_max))
         print(lbl_max, pred_max)
         print("********************************")
         time.sleep(1)
