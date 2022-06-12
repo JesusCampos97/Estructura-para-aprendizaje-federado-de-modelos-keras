@@ -132,12 +132,18 @@ with picamera.PiCamera() as camera:
         start_t2=time.time()
         # Add a batch dimension
         input_data = np.expand_dims(img, axis=0)
-        input_data = load_image_tensor(input_data)
+        #input_data = load_image_tensor(input_data)
 
         # feed data to input tensor and run the interpreter
         common.set_input(interpreter, input_data)
         interpreter.invoke()
-        
+        #----------------------------------------------------------------
+        classes = classify.get_classes(interpreter, top_k=1)
+        labels = dataset.read_label_file(label_path)
+        for c in classes:
+            print('%s: %.5f' % (labels.get(c.id, c.id), c.score))
+        #----------------------------------------------------------------
+
         # Obtain results and map them to the classes
         predictions = interpreter.get_tensor(output_details[0]['index'])[0]
         
