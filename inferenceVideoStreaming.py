@@ -4,6 +4,7 @@ from pycoral.utils import dataset
 from pycoral.adapters import common
 from pycoral.adapters import classify
 
+from tensorflow.keras.preprocessing import image
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
