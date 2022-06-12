@@ -108,7 +108,7 @@ with picamera.PiCamera() as camera:
         input_data = np.expand_dims(img, axis=0)
         
         # feed data to input tensor and run the interpreter
-        interpreter.set_tensor(input_details[0]['index'], input_data)
+        common.set_input(interpreter, input_data)
         interpreter.invoke()
         
         # Obtain results and map them to the classes
