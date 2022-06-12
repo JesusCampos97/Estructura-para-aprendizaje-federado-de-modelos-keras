@@ -64,8 +64,8 @@ def load_image_tensor(img, show=False):
 
 #specify the path of Model and Label file
 
-model_path = "./Devices/20/02-06-2022 09-09/model.tflite" 
-label_path = "./Devices/20/02-06-2022 09-09/labels.txt"
+model_path = "./Devices/5/30-05-2022 12-40/model.tflite"  #./Devices/5/30-05-2022 12-40 ./Devices/20/02-06-2022 09-09
+label_path = "./Devices/5/30-05-2022 12-40/labels.txt"
 
 top_k_results = 2
 
