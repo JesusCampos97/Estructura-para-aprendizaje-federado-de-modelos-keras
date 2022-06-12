@@ -145,30 +145,6 @@ with picamera.PiCamera() as camera:
             print('%s: %.5f' % (labels.get(c.id, c.id), c.score))
         #----------------------------------------------------------------
 
-        """
-        
-        
-        # Obtain results and map them to the classes
-        predictions = interpreter.get_tensor(output_details[0]['index'])[0]
-        
-        # Get indices of the top k results
-        top_k_indices = np.argsort(predictions)[::-1][:top_k_results]
-        
-        
-        pred_max=predictions[top_k_indices[0]]/255.0
-        lbl_max=labels[top_k_indices[0]]
-        
-        #take action based on maximum prediction value
-        if (pred_max < threshold):
-                camera.annotate_text = "___"
-               
-                
-        if (pred_max >= threshold):
-                percent=round(pred_max*100)
-                txt= " " + lbl_max + " (" + str(percent) + "%)"
-                camera.annotate_text = txt
-                
-        """
         time_elapsed(start_t2,"inference")
         #-------------------------------------------------------------
         
