@@ -1,7 +1,9 @@
 
+from pycoral.utils import edgetpu
+from pycoral.utils import dataset
+from pycoral.adapters import common
+from pycoral.adapters import classify
 
-from tflite_runtime.interpreter import load_delegate
-from tflite_runtime.interpreter import Interpreter
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
@@ -45,8 +47,7 @@ with open(label_path, 'r') as f:
     labels = list(map(str.strip, f.readlines()))
 
 # Load TFLite model and allocate tensors
-interpreter = Interpreter(model_path=model_path, 
-    experimental_delegates=[load_delegate('libedgetpu.so.1.0')])
+interpreter = edgetpu.make_interpreter(model_path)
 interpreter.allocate_tensors()
 
 # Get input and output tensors.
