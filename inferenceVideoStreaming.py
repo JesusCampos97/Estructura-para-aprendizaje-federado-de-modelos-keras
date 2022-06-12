@@ -166,6 +166,6 @@ with picamera.PiCamera() as camera:
         #print("*** "+str(pred_max))
         #print(lbl_max, pred_max)
         print("********************************")
-        time.sleep(1)
+        #time.sleep(1)
         
 
