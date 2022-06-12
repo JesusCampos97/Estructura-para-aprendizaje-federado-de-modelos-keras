@@ -13,7 +13,7 @@ from picamera import PiCamera, Color
 from time import sleep
 import time
 
-def scale_image(frame, new_size=(224, 224)):
+def scale_image(frame, new_size=(256, 256)):
   # Get the dimensions
   height, width, _ = frame.shape # Image shape
   new_width, new_height = new_size # Target shape 
