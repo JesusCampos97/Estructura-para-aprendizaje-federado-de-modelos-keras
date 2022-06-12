@@ -48,8 +48,9 @@ def load_image(img_path, show=False):
 
     return img_tensor
 
-def load_image_tensor(img_tensor, show=False):
+def load_image_tensor(img, show=False):
 
+    img_tensor = image.img_to_array(img)
     img_tensor /= 255.                                      # imshow expects values in the range [0, 1]
 
     if show:
@@ -132,7 +133,7 @@ with picamera.PiCamera() as camera:
         start_t2=time.time()
         # Add a batch dimension
         input_data = np.expand_dims(img, axis=0)
-        #input_data = load_image_tensor(input_data)
+        input_data = load_image_tensor(img)
 
         # feed data to input tensor and run the interpreter
         common.set_input(interpreter, input_data)
@@ -144,6 +145,9 @@ with picamera.PiCamera() as camera:
             print('%s: %.5f' % (labels.get(c.id, c.id), c.score))
         #----------------------------------------------------------------
 
+        """
+        
+        
         # Obtain results and map them to the classes
         predictions = interpreter.get_tensor(output_details[0]['index'])[0]
         
@@ -164,7 +168,7 @@ with picamera.PiCamera() as camera:
                 txt= " " + lbl_max + " (" + str(percent) + "%)"
                 camera.annotate_text = txt
                 
-        
+        """
         time_elapsed(start_t2,"inference")
         #-------------------------------------------------------------
         
@@ -179,8 +183,8 @@ with picamera.PiCamera() as camera:
         #-------------------------------------------------------------
         
         #time_elapsed(start_time,"overall")
-        print("*** "+str(pred_max))
-        print(lbl_max, pred_max)
+        #print("*** "+str(pred_max))
+        #print(lbl_max, pred_max)
         print("********************************")
         time.sleep(1)
         
