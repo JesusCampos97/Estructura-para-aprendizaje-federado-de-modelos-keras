@@ -121,7 +121,7 @@ with picamera.PiCamera() as camera:
         start_t2=time.time()
         # Add a batch dimension
         input_data = np.expand_dims(img, axis=0)
-        input_data = load_image(img)
+        #input_data = load_image(img)
 
         # feed data to input tensor and run the interpreter
         common.set_input(interpreter, input_data)
