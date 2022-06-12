@@ -144,9 +144,9 @@ with picamera.PiCamera() as camera:
         for c in classes:
             print('%s: %.5f' % (labels.get(c.id, c.id), c.score))
             if labels.get(c.id, c.id)=="road":
-                camera.annotate_text = "road"
+                camera.annotate_text = "road ("+str(c.score*100.0)+" %)"
             else:
-                camera.annotate_text = "crosswalk"
+                camera.annotate_text = "crosswalk ("+str(c.score*100.0)+" %)"
         #----------------------------------------------------------------
 
         time_elapsed(start_t2,"inference")
