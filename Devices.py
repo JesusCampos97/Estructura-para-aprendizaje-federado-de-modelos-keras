@@ -44,8 +44,8 @@ class Device:
         self.path = path
         if(os.path.isdir(path+"/tmp")==False):
                 os.mkdir(path+"/tmp")
-        if(os.path.isdir(path+"/tmp/allDataset")==False):
-                os.mkdir(path+"/tmp/allDataset")
+        if(os.path.isdir(path+"/tmp/allDataset no huelva")==False):
+                os.mkdir(path+"/tmp/allDataset no huelva")
         self.path_dataset = path_dataset
         self.data_percentage = data_percentage
         self.train_percentage = train_percentage
@@ -101,7 +101,7 @@ class Device:
         dst_dir = self.path+"/tmp"
         if(os.path.isdir(dst_dir)==False):
             os.mkdir(dst_dir)
-        dst_dir+="/allDataset"
+        dst_dir+="/allDataset no huelva"
         if(os.path.isdir(dst_dir)==False):
             os.mkdir(dst_dir)
         list = os.listdir(src_dir) # dir is your directory path
@@ -139,14 +139,14 @@ class Device:
             os.mkdir(dst_dir)
 
         for i,val in enumerate(train):
-            shutil.copy(self.path+'/tmp/allDataset/'+str(train[i]), dst_dir)
+            shutil.copy(self.path+'/tmp/allDataset no huelva/'+str(train[i]), dst_dir)
 
         dst_dir = self.path+"/tmp/test/"
         if(os.path.isdir(dst_dir)==False):
             os.mkdir(dst_dir)
 
         for i,val in enumerate(test):
-            shutil.copy(self.path+'/tmp/allDataset/'+str(test[i]), dst_dir)
+            shutil.copy(self.path+'/tmp/allDataset no huelva/'+str(test[i]), dst_dir)
         
         return train, test
 
@@ -154,7 +154,7 @@ class Device:
         #Aqui hay que cmabiar al forma de trabajar. La clase 0 tiene que ser siempre la misma... si no cascará al mergear 2 modelos siempre.... es decir no irá bien
 
         labels=[]
-        dst_dir = self.path_dataset+"/allDataset"
+        dst_dir = self.path_dataset+"/allDataset no huelva"
         print("path de imagenes "+dst_dir)
         for filename in enumerate(os.listdir(dst_dir)):
             labels.append(filename[1])
@@ -227,7 +227,7 @@ class Device:
 
         train_generator = train_gen.flow_from_dataframe(
             dataframe = train_set,
-            directory = self.path_dataset + '/allDataset/',
+            directory = self.path_dataset + '/allDataset no huelva/',
             x_col = 'file',
             y_col = 'labels',
             class_mode = 'categorical',#binary
@@ -237,7 +237,7 @@ class Device:
 
         validation_generator = val_gen.flow_from_dataframe(
             dataframe = val_set,
-            directory = self.path_dataset + '/allDataset/',
+            directory = self.path_dataset + '/allDataset no huelva/',
             x_col = 'file',
             y_col = 'labels',
             class_mode = 'categorical',

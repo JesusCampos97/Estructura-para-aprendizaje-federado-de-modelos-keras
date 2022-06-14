@@ -22,7 +22,7 @@ model_type = 5 -> MobileNetV2 para entrenamiento del modelo
 """
 
 def processImages(path_dataset):
-    filepath = path_dataset+'/allDataset/'
+    filepath = path_dataset+'/allDataset no huelva/'
     for i in tqdm(range(len(os.listdir(filepath)))):
         pic_path = filepath + os.listdir(filepath)[i]
         pic = PIL.Image.open(pic_path)
