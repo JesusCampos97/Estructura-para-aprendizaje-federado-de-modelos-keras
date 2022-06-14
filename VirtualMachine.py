@@ -42,7 +42,7 @@ if __name__ == "__main__":
     image_height = 256 #224
     image_width = 256 #224
     batch_size = 16
-    primera_ejecucion = False
+    primera_ejecucion = True
     num_etapas=1 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
     merge_type=1 #1-FederatedAverage, 2- PonderedFederatedAverage
     path_best_model="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5"
