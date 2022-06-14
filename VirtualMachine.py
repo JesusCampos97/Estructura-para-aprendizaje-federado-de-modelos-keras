@@ -22,7 +22,7 @@ model_type = 5 -> MobileNetV2 para entrenamiento del modelo
 """
 
 def processImages(path_dataset):
-    filepath = path_dataset+'/allDataset no huelva/'
+    filepath = path_dataset+'/allDataset huelva/'
     for i in tqdm(range(len(os.listdir(filepath)))):
         pic_path = filepath + os.listdir(filepath)[i]
         pic = PIL.Image.open(pic_path)
@@ -32,21 +32,21 @@ def processImages(path_dataset):
 if __name__ == "__main__":
 
 
-    num_devices=1 # se ha hehco con 5, quedan 10 y 20
+    num_devices=20 # se ha hehco con 5, quedan 10 y 20
     data_percentage=0.8
     train_percentage=0.8
     path_devices="./Devices/"#"Devices/5/20042022 (2)"
     path_dataset="/datasets_nuevos/nuevo dataset" #path donde se encuentra el dataset descomprimido
     model_type=1 #Se debera de pasar por parametros
-    epochs=4 #Se debera de pasar por parametros
+    epochs=1 #Se debera de pasar por parametros
     image_height = 256 #224
     image_width = 256 #224
     batch_size = 16
     primera_ejecucion = True
-    num_etapas=1 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
+    num_etapas=4 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
     merge_type=1 #1-FederatedAverage, 2- PonderedFederatedAverage
-    path_best_model="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5"
-    min_accuracy_to_merge=0.756
+    path_best_model="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/1/14-06-2022 11-34/d0/model.h5"#"/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5"
+    min_accuracy_to_merge=0.935
 
     #Creo las carpetas de los datasets y los renombro
     start_primera_ejecucion = time.time()
@@ -59,22 +59,22 @@ if __name__ == "__main__":
     if (primera_ejecucion):
         print("Primera ejecución de la experimentación en el sistema. Creando carpetas de dispositivo . . .")
         os.getcwd()
-        collection = path_dataset+"/dataset negativo no huelva/"
+        collection = path_dataset+"/dataset negativo huelva/"
         for i, filename in enumerate(os.listdir(collection)):
-            os.rename(path_dataset+"/dataset negativo no huelva/" + filename, path_dataset+"/dataset negativo no huelva/road_" + str(i) + ".jpg")
+            os.rename(path_dataset+"/dataset negativo huelva/" + filename, path_dataset+"/dataset negativo huelva/road_" + str(i) + ".jpg")
 
-        collection = path_dataset+"/dataset positivo no huelva/"
+        collection = path_dataset+"/dataset positivo huelva/"
         for i, filename in enumerate(os.listdir(collection)):
-            os.rename(path_dataset+"/dataset positivo no huelva/" + filename, path_dataset+"/dataset positivo no huelva/crosswalk_" + str(i) + ".jpg")
+            os.rename(path_dataset+"/dataset positivo huelva/" + filename, path_dataset+"/dataset positivo huelva/crosswalk_" + str(i) + ".jpg")
 
-        src_dir = path_dataset+"/dataset negativo no huelva/"
-        dst_dir = path_dataset+"/allDataset no huelva/"
+        src_dir = path_dataset+"/dataset negativo huelva/"
+        dst_dir = path_dataset+"/allDataset huelva/"
         os.mkdir(dst_dir)
 
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             shutil.copy(jpgfile, dst_dir)
 
-        src_dir = path_dataset+"/dataset positivo no huelva/"
+        src_dir = path_dataset+"/dataset positivo huelva/"
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             shutil.copy(jpgfile, dst_dir)
 
