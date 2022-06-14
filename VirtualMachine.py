@@ -32,18 +32,18 @@ def processImages(path_dataset):
 if __name__ == "__main__":
 
 
-    num_devices=20 # se ha hehco con 5, quedan 10 y 20
+    num_devices=1 # se ha hehco con 5, quedan 10 y 20
     data_percentage=0.8
     train_percentage=0.8
     path_devices="./Devices/"#"Devices/5/20042022 (2)"
-    path_dataset="/datasets" #path donde se encuentra el dataset descomprimido
+    path_dataset="/datasets nuevos" #path donde se encuentra el dataset descomprimido
     model_type=1 #Se debera de pasar por parametros
-    epochs=1 #Se debera de pasar por parametros
+    epochs=4 #Se debera de pasar por parametros
     image_height = 256 #224
     image_width = 256 #224
-    batch_size = 32
+    batch_size = 16
     primera_ejecucion = False
-    num_etapas=15 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
+    num_etapas=1 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
     merge_type=1 #1-FederatedAverage, 2- PonderedFederatedAverage
     path_best_model="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5"
     min_accuracy_to_merge=0.756
@@ -59,22 +59,22 @@ if __name__ == "__main__":
     if (primera_ejecucion):
         print("Primera ejecución de la experimentación en el sistema. Creando carpetas de dispositivo . . .")
         os.getcwd()
-        collection = path_dataset+"/dataset negativo/"
+        collection = path_dataset+"/dataset negativo no huelva/"
         for i, filename in enumerate(os.listdir(collection)):
-            os.rename(path_dataset+"/dataset negativo/" + filename, path_dataset+"/dataset negativo/road_" + str(i) + ".jpg")
+            os.rename(path_dataset+"/dataset negativo no huelva/" + filename, path_dataset+"/dataset negativo no huelva/road_" + str(i) + ".jpg")
 
-        collection = path_dataset+"/dataset positivo/"
+        collection = path_dataset+"/dataset positivo no huelva/"
         for i, filename in enumerate(os.listdir(collection)):
-            os.rename(path_dataset+"/dataset positivo/" + filename, path_dataset+"/dataset positivo/crosswalk_" + str(i) + ".jpg")
+            os.rename(path_dataset+"/dataset positivo no huelva/" + filename, path_dataset+"/dataset positivo no huelva/crosswalk_" + str(i) + ".jpg")
 
-        src_dir = path_dataset+"/dataset negativo/"
-        dst_dir = path_dataset+"/allDataset/"
+        src_dir = path_dataset+"/dataset negativo no huelva/"
+        dst_dir = path_dataset+"/allDataset no huelva/"
         os.mkdir(dst_dir)
 
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             shutil.copy(jpgfile, dst_dir)
 
-        src_dir = path_dataset+"/dataset positivo/"
+        src_dir = path_dataset+"/dataset positivo no huelva/"
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             shutil.copy(jpgfile, dst_dir)
 

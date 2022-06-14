@@ -97,7 +97,7 @@ class Device:
 
 
     def loadDataIntoPaths(self):
-        src_dir = self.path_dataset+"/dataset negativo/"
+        src_dir = self.path_dataset+"/dataset negativo no huelva/"
         dst_dir = self.path+"/tmp"
         if(os.path.isdir(dst_dir)==False):
             os.mkdir(dst_dir)
@@ -112,7 +112,7 @@ class Device:
                 shutil.copy(jpgfile, dst_dir)
             i+=1
 
-        src_dir = self.path_dataset+"/dataset positivo/"
+        src_dir = self.path_dataset+"/dataset positivo no huelva/"
         list = os.listdir(src_dir) # dir is your directory path
         file_count = len(list)
         i=0
