@@ -19,23 +19,27 @@ class Server:
     # create a model from the weights of multiple models
     def model_weight_ensemble(self, members, weights):
         # determine how many layers need to be averaged
-        n_layers = len(members[0].get_weights())
-        # create an set of average model weights
-        avg_model_weights = []
-        for layer in range(n_layers):
-            # collect this layer from each model
-            layer_weights = array([model.get_weights()[layer] for model in members])
-            # weighted average of weights for this layer
-            avg_layer_weights = average(layer_weights, axis=0, weights=weights)
-            #avg_layer_weights = median(layer_weights, axis=0) #probar la mediana
-            # store average layer weights
-            avg_model_weights.append(avg_layer_weights)
-            # create a new model with the same structure
-        model = clone_model(members[0])
-        # set the weights in the new
-        model.set_weights(avg_model_weights)
-        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-        return model
+        if len(members)>0:
+            n_layers = len(members[0].get_weights())
+            # create an set of average model weights
+            avg_model_weights = []
+            for layer in range(n_layers):
+                # collect this layer from each model
+                layer_weights = array([model.get_weights()[layer] for model in members])
+                # weighted average of weights for this layer
+                avg_layer_weights = average(layer_weights, axis=0, weights=weights)
+                #avg_layer_weights = median(layer_weights, axis=0) #probar la mediana
+                # store average layer weights
+                avg_model_weights.append(avg_layer_weights)
+                # create a new model with the same structure
+            model = clone_model(members[0])
+            # set the weights in the new
+            model.set_weights(avg_model_weights)
+            model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+            return model
+        else:
+            best_model=tf.keras.models.load_model(self.path_best_model)
+            return best_model
 
     def merge(self, pathp):
         tf.keras.backend.clear_session()
