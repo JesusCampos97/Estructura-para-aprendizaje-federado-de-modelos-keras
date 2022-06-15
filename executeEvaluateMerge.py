@@ -6,7 +6,6 @@ import time
 import pandas as pd
 
 num_devices=2
-data_percentage=0.8
 train_percentage=0.8
 path_devices="./Devices/"#"Devices/5/20042022 (2)"
 path_dataset="/datasets" #path donde se encuentra el dataset descomprimido
@@ -23,7 +22,7 @@ print(new_path)
 if(os.path.isdir(new_path)==False):
 	os.mkdir(new_path)
 #path_param=new_path+"/30-04-2022 23-32/d1"+"_day"+str(day)
-#device = Device(1, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size, day)
+#device = Device(1, path_param, path_dataset, train_percentage, model_type, epochs, steps_per_epoch, image_height, image_width, batch_size, day)
 #device.evaluate_new("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/30-04-2022 23-32/model_merged.h5")
 
 
@@ -31,7 +30,7 @@ evaluate_times=[]
 print("Ejecuta un dispositivo")
 path_param="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/02-05-2022 18-55/d0"#+"_day"+str(day)
 start_device_evaluate = time.time()
-device = Device(0, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
+device = Device(0, path_param, path_dataset, train_percentage, model_type, epochs, 
 	steps_per_epoch, image_height, image_width, batch_size, day)
 device.evaluate_new("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/2/02-05-2022 18-55/model_merged.h5")
 end_device_evaluate = time.time()
