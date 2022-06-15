@@ -44,8 +44,8 @@ class Device:
         self.path = path
         if(os.path.isdir(path+"/tmp")==False):
                 os.mkdir(path+"/tmp")
-        if(os.path.isdir(path+"/tmp/allDataset huelva")==False):
-                os.mkdir(path+"/tmp/allDataset huelva")
+        if(os.path.isdir(path+"/tmp/allDataset no huelva")==False):
+                os.mkdir(path+"/tmp/allDataset no huelva")
         self.path_dataset = path_dataset
         self.data_percentage = data_percentage
         self.train_percentage = train_percentage
@@ -96,65 +96,11 @@ class Device:
         return history.history['accuracy'][0], history.history['val_accuracy'][0], history.history['loss'][0], history.history['val_loss'][0]
 
 
-    def loadDataIntoPaths(self):
-        src_dir = self.path_dataset+"/dataset negativo huelva/"
-        dst_dir = self.path+"/tmp"
-        if(os.path.isdir(dst_dir)==False):
-            os.mkdir(dst_dir)
-        dst_dir+="/allDataset huelva"
-        if(os.path.isdir(dst_dir)==False):
-            os.mkdir(dst_dir)
-        list = os.listdir(src_dir) # dir is your directory path
-        file_count = len(list)
-        i=0
-        for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
-            if(i<(file_count*self.data_percentage)):
-                shutil.copy(jpgfile, dst_dir)
-            i+=1
-
-        src_dir = self.path_dataset+"/dataset positivo huelva/"
-        list = os.listdir(src_dir) # dir is your directory path
-        file_count = len(list)
-        i=0
-        for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
-            if(i<(file_count*self.data_percentage)):
-                shutil.copy(jpgfile, dst_dir)
-            i+=1
-
-        labels=[]
-        for filename in enumerate(os.listdir(dst_dir)):
-            labels.append(filename[1])
-
-        num=len(labels)
-        random.shuffle(labels)
-        final=int(num*self.train_percentage) #se usa un 80 para train y un 20 para test de forma normal
-        train= labels[:final]
-        test= labels[final:]
-
-        #print(len(train))
-        #print(len(test))
-
-        dst_dir = self.path+"/tmp/train/"
-        if(os.path.isdir(dst_dir)==False):
-            os.mkdir(dst_dir)
-
-        for i,val in enumerate(train):
-            shutil.copy(self.path+'/tmp/allDataset huelva/'+str(train[i]), dst_dir)
-
-        dst_dir = self.path+"/tmp/test/"
-        if(os.path.isdir(dst_dir)==False):
-            os.mkdir(dst_dir)
-
-        for i,val in enumerate(test):
-            shutil.copy(self.path+'/tmp/allDataset huelva/'+str(test[i]), dst_dir)
-        
-        return train, test
-
     def loadDataImages(self):
         #Aqui hay que cmabiar al forma de trabajar. La clase 0 tiene que ser siempre la misma... si no cascará al mergear 2 modelos siempre.... es decir no irá bien
 
         labels=[]
-        dst_dir = self.path_dataset+"/allDataset huelva"
+        dst_dir = self.path_dataset+"/allDataset no huelva"
         print("path de imagenes "+dst_dir)
         for filename in enumerate(os.listdir(dst_dir)):
             labels.append(filename[1])
@@ -227,7 +173,7 @@ class Device:
 
         train_generator = train_gen.flow_from_dataframe(
             dataframe = train_set,
-            directory = self.path_dataset + '/allDataset huelva/',
+            directory = self.path_dataset + '/allDataset no huelva/',
             x_col = 'file',
             y_col = 'labels',
             class_mode = 'categorical',#binary
@@ -237,7 +183,7 @@ class Device:
 
         validation_generator = val_gen.flow_from_dataframe(
             dataframe = val_set,
-            directory = self.path_dataset + '/allDataset huelva/',
+            directory = self.path_dataset + '/allDataset no huelva/',
             x_col = 'file',
             y_col = 'labels',
             class_mode = 'categorical',
