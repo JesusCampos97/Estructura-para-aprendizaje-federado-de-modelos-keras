@@ -22,7 +22,7 @@ model_type = 5 -> MobileNetV2 para entrenamiento del modelo
 """
 
 def processImages(path_dataset):
-    filepath = path_dataset+'/allDataset no huelva/'
+    filepath = path_dataset+'/allDataset huelva/'
     for i in tqdm(range(len(os.listdir(filepath)))):
         pic_path = filepath + os.listdir(filepath)[i]
         pic = PIL.Image.open(pic_path)
@@ -33,7 +33,6 @@ if __name__ == "__main__":
 
 
     num_devices=20 # se ha hehco con 5, quedan 10 y 20
-    data_percentage=0.8
     train_percentage=0.8
     path_devices="./Devices/"#"Devices/5/20042022 (2)"
     path_dataset="/datasets_nuevos/nuevo dataset" #path donde se encuentra el dataset descomprimido
@@ -59,22 +58,22 @@ if __name__ == "__main__":
     if (primera_ejecucion):
         print("Primera ejecución de la experimentación en el sistema. Creando carpetas de dispositivo . . .")
         os.getcwd()
-        collection = path_dataset+"/dataset negativo no huelva/"
+        collection = path_dataset+"/dataset negativo huelva/"
         for i, filename in enumerate(os.listdir(collection)):
-            os.rename(path_dataset+"/dataset negativo no huelva/" + filename, path_dataset+"/dataset negativo no huelva/road_" + str(i) + ".jpg")
+            os.rename(path_dataset+"/dataset negativo huelva/" + filename, path_dataset+"/dataset negativo huelva/road_" + str(i) + ".jpg")
 
-        collection = path_dataset+"/dataset positivo no huelva/"
+        collection = path_dataset+"/dataset positivo huelva/"
         for i, filename in enumerate(os.listdir(collection)):
-            os.rename(path_dataset+"/dataset positivo no huelva/" + filename, path_dataset+"/dataset positivo no huelva/crosswalk_" + str(i) + ".jpg")
+            os.rename(path_dataset+"/dataset positivo huelva/" + filename, path_dataset+"/dataset positivo huelva/crosswalk_" + str(i) + ".jpg")
 
-        src_dir = path_dataset+"/dataset negativo no huelva/"
-        dst_dir = path_dataset+"/allDataset no huelva/"
+        src_dir = path_dataset+"/dataset negativo huelva/"
+        dst_dir = path_dataset+"/allDataset huelva/"
         os.mkdir(dst_dir)
 
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             shutil.copy(jpgfile, dst_dir)
 
-        src_dir = path_dataset+"/dataset positivo no huelva/"
+        src_dir = path_dataset+"/dataset positivo huelva/"
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             shutil.copy(jpgfile, dst_dir)
 
@@ -113,7 +112,7 @@ if __name__ == "__main__":
                 os.mkdir(path_param)
 
             start_device_execute = time.time()
-            device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
+            device = Device(i, path_param, path_dataset, train_percentage, model_type, epochs, 
                 image_height, image_width, batch_size, day, path_best_model)
             accuracy, val_accuracy, loss, val_loss = device.execute()
             accuracy_list.append(accuracy)
@@ -156,7 +155,7 @@ if __name__ == "__main__":
             print("Ejecuta un dispositivo")
             path_param=new_path+"/d"+str(i)
             start_device_evaluate = time.time()
-            device = Device(i, path_param, path_dataset, data_percentage, train_percentage, model_type, epochs, 
+            device = Device(i, path_param, path_dataset, train_percentage, model_type, epochs, 
                 image_height, image_width, batch_size, day, path_best_model)
             is_model_changed, evaluate_accuracy=device.evaluate(new_path+"/model_merged.h5")
             is_model_changed_list.append(is_model_changed)

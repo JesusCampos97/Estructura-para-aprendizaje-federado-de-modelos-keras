@@ -35,19 +35,17 @@ class Device:
     """
         @params
             path: Ruta donde se guarda cada dispositivo
-            data_percentage: Cantidad de datos que utilizará de nuestro dataset 
     """
-    def __init__(self, number, path, path_dataset, data_percentage, train_percentage, model_type, epochs, image_height, image_width, batch_size, day, path_best_model):
+    def __init__(self, number, path, path_dataset, train_percentage, model_type, epochs, image_height, image_width, batch_size, day, path_best_model):
         tf.keras.backend.clear_session()
         self.number = number
         random.seed(number) #number+day d0 -> primer dia seed 0, d1 primer dia seed 1, d0 segundo dia seed 1, d1 segundia dia seed 2 ... y asi siempre es diferente con lo que entrenan.. o no deberia ser eso?
         self.path = path
         if(os.path.isdir(path+"/tmp")==False):
                 os.mkdir(path+"/tmp")
-        if(os.path.isdir(path+"/tmp/allDataset no huelva")==False):
-                os.mkdir(path+"/tmp/allDataset no huelva")
+        if(os.path.isdir(path+"/tmp/allDataset huelva")==False):
+                os.mkdir(path+"/tmp/allDataset huelva")
         self.path_dataset = path_dataset
-        self.data_percentage = data_percentage
         self.train_percentage = train_percentage
         self.model_type = model_type
         self.epochs = epochs
@@ -100,7 +98,7 @@ class Device:
         #Aqui hay que cmabiar al forma de trabajar. La clase 0 tiene que ser siempre la misma... si no cascará al mergear 2 modelos siempre.... es decir no irá bien
 
         labels=[]
-        dst_dir = self.path_dataset+"/allDataset no huelva"
+        dst_dir = self.path_dataset+"/allDataset huelva"
         print("path de imagenes "+dst_dir)
         for filename in enumerate(os.listdir(dst_dir)):
             labels.append(filename[1])
@@ -173,7 +171,7 @@ class Device:
 
         train_generator = train_gen.flow_from_dataframe(
             dataframe = train_set,
-            directory = self.path_dataset + '/allDataset no huelva/',
+            directory = self.path_dataset + '/allDataset huelva/',
             x_col = 'file',
             y_col = 'labels',
             class_mode = 'categorical',#binary
@@ -183,7 +181,7 @@ class Device:
 
         validation_generator = val_gen.flow_from_dataframe(
             dataframe = val_set,
-            directory = self.path_dataset + '/allDataset no huelva/',
+            directory = self.path_dataset + '/allDataset huelva/',
             x_col = 'file',
             y_col = 'labels',
             class_mode = 'categorical',
@@ -289,7 +287,6 @@ class Device:
             "number" : self.number,
             "path" : self.path,
             "path_dataset" : self.path_dataset,
-            "data_percentage" : self.data_percentage,
             "train_percentage" : self.train_percentage,
             "model_type" : self.model_type,
             "epochs" : self.epochs,
