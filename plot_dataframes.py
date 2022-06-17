@@ -22,8 +22,11 @@ df.loc[df['day'].isin(ids), 'day'] += 1
 
 
 df_aux_acc_mean=df.groupby(['day'])['accuracy'].mean()
+print(df_aux_acc_mean)
 df_aux_loss_mean=df.groupby(['day'])['val_accuracy'].mean()
+print(df_aux_loss_mean)
 df_aux_evaluate_acc_mean=df.groupby(['day'])['evaluate_accuracy'].mean()
+print(df_aux_evaluate_acc_mean)
 
 media_cambios=df['is_model_changed'].mean()
 
