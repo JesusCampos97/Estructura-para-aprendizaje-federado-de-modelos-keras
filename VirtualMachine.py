@@ -32,21 +32,21 @@ def processImages(path_dataset):
 if __name__ == "__main__":
 
 
-    num_devices=20 # se ha hehco con 5, quedan 10 y 20
+    num_devices=1 # se ha hehco con 5, quedan 10 y 20
     train_percentage=0.8
     path_devices="./Devices/"#"Devices/5/20042022 (2)"
     path_dataset="/datasets_nuevos/nuevo dataset" #path donde se encuentra el dataset descomprimido
     model_type=1 #Se debera de pasar por parametros
-    epochs=1 #Se debera de pasar por parametros
+    epochs=10 #Se debera de pasar por parametros
     image_height = 256 #224
     image_width = 256 #224
     batch_size = 16
     primera_ejecucion = False
-    num_etapas=10 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
+    num_etapas=1 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
     merge_type=1 #1-FederatedAverage, 2- PonderedFederatedAverage
     path_best_model="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/1/14-06-2022 11-34/d0/model.h5"#"/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5"
     min_accuracy_to_merge=0.8
-    first_day=4
+    first_day=0
     path_dia="./Devices/20/15-06-2022 12-51"
 
     #Creo las carpetas de los datasets y los renombro
