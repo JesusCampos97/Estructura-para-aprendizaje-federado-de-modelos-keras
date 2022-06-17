@@ -43,8 +43,8 @@ class Device:
         self.path = path
         if(os.path.isdir(path+"/tmp")==False):
                 os.mkdir(path+"/tmp")
-        if(os.path.isdir(path+"/tmp/allDataset huelva")==False):
-                os.mkdir(path+"/tmp/allDataset huelva")
+        if(os.path.isdir(path+"/tmp/allDataset no huelva")==False):
+                os.mkdir(path+"/tmp/allDataset no huelva")
         self.path_dataset = path_dataset
         self.train_percentage = train_percentage
         self.model_type = model_type
@@ -98,7 +98,7 @@ class Device:
         #Aqui hay que cmabiar al forma de trabajar. La clase 0 tiene que ser siempre la misma... si no cascará al mergear 2 modelos siempre.... es decir no irá bien
 
         labels=[]
-        dst_dir = self.path_dataset+"/allDataset huelva"
+        dst_dir = self.path_dataset+"/allDataset no huelva"
         print("path de imagenes "+dst_dir)
         for filename in enumerate(os.listdir(dst_dir)):
             labels.append(filename[1])
@@ -171,7 +171,7 @@ class Device:
 
         train_generator = train_gen.flow_from_dataframe(
             dataframe = train_set,
-            directory = self.path_dataset + '/allDataset huelva/',
+            directory = self.path_dataset + '/allDataset no huelva/',
             x_col = 'file',
             y_col = 'labels',
             class_mode = 'categorical',#binary
@@ -181,7 +181,7 @@ class Device:
 
         validation_generator = val_gen.flow_from_dataframe(
             dataframe = val_set,
-            directory = self.path_dataset + '/allDataset huelva/',
+            directory = self.path_dataset + '/allDataset no huelva/',
             x_col = 'file',
             y_col = 'labels',
             class_mode = 'categorical',
