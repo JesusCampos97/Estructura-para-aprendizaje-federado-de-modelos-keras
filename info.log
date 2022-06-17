@@ -122,3 +122,5 @@
 *- 08-05-22 -*
     5/24-05-2022 14-54 -> se utiliza para crear imagen en memoria del acc y el loss -> Primeras pruebas. 5 Dispositivos durante 5 días
     
+*- 17-06-22 -*
+    1/17-06-2022 15-40 -> solo entrena con huelva deja el 0.89 de acc
