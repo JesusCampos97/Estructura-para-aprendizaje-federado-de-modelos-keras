@@ -124,3 +124,10 @@
     
 *- 17-06-22 -*
     1/17-06-2022 15-40 -> solo entrena con huelva deja el 0.89 de acc
+
+*- 19-06-22 -*
+    Hay que decir como sale un modelo entrenado con huelva y no huelva
+    hay que poner un modelo entrenado sin huelva y decir que cuando pasamos huelva decae, por ello entrenar con federadoes mejor
+    por que adaptamos el modelo a donde corresponde sin tener esas caidas y mejorando el acc sin necesidad
+    de tener todas las imagenes de pasos de cebra del mundo en un servidor y por lo tanto tard emuchisimo
+    en computo

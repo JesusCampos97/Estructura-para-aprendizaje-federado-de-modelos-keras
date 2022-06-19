@@ -86,11 +86,12 @@ class Device:
                             validation_data = validation_generator, 
                             epochs = self.epochs)
 
-        with open(self.path+'/history.json', 'r') as f:
-                history_last = json.loads(f.read())
-        #extract an element in the response
-        last_acc=history_last[-1]["accuracy"]
-        last_val_acc=history_last[-1]["val_accuracy"]
+        if self.day>0:
+            with open(self.path+'/history.json', 'r') as f:
+                    history_last = json.loads(f.read())
+            #extract an element in the response
+            last_acc=history_last[-1]["accuracy"]
+            last_val_acc=history_last[-1]["val_accuracy"]
 
         if self.day>0 and history.history['val_accuracy'][0]>last_val_acc or (history.history['val_accuracy'][0]==last_val_acc and history.history['accuracy'][0]>last_acc):
             #si mi entrenamiento es mejor entonces lo cambio, si no me quedo con mi modelo anterior que iba mejor
