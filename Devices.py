@@ -93,19 +93,25 @@ class Device:
             last_acc=history_last[-1]["accuracy"]
             last_val_acc=history_last[-1]["val_accuracy"]
 
-        if self.day>0 and history.history['val_accuracy'][0]>last_val_acc or (history.history['val_accuracy'][0]==last_val_acc and history.history['accuracy'][0]>last_acc):
-            #si mi entrenamiento es mejor entonces lo cambio, si no me quedo con mi modelo anterior que iba mejor
+            if history.history['val_accuracy'][0]>last_val_acc or (history.history['val_accuracy'][0]==last_val_acc and history.history['accuracy'][0]>last_acc):
+                #si mi entrenamiento es mejor entonces lo cambio, si no me quedo con mi modelo anterior que iba mejor
+                model.save(self.path+"/model.h5", overwrite=True)
+                #print("modelo guardado")
+                self.plotHistory(history)
+                self.saveConfig(history)
+                #self.deleteTempFiles()
+                return history.history['accuracy'][0], history.history['val_accuracy'][0], history.history['loss'][0], history.history['val_loss'][0]
+
+            else:
+                #me quedo con mi modelo anterior y por lo tanto con su validacion y acc etc
+                return history_last[-1]["accuracy"], history_last[-1]["val_accuracy"], history_last[-1]["loss"], history_last[-1]["val_loss"]
+        else:
             model.save(self.path+"/model.h5", overwrite=True)
             #print("modelo guardado")
             self.plotHistory(history)
             self.saveConfig(history)
-            #self.deleteTempFiles()
-            return history.history['accuracy'][0], history.history['val_accuracy'][0], history.history['loss'][0], history.history['val_loss'][0]
-
-        else:
             #me quedo con mi modelo anterior y por lo tanto con su validacion y acc etc
-            return history_last[-1]["accuracy"], history_last[-1]["val_accuracy"], history_last[-1]["loss"], history_last[-1]["val_loss"]
-
+            return history.history['accuracy'][0], history.history['val_accuracy'][0], history.history['loss'][0], history.history['val_loss'][0]
         
 
     def loadDataImages(self):
