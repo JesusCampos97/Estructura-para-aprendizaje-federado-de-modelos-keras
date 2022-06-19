@@ -92,7 +92,7 @@ class Device:
         last_acc=history_last[-1]["accuracy"]
         last_val_acc=history_last[-1]["val_accuracy"]
 
-        if history.history['val_accuracy'][0]>last_val_acc or (history.history['val_accuracy'][0]==last_val_acc and history.history['accuracy'][0]>last_acc):
+        if self.day>0 and history.history['val_accuracy'][0]>last_val_acc or (history.history['val_accuracy'][0]==last_val_acc and history.history['accuracy'][0]>last_acc):
             #si mi entrenamiento es mejor entonces lo cambio, si no me quedo con mi modelo anterior que iba mejor
             model.save(self.path+"/model.h5", overwrite=True)
             #print("modelo guardado")
