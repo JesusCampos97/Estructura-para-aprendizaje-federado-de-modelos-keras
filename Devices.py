@@ -43,8 +43,8 @@ class Device:
         self.path = path
         if(os.path.isdir(path+"/tmp")==False):
                 os.mkdir(path+"/tmp")
-        if(os.path.isdir(path+"/tmp/allDataset huelva")==False):
-                os.mkdir(path+"/tmp/allDataset huelva")
+        if(os.path.isdir(path+"/tmp/allDataset no huelva")==False):
+                os.mkdir(path+"/tmp/allDataset no huelva")
         self.path_dataset = path_dataset
         self.train_percentage = train_percentage
         self.model_type = model_type
@@ -118,7 +118,7 @@ class Device:
         #Aqui hay que cmabiar al forma de trabajar. La clase 0 tiene que ser siempre la misma... si no cascará al mergear 2 modelos siempre.... es decir no irá bien
 
         labels=[]
-        dst_dir = self.path_dataset+"/allDataset huelva"
+        dst_dir = self.path_dataset+"/allDataset no huelva"
         print("path de imagenes "+dst_dir)
         for filename in enumerate(os.listdir(dst_dir)):
             labels.append(filename[1])
@@ -127,9 +127,9 @@ class Device:
         random.shuffle(labels)
         num_max_labels=int(num*self.train_percentage) #se usa un 80 para train y un 20 para test de forma normal
         train = labels[:num_max_labels]
-        train= train[:2000] #Se cogen las primeras 2000 imagenes para ver si generaliza un 70% de train del total de 2800 img
+        train= train[:1050] #Se cogen las primeras 2000 imagenes para ver si generaliza un 70% de train del total de 2800 img
         test = labels[num_max_labels-1:]
-        test = test[:800] #Se cogen las primeras 800 imagenes un 30% de test del total de 2800 img
+        test = test[:450] #Se cogen las primeras 800 imagenes un 30% de test del total de 2800 img
         #el numero de imagenes está cogido así para no entrenar con demasiadas imagenes y que tarde en ejecutar en la raspberry una barbaridad
 
         print("Num imagenes totales "+str(len(train)+len(test)))
@@ -191,7 +191,7 @@ class Device:
 
         train_generator = train_gen.flow_from_dataframe(
             dataframe = train_set,
-            directory = self.path_dataset + '/allDataset huelva/',
+            directory = self.path_dataset + '/allDataset no huelva/',
             x_col = 'file',
             y_col = 'labels',
             class_mode = 'categorical',#binary
@@ -201,7 +201,7 @@ class Device:
 
         validation_generator = val_gen.flow_from_dataframe(
             dataframe = val_set,
-            directory = self.path_dataset + '/allDataset huelva/',
+            directory = self.path_dataset + '/allDataset no huelva/',
             x_col = 'file',
             y_col = 'labels',
             class_mode = 'categorical',
