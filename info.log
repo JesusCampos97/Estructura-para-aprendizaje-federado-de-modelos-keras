@@ -123,17 +123,17 @@
     5/24-05-2022 14-54 -> se utiliza para crear imagen en memoria del acc y el loss -> Primeras pruebas. 5 Dispositivos durante 5 días
     
 *- 17-06-22 -*
-    1/17-06-2022 15-40 -> solo entrena con no no huelva deja el 0.89 de acc
+    1/17-06-2022 15-40 -> solo entrena con huelva deja el 0.89 de acc
 
 *- 19-06-22 -*
-    Hay que decir como sale un modelo entrenado con no no huelva y no no no huelva
-    hay que poner un modelo entrenado sin no no huelva y decir que cuando pasamos no no huelva decae, por ello entrenar con federadoes mejor
+    Hay que decir como sale un modelo entrenado con huelva y no huelva
+    hay que poner un modelo entrenado sin huelva y decir que cuando pasamos huelva decae, por ello entrenar con federadoes mejor
     por que adaptamos el modelo a donde corresponde sin tener esas caidas y mejorando el acc sin necesidad
     de tener todas las imagenes de pasos de cebra del mundo en un servidor y por lo tanto tard emuchisimo
     en computo
 
-    el fichero 20/19-06-2022 23-54 es el que tiene los resultados de federar no no huelva llegando a producir los mismos resultados
+    el fichero 20/19-06-2022 23-54 es el que tiene los resultados de federar huelva llegando a producir los mismos resultados
 
 *- 22-06-22 -*
-    se prueba a ejecutar un dispositivo entrenando durante 10 epocas con 1 de batch e imagenes de no no no huelva para comparara con el usado de 4 epocas
+    se prueba a ejecutar un dispositivo entrenando durante 10 epocas con 1 de batch e imagenes de no huelva para comparara con el usado de 4 epocas
     se quiere probar usar un batchsize de 16 en el merge del fichero bueno del dia 19

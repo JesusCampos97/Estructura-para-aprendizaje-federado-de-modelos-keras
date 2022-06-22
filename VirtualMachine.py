@@ -22,7 +22,7 @@ model_type = 5 -> MobileNetV2 para entrenamiento del modelo
 """
 
 def processImages(path_dataset):
-    filepath = path_dataset+'/allDataset no no huelva/'
+    filepath = path_dataset+'/allDataset no huelva/'
     for i in tqdm(range(len(os.listdir(filepath)))):
         pic_path = filepath + os.listdir(filepath)[i]
         pic = PIL.Image.open(pic_path)
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     path_devices="./Devices/"#"Devices/5/20042022 (2)"
     path_dataset="/datasets_nuevos/nuevo dataset" #path donde se encuentra el dataset descomprimido
     model_type=1 #Se debera de pasar por parametros
-    epochs=10 #Se debera de pasar por parametros
+    epochs=5 #Se debera de pasar por parametros
     image_height = 256 #224
     image_width = 256 #224
     batch_size = 16
@@ -60,22 +60,22 @@ if __name__ == "__main__":
     if (primera_ejecucion):
         print("Primera ejecución de la experimentación en el sistema. Creando carpetas de dispositivo . . .")
         os.getcwd()
-        collection = path_dataset+"/dataset negativo no no huelva/"
+        collection = path_dataset+"/dataset negativo no huelva/"
         for i, filename in enumerate(os.listdir(collection)):
-            os.rename(path_dataset+"/dataset negativo no no huelva/" + filename, path_dataset+"/dataset negativo no no huelva/road_" + str(i) + ".jpg")
+            os.rename(path_dataset+"/dataset negativo no huelva/" + filename, path_dataset+"/dataset negativo no huelva/road_" + str(i) + ".jpg")
 
-        collection = path_dataset+"/dataset positivo no no huelva/"
+        collection = path_dataset+"/dataset positivo no huelva/"
         for i, filename in enumerate(os.listdir(collection)):
-            os.rename(path_dataset+"/dataset positivo no no huelva/" + filename, path_dataset+"/dataset positivo no no huelva/crosswalk_" + str(i) + ".jpg")
+            os.rename(path_dataset+"/dataset positivo no huelva/" + filename, path_dataset+"/dataset positivo no huelva/crosswalk_" + str(i) + ".jpg")
 
-        src_dir = path_dataset+"/dataset negativo no no huelva/"
-        dst_dir = path_dataset+"/allDataset no no huelva/"
+        src_dir = path_dataset+"/dataset negativo no huelva/"
+        dst_dir = path_dataset+"/allDataset no huelva/"
         os.mkdir(dst_dir)
 
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             shutil.copy(jpgfile, dst_dir)
 
-        src_dir = path_dataset+"/dataset positivo no no huelva/"
+        src_dir = path_dataset+"/dataset positivo no huelva/"
         for jpgfile in glob.iglob(os.path.join(src_dir, "*.jpg")):
             shutil.copy(jpgfile, dst_dir)
 
