@@ -37,10 +37,10 @@ if __name__ == "__main__":
     path_devices="./Devices/"#"Devices/5/20042022 (2)"
     path_dataset="/datasets_nuevos/nuevo dataset" #path donde se encuentra el dataset descomprimido
     model_type=1 #Se debera de pasar por parametros
-    epochs=5 #Se debera de pasar por parametros
+    epochs=10 #Se debera de pasar por parametros
     image_height = 256 #224
     image_width = 256 #224
-    batch_size = 16
+    batch_size = 8
     primera_ejecucion = False
     num_etapas=1 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
     merge_type=1 #1-FederatedAverage, 2- PonderedFederatedAverage
