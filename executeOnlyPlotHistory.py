@@ -7,7 +7,7 @@ with open('./Devices/1/22-06-2022 20-49/d0/history.json', 'r') as f:
     history = json.loads(f.read())
 
 
-df=pd.DataFrame.from_dict(history[0], orient="index")
+df=pd.DataFrame.from_dict(history)
 print(df)
 figure=df.plot(x="Epochs", y="Accuracy")
 figure.legend(['train', 'val'], loc='upper left')
