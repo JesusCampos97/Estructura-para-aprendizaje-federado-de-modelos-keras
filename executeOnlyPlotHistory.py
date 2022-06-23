@@ -5,6 +5,8 @@ import json
 with open('./Devices/1/22-06-2022 20-49/d0/history.json', 'r') as f:
     history = json.loads(f.read())
 
+print(history)
+
 plt.plot(history['accuracy'][0])
 plt.plot(history['val_accuracy'][0])
 plt.title('model accuracy')
