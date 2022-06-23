@@ -8,11 +8,11 @@ with open('./Devices/1/22-06-2022 20-49/d0/history.json', 'r') as f:
 
 
 df=pd.DataFrame.from_dict(history, orient="columns")
-df=df.loc[:,['accuracy','val_accuracy']]
+df=df.loc[:,['loss','val_loss']]
 print(df)
 
-figure=df.plot(title='Model accuracy')
+figure=df.plot(title='Model loss')
 plt.xlabel("Epochs")
-plt.ylabel("Accuracy")
+plt.ylabel("Loss")
 plt.legend(['train', 'val'], loc='upper left')
-plt.savefig('./Devices/1/22-06-2022 20-49/d0/accuracy.png')
+plt.savefig('./Devices/1/22-06-2022 20-49/d0/loss.png')
