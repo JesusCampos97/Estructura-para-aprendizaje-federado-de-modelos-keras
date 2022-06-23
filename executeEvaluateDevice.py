@@ -7,7 +7,7 @@ import pandas as pd
 
 
 num_devices=1
-train_percentage=0.8
+train_percentage=0.7
 path_devices="./Devices/"#"Devices/5/20042022 (2)"
 path_dataset="/datasets_nuevos/nuevo dataset" #path donde se encuentra el dataset descomprimido
 model_type=1 #Se debera de pasar por parametros
