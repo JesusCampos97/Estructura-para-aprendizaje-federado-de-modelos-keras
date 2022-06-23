@@ -70,7 +70,7 @@ plt.plot(df_aux_d4['val_accuracy'])
 """
 plt.title('Accuracy comparation')
 plt.ylabel('Accuracy')
-plt.xlabel('Days')
+plt.xlabel('Days/Steps')
 plt.legend(['acc', 'val_acc', 'evaluate_acc'], loc='lower right')
 plt.xticks(np.arange(min(df['day']), max(df['day'])+1, 1.0))
 plt.savefig(path+'/grafica_acc.png')
@@ -87,7 +87,7 @@ ax_aux_loss=df_aux_val_loss_mean.plot(kind='line',x='day',y='val_loss',color='bl
 
 plt.title('Loss comparation')
 plt.ylabel('Loss')
-plt.xlabel('Days')
+plt.xlabel('Days/Steps')
 plt.legend(['acc', 'val_acc', 'evaluate_acc','loss', 'val_loss'], loc='upper right')
 plt.xticks(np.arange(min(df['day']), max(df['day'])+1, 1.0))
 
