@@ -10,10 +10,9 @@ with open('./Devices/1/22-06-2022 20-49/d0/history.json', 'r') as f:
 df=pd.DataFrame.from_dict(history, orient="columns")
 print(df)
 
-figure=df.plot(y="accuracy")
+figure=df.plot(y="accuracy", title='Model accuracy')
 
-figure.title('Model accuracy')
-figure.set_xlabel("Epochs")
-figure.set_ylabel("Accuracy")
-figure.legend(['train', 'val'], loc='upper left')
-figure.savefig('./Devices/1/22-06-2022 20-49/d0/accuracy.png')
+plt.xlabel("Epochs")
+plt.ylabel("Accuracy")
+plt.legend(['train', 'val'], loc='upper left')
+plt.savefig('./Devices/1/22-06-2022 20-49/d0/accuracy.png')
