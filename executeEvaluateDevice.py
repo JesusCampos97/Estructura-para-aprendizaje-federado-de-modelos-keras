@@ -22,4 +22,4 @@ path_param="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-mo
 
 device = Device(0, path_param, path_dataset, train_percentage, model_type, epochs, 
 	steps_per_epoch, image_height, image_width, batch_size, day)
-device.evaluate_new("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/1/22-06-2022 20-49/d0/model.h5")
+device.evaluate("/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/1/22-06-2022 20-49/d0/model.h5")
