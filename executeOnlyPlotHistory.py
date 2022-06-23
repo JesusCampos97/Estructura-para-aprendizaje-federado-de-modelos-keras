@@ -11,7 +11,7 @@ df=pd.DataFrame.from_dict(history, orient="columns")
 print(df)
 
 figure=df.plot(y="accuracy", title='Model accuracy')
-figure=figure.plot(y="val_accuracy", title='Model accuracy')
+figure2=df.plot(y="val_accuracy", title='Model accuracy')
 plt.xlabel("Epochs")
 plt.ylabel("Accuracy")
 plt.legend(['train', 'val'], loc='upper left')
