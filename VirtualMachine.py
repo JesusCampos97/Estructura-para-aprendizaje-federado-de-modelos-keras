@@ -46,7 +46,7 @@ if __name__ == "__main__":
     merge_type=1 #1-FederatedAverage, 2- PonderedFederatedAverage
     path_best_model="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/1/14-06-2022 11-34/d0/model.h5"#"/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5"
     min_accuracy_to_merge=0.8
-    first_day=3
+    first_day=0
     path_dia="./Devices/5/23-06-2022 10-54"
 
     #Creo las carpetas de los datasets y los renombro
