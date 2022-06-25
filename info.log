@@ -142,3 +142,4 @@
     1/22-06-2022 20-49 -> es el que se usa para las graficas de 1 y como mejor modelo. entrenado 10 epocas
     5/23-06-2022 10-54 -> es bueno y tiene 92.73 acc 92.26 val acc y 92.77 de eval acc cambiando el 67.10% de 
     las veces tardando como 1h 20 cada dispositivo
+10/24-06-2022 08-17

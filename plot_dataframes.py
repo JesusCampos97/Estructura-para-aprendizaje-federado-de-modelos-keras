@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/5/23-06-2022 10-54"
+path="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/10/24-06-2022 08-17"
 df = pd.read_csv(path+"/results.csv")  
 
 df_add_aux = {'device': -1, 'accuracy': 0.8529411554, 'val_accuracy': 0.7568807602,'loss':0.2944834175, 'val_loss':0.4638305307,'day':-1,
