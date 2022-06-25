@@ -142,4 +142,21 @@
     1/22-06-2022 20-49 -> es el que se usa para las graficas de 1 y como mejor modelo. entrenado 10 epocas
     5/23-06-2022 10-54 -> es bueno y tiene 92.73 acc 92.26 val acc y 92.77 de eval acc cambiando el 67.10% de 
     las veces tardando como 1h 20 cada dispositivo
-10/24-06-2022 08-17
+    10/24-06-2022 08-17 -> es bueno tiene  92.81 de val acc, 92.35 de acc evaluate y cambia el 53.64% de veces, con 92.88 de acc
+    buena grafica. tarda en total:
+    1.0     95.979496
+    2.0     91.737229
+    3.0     91.774013
+    4.0     92.556459
+    5.0     91.968748
+    6.0     92.595390
+    7.0     93.685446
+    8.0     92.704081
+    9.0     93.246678
+    10.0    92.534147
+    11.0    92.389406
+    12.0    92.473525
+    13.0    92.891037
+    14.0    93.323154
+    15.0    93.374798
+    se deja con 20 por si sale mejor jeje
