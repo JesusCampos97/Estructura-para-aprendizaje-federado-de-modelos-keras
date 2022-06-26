@@ -15,6 +15,8 @@ from time import sleep
 import time
 import pygame
 
+pygame.mixer.init()
+sound =  pygame.mixer.Sound("/home/pi/Downloads/beep-01a.wav")
 
 def scale_image(frame, new_size=(256, 256)):
   # Get the dimensions
@@ -63,12 +65,12 @@ def load_image_tensor(img, show=False):
     return img_tensor
 
 def executeSound():
-    pygame.mixer.init()
-    sound =  pygame.mixer.Sound("/home/pi/Downloads/beep-01a.wav")
     channela =sound.play()
 
-    while channela.get_busy():
-        pygame.time.delay(100)
+    while pygame.mixer.get_busy():
+        pygame.time.delay(10)
+        pygame.event.poll()
+
       
 #-----initialise the Model and Load into interpreter-------------------------
 
