@@ -176,7 +176,6 @@ with picamera.PiCamera() as camera:
         #preview.set_data(img)
         preview.set_data(stream)
         fig.canvas.draw()
-        fig.canvas.show()
         
         time_elapsed(start_t3,"preview")
         #-------------------------------------------------------------
