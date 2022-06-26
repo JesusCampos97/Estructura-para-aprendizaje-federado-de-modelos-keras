@@ -13,6 +13,8 @@ import picamera
 from picamera import PiCamera, Color
 from time import sleep
 import time
+import pygame
+
 
 def scale_image(frame, new_size=(256, 256)):
   # Get the dimensions
@@ -59,6 +61,13 @@ def load_image_tensor(img, show=False):
         plt.show()
 
     return img_tensor
+
+def executeSound():
+    pygame.mixer.init()
+    pygame.mixer.music.load("/home/pi/Downloads/beep-01a.wav")
+    pygame.mixer.music.play()
+    while pygame.mixer.music.get_busy() == True:
+        continue
       
 #-----initialise the Model and Load into interpreter-------------------------
 
@@ -86,8 +95,8 @@ input_shape = input_details[0]['shape']
 size = input_shape[:2] if len(input_shape) == 3 else input_shape[1:3]
 #print(size)
 
-#prediction threshold for triggering actions
-threshold=0.5
+#threshold 
+threshold=2
 
 
 #-----------------------------------------------------------
@@ -141,12 +150,21 @@ with picamera.PiCamera() as camera:
         #----------------------------------------------------------------
         classes = classify.get_classes(interpreter, top_k=1)
         labels = dataset.read_label_file(label_path)
+        num_road=0
+        num_crosswalk=0
         for c in classes:
             print('%s: %.5f' % (labels.get(c.id, c.id), c.score))
             if labels.get(c.id, c.id)=="road":
-                camera.annotate_text = "road ("+str(round(c.score*100.0,2))+" %)"
+                num_road+=1
+                num_crosswalk=0
+                if(num_road>threshold):
+                    executeSound()
+                    camera.annotate_text = "road ("+str(round(c.score*100.0,2))+" %)"
             else:
-                camera.annotate_text = "crosswalk ("+str(round(c.score*100.0,2))+" %)"
+                num_crosswalk+=1
+                num_road=0
+                if(num_crosswalk>threshold):
+                    camera.annotate_text = "crosswalk ("+str(round(c.score*100.0,2))+" %)"
         #----------------------------------------------------------------
 
         time_elapsed(start_t2,"inference")
