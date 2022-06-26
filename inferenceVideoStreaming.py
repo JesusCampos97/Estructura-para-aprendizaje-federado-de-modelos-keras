@@ -64,10 +64,11 @@ def load_image_tensor(img, show=False):
 
 def executeSound():
     pygame.mixer.init()
-    pygame.mixer.music.load("/home/pi/Downloads/beep-01a.wav")
-    pygame.mixer.music.play()
-    while pygame.mixer.music.get_busy() == True:
-        continue
+    sound =  pygame.mixer.Sound("/home/pi/Downloads/beep-01a.wav")
+    channela =sound.play()
+
+    while channela.get_busy():
+        pygame.time.delay(100)
       
 #-----initialise the Model and Load into interpreter-------------------------
 
