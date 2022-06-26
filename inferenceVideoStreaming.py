@@ -114,7 +114,8 @@ tmp = np.zeros([480,640] + [3], np.uint8)
 preview = ax.imshow(tmp)
 #---------------------------------------------------------
 
-
+num_road=0
+num_crosswalk=0
 with picamera.PiCamera() as camera:
     camera.framerate = 90
     camera.resolution = (640, 480)
@@ -150,8 +151,7 @@ with picamera.PiCamera() as camera:
         #----------------------------------------------------------------
         classes = classify.get_classes(interpreter, top_k=1)
         labels = dataset.read_label_file(label_path)
-        num_road=0
-        num_crosswalk=0
+       
         for c in classes:
             print('%s: %.5f' % (labels.get(c.id, c.id), c.score))
             if labels.get(c.id, c.id)=="road":
