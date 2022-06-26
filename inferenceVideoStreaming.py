@@ -14,7 +14,7 @@ from picamera import PiCamera, Color
 from time import sleep
 import time
 import pygame
-
+import os
 
 def scale_image(frame, new_size=(256, 256)):
   # Get the dimensions
@@ -71,6 +71,10 @@ def executeSound():
 
         import pygame"""
 
+    
+
+    if "XDG_RUNTIME_DIR" not in os.environ:
+        os.environ["XDG_RUNTIME_DIR"] = "/tmp/runtime-root"
     pygame.init()
     pygame.mixer.init()
 
