@@ -14,7 +14,7 @@ from picamera import PiCamera, Color
 from time import sleep
 import time
 import pygame
-import os
+
 
 def scale_image(frame, new_size=(256, 256)):
   # Get the dimensions
@@ -63,29 +63,11 @@ def load_image_tensor(img, show=False):
     return img_tensor
 
 def executeSound():
-    """pygame.mixer.init()
-    pygame.mixer.music.load("/home/pi/Downloads/mixkit-truck-reversing-beeps-loop-1077.wav")
+    pygame.mixer.init()
+    pygame.mixer.music.load("/home/pi/Downloads/beep-01a.wav")
     pygame.mixer.music.play()
     while pygame.mixer.music.get_busy() == True:
         continue
-
-        import pygame"""
-
-    
-
-    if "XDG_RUNTIME_DIR" not in os.environ:
-        os.environ["XDG_RUNTIME_DIR"] = "/tmp/runtime-root"
-    pygame.init()
-    pygame.mixer.init()
-
-
-    audioFiles = [r'/home/pi/Downloads/mixkit-truck-reversing-beeps-loop-1077.wav']
-
-    pygame.mixer.music.load(audioFiles[0])
-    pygame.mixer.music.play(0)
-
-    while pygame.mixer.music.get_busy():
-        pygame.event.pump()
       
 #-----initialise the Model and Load into interpreter-------------------------
 
