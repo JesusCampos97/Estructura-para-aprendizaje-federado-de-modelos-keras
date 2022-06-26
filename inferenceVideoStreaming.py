@@ -70,8 +70,11 @@ def executeSound():
 
     while pygame.mixer.get_busy():
         pygame.time.delay(10)
-        pygame.event.poll()
-
+        ev = pygame.event.poll() 
+        if ev.type == pygame.QUIT:
+            break
+    pygame.quit()
+    
       
 #-----initialise the Model and Load into interpreter-------------------------
 
