@@ -15,6 +15,11 @@ from time import sleep
 import time
 import pygame
 import os
+import simpleaudio as sa
+
+wave_obj = sa.WaveObject.from_wave_file("/home/pi/Downloads/beep-01a.wav")
+play_obj = wave_obj.play()
+play_obj.wait_done()
 
 def scale_image(frame, new_size=(256, 256)):
   # Get the dimensions
