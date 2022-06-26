@@ -15,7 +15,6 @@ from time import sleep
 import time
 import pygame
 
-sound =  pygame.mixer.Sound("/home/pi/Downloads/beep-01a.wav")
 
 def scale_image(frame, new_size=(256, 256)):
   # Get the dimensions
@@ -65,6 +64,7 @@ def load_image_tensor(img, show=False):
 
 def executeSound():
     pygame.mixer.init()
+    sound =  pygame.mixer.Sound("/home/pi/Downloads/beep-01a.wav")
 
     channela =sound.play()
 
