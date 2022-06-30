@@ -43,11 +43,11 @@ if __name__ == "__main__":
     batch_size = 16
     primera_ejecucion = False
     num_etapas=15 #Serian X días distintos, donde se seguiria ejecutando el federado, osea 2 dispositivos, entrenan, mergean y evaluan, se quedan el mejor y lo vuelven a evlauar todo con el nuevo modelo
-    merge_type=2 #1-FederatedAverage, 2- PonderedFederatedAverage
+    merge_type=1 #1-FederatedAverage, 2- PonderedFederatedAverage
     path_best_model="/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/1/14-06-2022 11-34/d0/model.h5"#"/home/pi/Desktop/proyecto/Estructura-para-aprendizaje-federado-de-modelos-keras/Devices/server_model.h5"
     min_accuracy_to_merge=0.8
-    first_day=0 #7 antes del 26/06/22 21 16
-    path_dia="./Devices/5/23-06-2022 10-54"
+    first_day=7 #7 antes del 26/06/22 21 16
+    path_dia="./Devices/20/25-06-2022 13-40"
 
     #Creo las carpetas de los datasets y los renombro
     start_primera_ejecucion = time.time()
