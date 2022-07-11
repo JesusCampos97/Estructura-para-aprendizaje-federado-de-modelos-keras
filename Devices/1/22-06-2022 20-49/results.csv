@@ -1,0 +1,2 @@
+device,accuracy,val_accuracy,loss,val_loss,day,execute_time_seconds,evaluate_time_seconds,is_model_changed,evaluate_accuracy
+0,0.8,0.8655462,0.4841466416810688,0.2948421562711398,0,4508.655899524689,106.15499567985535,0,0.9159663915634155
