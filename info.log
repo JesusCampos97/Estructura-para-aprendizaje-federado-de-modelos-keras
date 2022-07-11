@@ -146,4 +146,9 @@
     buena grafica
 
 ---
+Los modelos utilizados en la memoria son:
 25/06/2022 13:40 -> modelo 20 devices con FedAvg
+26/06/2022 21:17 -> modelo 20 devices con Media ponderada
+22/06/2022 20:49 -> modelo 1 device no federado
+23/06/2022 10:54 -> modelo 5 devices con FedAvg
+24/06/2022 08:17 -> modelo 10 devices con FedAvg
