@@ -1,0 +1,11 @@
+{
+    "number": 15,
+    "path": "./Devices/20/25-06-2022 13-40/d15",
+    "path_dataset": "/datasets_nuevos/nuevo dataset",
+    "train_percentage": 0.8,
+    "model_type": 1,
+    "epochs": 1,
+    "image_height": 256,
+    "image_width": 256,
+    "batch_size": 16
+}
